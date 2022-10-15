@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+/* Main CSS File */
+@import 'mixins/clearfix';
+@import 'mixins/breakpoints';
+@import 'mixins/lazy';
+@import 'mixins/buttons';
+
+@import 'config/variables';
+$font-family: 'Jost';
+
+/*-------------------- 1.General Styles ---------- */
+@import 'base/base';
+@import 'base/type';
+@import 'base/layout';
+
+/*-------------------- 2.Headers --------------------*/
+@import 'base/headers/header';
+
+/*-------------------- 2.1.Menu --------------------*/
+@import 'base/headers/menu';
+
+/*-------------------- 2.2.Vertical Menu --------------------*/
+@import 'base/headers/vertical-menu';
+
+/*-------------------- 2.3.Sticky Header --------------------*/
+@import 'base/headers/sticky-header';
+
+/*-------------------- 2.4.Mobiel Menu --------------------*/
+@import 'base/headers/mobile-menu';
+@import 'base/headers/mobile-menu-light';
+
+/*-------------------- 3.Footer --------------------*/
+@import 'base/footer';
