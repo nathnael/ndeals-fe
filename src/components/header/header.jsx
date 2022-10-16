@@ -1,5 +1,6 @@
 import React from "react";
-
+import "../../Assets/scss/style.scss";
+import LoginModal from "../modals/login-modal";
 
 function Header () {
     
@@ -14,7 +15,7 @@ function Header () {
                 <div className="container">
                     <div className="header-left overflow-hidden mr-3 mr-sm-0">
                         <div className="welcome-msg d-flex flex-nowrap">
-                            <p>Special collection already available.</p>&nbsp;<a>Read more ...</a>
+                            <p>Special collection already available.</p>&nbsp;<a href="/">Read more ...</a>
                         </div>
                     </div>
 
@@ -25,27 +26,28 @@ function Header () {
                                 <ul>
                                     <li>
                                         <div className="header-dropdown">
-                                            <a>USD</a>
+                                            <a href="/">USD</a>
                                             <div className="header-menu">
                                                 <ul>
-                                                    <li><a>Eur</a></li>
-                                                    <li><a>Usd</a></li>
+                                                    <li><a href="/">Eur</a></li>
+                                                    <li><a href="/">Usd</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </li>
                                     <li>
                                         <div className="header-dropdown">
-                                            <a>English</a>
+                                            <a href="/">English</a>
                                             <div className="header-menu">
                                                 <ul>
-                                                    <li><a>English</a></li>
-                                                    <li><a>French</a></li>
-                                                    <li><a>Spanish</a></li>
+                                                    <li><a href="/">English</a></li>
+                                                    <li><a href="/">French</a></li>
+                                                    <li><a href="/">Spanish</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </li>
+                                    <LoginModal />
                                 </ul>
                             </li>
                         </ul>
@@ -79,7 +81,6 @@ function Header () {
                                 <p>Account</p>
                             </a>
                         </div>
-
                     </div>
                 </div>
             </div>

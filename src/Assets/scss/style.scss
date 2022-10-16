@@ -32,3 +32,40 @@ $font-family: 'Jost';
 
 /*-------------------- 3.Footer --------------------*/
 @import 'base/footer';
+
+/*-------------------- 4.Elements --------------------*/
+/*-------------------- 4.1.Page Header --------------------*/
+@import 'elements/page-header';
+
+/*-------------------- 4.3.Titles --------------------*/
+@import 'elements/titles';
+
+/*-------------------- 4.4.Icon boxes --------------------*/
+@import 'elements/icon-boxes';
+
+/*-------------------- 4.5.Cards --------------------*/
+@import 'elements/cards';
+
+/*-------------------- 4.6.Cards --------------------*/
+@import 'elements/tabs';
+
+/*-------------------- 4.7.Buttons --------------------*/
+@import 'elements/buttons';
+
+/*-------------------- 4.14.Forms --------------------*/
+@import 'elements/forms';
+
+/*-------------------- 4.19.Modals --------------------*/
+@import 'elements/modals';
+
+
+/*-------------------- 5.11.Login --------------------*/
+@import 'pages/login';
+
+/*-------------------- 6.Spacing + Helpers --------------------*/
+@import 'config/helpers';
+@import 'config/spacing';
+
+/*-------------------- 8.HomePage --------------------*/
+@import 'skins/skin';
+@import 'custom';
