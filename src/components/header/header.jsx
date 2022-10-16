@@ -1,6 +1,11 @@
 import React from "react";
 import "../../Assets/scss/style.scss";
 import LoginModal from "../modals/login-modal";
+import CartMenu from "./partials/cart-menu";
+import CategoryMenu from "./partials/category-menu";
+import HeaderSearch from "./partials/header-search";
+import MainMenu from "./partials/main-menu";
+import WishlistMenu from "./partials/wishlist-menu";
 
 function Header () {
     
@@ -64,12 +69,12 @@ function Header () {
                         </button>
 
                         <a href="/" className="logo">
-                            <img src="images/logo/ncommerce-logos.jpeg" alt="NCommerce Logo" width={ 104 } height={ 27 } />
+                            <img src="images/logo/ncommerce-logos.jpeg" alt="NCommerce Logo" width={ 70 } height={ 27 } />
                         </a>
                     </div>
 
                     <div className="header-center">
-                        {/* <HeaderSearch /> */}
+                        <HeaderSearch />
                     </div>
 
                     <div className="header-right">
@@ -81,6 +86,8 @@ function Header () {
                                 <p>Account</p>
                             </a>
                         </div>
+                        <WishlistMenu />
+                        <CartMenu />
                     </div>
                 </div>
             </div>
@@ -89,11 +96,11 @@ function Header () {
                 <div className="header-bottom sticky-header">
                     <div className="container">
                         <div className="header-left">
-                            <p>CategoryMenu</p>
+                            <CategoryMenu />
                         </div>
 
                         <div className="header-center">
-                            <p>MainMenu</p>
+                            <MainMenu />
                         </div>
 
                         <div className="header-right overflow-hidden">
