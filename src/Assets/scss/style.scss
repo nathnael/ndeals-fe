@@ -58,6 +58,9 @@ $font-family: 'Jost';
 /*-------------------- 4.19.Modals --------------------*/
 @import 'elements/modals';
 
+/*-------------------- 4.19.Swiper --------------------*/
+@import 'elements/swiper';
+
 
 /*-------------------- 5.11.Login --------------------*/
 @import 'pages/login';
@@ -68,4 +71,4 @@ $font-family: 'Jost';
 
 /*-------------------- 8.HomePage --------------------*/
 @import 'skins/skin';
-@import 'custom';
+@import 'custom_13';
