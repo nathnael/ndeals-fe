@@ -9,20 +9,21 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 // import required modules
-import { Navigation, Pagination } from "swiper";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 
 function OwlCarousel ( props ) {
 
     return (
         <Swiper
             autoHeight={false}
-            spaceBetween={20}
+            spaceBetween={0}
             navigation={false}
-            pagination={{
-            clickable: false,
-            }}
-            modules={[Navigation, Pagination]}
+            modules={[Navigation, Pagination, Scrollbar, A11y]}
             className="mySwiper"
+            pagination={{ clickable: true }}
+            scrollbar={{ draggable: false }}
+            onSwiper={(swiper) => console.log(swiper)}
+            onSlideChange={() => console.log('slide change')}
         >
             {
                 props.children.map(child => (

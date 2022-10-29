@@ -52,6 +52,9 @@ $font-family: 'Jost';
 /*-------------------- 4.7.Buttons --------------------*/
 @import 'elements/buttons';
 
+/*-------------------- 4.8.Products --------------------*/
+@import 'elements/products';
+
 /*-------------------- 4.14.Forms --------------------*/
 @import 'elements/forms';
 
@@ -60,6 +63,9 @@ $font-family: 'Jost';
 
 /*-------------------- 4.19.Swiper --------------------*/
 @import 'elements/swiper';
+
+/*-------------------- 4.26.Slider --------------------*/
+@import 'elements/slider';
 
 
 /*-------------------- 5.11.Login --------------------*/
@@ -71,4 +77,4 @@ $font-family: 'Jost';
 
 /*-------------------- 8.HomePage --------------------*/
 @import 'skins/skin';
-@import 'custom_13';
+@import 'custom_1';

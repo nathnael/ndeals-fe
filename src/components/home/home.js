@@ -28,7 +28,7 @@ function Home() {
         <div className="main home-page skeleton-body">
             <div className="intro-slider-container">
                 <OwlCarousel adClass="owl-simple intro-slider" options={ introSlider }>
-                    <div className="intro-slide" style={ { backgroundColor: '#EDF2F0', backgroundImage: 'url(images/home/sliders/slide-1.png)' } }>
+                    <div className="intro-slide" style={ { backgroundColor: '#EDF2F0', backgroundImage: 'url(images/home/sliders/macbook.png)' } }>
                         <div className="container intro-content">
                             <Reveal keyframes={ fadeInUpShorter } delay={ 100 } duration={ 1000 }>
                                 <div className="row">
@@ -55,7 +55,7 @@ function Home() {
                             </Reveal>
                         </div>
                     </div>
-                    <div className="intro-slide" style={ { backgroundImage: 'url(images/home/sliders/slide-2.jpg)' } }>
+                    <div className="intro-slide" style={ { backgroundImage: 'url(images/home/sliders/beanbag_chair_slider.jpg)' } }>
                         <div className="container intro-content">
                             <Reveal keyframes={ fadeInUpShorter } delay={ 100 } duration={ 1000 }>
                                 <div className="row">
@@ -67,7 +67,7 @@ function Home() {
                                                 <br />Beanbag
                                                 <span>
                                                 <sup
-                                                    className="font-weight-light line-through"
+                                                    className="font-weight-light old-price"
                                                 >$89,99</sup>
                                                 <span className="text-primary">
                                                     &nbsp;$29&nbsp;
@@ -85,7 +85,7 @@ function Home() {
                         </div>
                     </div>
 
-                    <div className="intro-slide" style={ { backgroundColor: '#EDF2F0', backgroundImage: 'url(images/home/sliders/slide-3.jpg)' } }>
+                    <div className="intro-slide" style={ { backgroundColor: '#EDF2F0', backgroundImage: 'url(images/home/sliders/leather_jacket.jpg)' } }>
                         <div className="container intro-content">
                             <Reveal keyframes={ fadeInUpShorter } delay={ 100 } duration={ 1000 }>
                                 <div className="row">
@@ -97,7 +97,7 @@ function Home() {
                                                 <br />Biker Jacket
                                                 <span>
                                                 <sup
-                                                    className="font-weight-light line-through"
+                                                    className="font-weight-light old-price"
                                                 >$240,00</sup>
                                                 <span className="text-primary">
                                                     &nbsp;$180&nbsp;
