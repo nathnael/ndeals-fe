@@ -12,14 +12,15 @@ import "swiper/css/pagination";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 
 function OwlCarousel ( props ) {
+    const { adClass, options, events, isTheme = true } = props;
 
     return (
         <Swiper
-            autoHeight={false}
+            autoHeight={true}
             spaceBetween={0}
             navigation={false}
             modules={[Navigation, Pagination, Scrollbar, A11y]}
-            className="mySwiper"
+            className={ `mySwiper ${adClass}` }
             pagination={{ clickable: true }}
             scrollbar={{ draggable: false }}
             onSwiper={(swiper) => console.log(swiper)}
@@ -27,7 +28,7 @@ function OwlCarousel ( props ) {
         >
             {
                 props.children.map(child => (
-                    <SwiperSlide className='intro-content'>{child}</SwiperSlide>
+                    <SwiperSlide>{child}</SwiperSlide>
                 ))
             }
         </Swiper>

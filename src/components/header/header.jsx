@@ -1,5 +1,6 @@
 import React from "react";
 import "../../Assets/scss/style.scss";
+import "../../Assets/scss/plugins/owl-carousel/owl.carousel.scss";
 import LoginModal from "../modals/login-modal";
 import CartMenu from "./partials/cart-menu";
 import CategoryMenu from "./partials/category-menu";

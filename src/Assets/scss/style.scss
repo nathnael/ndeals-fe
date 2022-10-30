@@ -55,6 +55,9 @@ $font-family: 'Jost';
 /*-------------------- 4.8.Products --------------------*/
 @import 'elements/products';
 
+/*-------------------- 4.9.Banners --------------------*/
+@import 'elements/banners';
+
 /*-------------------- 4.14.Forms --------------------*/
 @import 'elements/forms';
 
@@ -67,6 +70,11 @@ $font-family: 'Jost';
 /*-------------------- 4.26.Slider --------------------*/
 @import 'elements/slider';
 
+/*-------------------- 4.31.Grid --------------------*/
+@import 'elements/grid';
+
+/*-------------------- 5.1.Home --------------------*/
+@import 'pages/home';
 
 /*-------------------- 5.11.Login --------------------*/
 @import 'pages/login';
