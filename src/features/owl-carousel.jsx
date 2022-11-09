@@ -12,13 +12,14 @@ import "swiper/css/pagination";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 
 function OwlCarousel ( props ) {
-    const { adClass, options, events, isTheme = true } = props;
-
+    const { adClass, slidesPerView, spaceBetween, navigate } = props;
+    console.log(`slidesPerView - ${slidesPerView}`);
+    console.log(`spaceBetween - ${spaceBetween}`);
     return (
         <Swiper
-            autoHeight={true}
-            spaceBetween={0}
-            navigation={false}
+            slidesPerView={slidesPerView}
+            spaceBetween={spaceBetween}
+            navigation={navigate}
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             className={ `mySwiper ${adClass}` }
             pagination={{ clickable: true }}

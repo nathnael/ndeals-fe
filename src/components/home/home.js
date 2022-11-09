@@ -1,16 +1,14 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Reveal from 'react-awesome-reveal';
+import Countdown from "react-countdown";
 
 import OwlCarousel from '../../features/owl-carousel';
-// import DealCollection from '~/components/partials/home/deal-collection';
-// import ElectronicsCollection from '~/components/partials/home/electronics-collection';
-// import FurnitureCollection from '~/components/partials/home/furniture-collection';
-// import ClothingCollection from '~/components/partials/home/clothing-collection';
-// import BlogCollection from '~/components/partials/home/blog-collection';
-// import NewsletterModal from "~/components/features/modals/newsletter-modal";
+import { rendererThree } from "../../features/count-down";
 
 import { 
     homeData, 
+    products,
+    posts,
     introSlider, 
     brandSlider, 
     fadeInLeft, 
@@ -21,8 +19,15 @@ import {
     fadeInUpShorter, 
     fadeIn 
 } from '../../utils/data';
+import SpecialCollection from './special-collection';
+import TopCollection from './top-collection';
+import { attrFilter } from '../../utils';
+import BlogCollection from './blog-collection';
+import NewsletterModal from '../../features/modals/newsletter-modal';
 
-function Home() {     
+function Home() {   
+
+    const topProducts = attrFilter( products, 'top' );
 
     return (
         <div className="main home-page skeleton-body">
@@ -270,6 +275,205 @@ function Home() {
                     </div>
                 </div>
             </div>
+            <div className="mb-3"></div>
+
+            <Reveal keyframes={ fadeIn } delay={ 200 } duration={ 1000 } triggerOnce>
+                <SpecialCollection products={ products } loading={ false } />                
+            </Reveal>
+
+            <div className="bg-light deal-container pt-5 pb-3 mb-5">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-9">
+                            <div className="deal">
+                                <div className="deal-content">
+                                    <Reveal keyframes={ fadeInLeftShorter } delay={ 200 } duration={ 1000 } triggerOnce>
+                                        <>
+                                            <h4>Limited Quantities</h4>
+                                            <h2>Deal of the Day</h2>
+
+                                            <h3 className="product-title">
+                                                <a href="/">POÄNG</a>
+                                            </h3>
+
+                                            <div className="product-price">
+                                                <span className="new-price">$149.00</span>
+                                                <span className="old-price">Was $240.00</span>
+                                            </div>
+
+                                            <div className="deal-countdown">
+                                                <Countdown date={ `2022-02-01T01:02:03` } renderer={ rendererThree } />
+                                            </div>
+
+                                            <a href="/shop/sidebar/list" className="btn btn-primary">
+                                                <span>Shop Now</span><i className="icon-long-arrow-right"></i>
+                                            </a>
+                                        </>
+                                    </Reveal>
+                                </div>
+
+                                <div className="deal-image position-relative">
+                                    <Reveal keyframes={ fadeIn } delay={ 200 } duration={ 1000 } triggerOnce>
+                                        <a href="/shop/sidebar/list">
+                                            <div className="lazy-overlay bg-white"></div>
+
+                                            <LazyLoadImage
+                                                alt="deal-banner"
+                                                src="https://res.cloudinary.com/ds6eldued/image/upload/v1667903405/products/deal-1_lscxyt.png"
+                                                threshold="300"
+                                                effect="blur"
+                                                width="100%"
+                                                height={ 560 }
+                                            />
+                                        </a>
+                                    </Reveal>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-lg-3">
+                            <div className="banner banner-overlay banner-overlay-light d-none d-lg-block h-100 pb-2">
+                                <a href="#" className="h-100">
+                                    <div className="lazy-overlay"></div>
+
+                                    <LazyLoadImage
+                                        alt="deal-banner"
+                                        src="https://res.cloudinary.com/ds6eldued/image/upload/v1667907052/banners/banner-onsale_axqedw.jpg"
+                                        threshold="300"
+                                        effect="blur"
+                                        className="h-100"
+                                        width="100%"
+                                        height={ 610 }
+                                    />
+                                </a>
+
+                                <div className="banner-content banner-content-top">
+                                    <h4 className="banner-subtitle text-white">The Best Choice</h4>
+                                    <h3 className="banner-title text-white">Indigo <br />Best Linen</h3>
+                                    <div className="banner-text text-primary">$49.99</div>
+                                    <a href="/shop/sidebar/3cols" className="btn btn-outline-light banner-link">Shop Now<i className="icon-long-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="mb-6"></div>
+
+            <Reveal keyframes={ fadeIn } delay={ 200 } duration={ 1000 } triggerOnce>
+                <TopCollection products={ topProducts } loading={ false } />
+            </Reveal>
+
+            <BlogCollection posts={ posts } loading={ false }></BlogCollection>
+
+            <Reveal keyframes={ fadeIn } delay={ 200 } duration={ 1000 } triggerOnce>
+                <div className="icon-boxes-container">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-sm-6 col-lg-3">
+                                <div className="icon-box icon-box-side">
+                                    <span className="icon-box-icon text-dark">
+                                        <i className="icon-rocket"></i>
+                                    </span>
+                                    <div className="icon-box-content">
+                                        <h3 className="icon-box-title">Free Shipping</h3>
+
+                                        <p>orders $50 or more</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-sm-6 col-lg-3">
+                                <div className="icon-box icon-box-side">
+                                    <span className="icon-box-icon text-dark">
+                                        <i className="icon-rotate-left"></i>
+                                    </span>
+
+                                    <div className="icon-box-content">
+                                        <h3 className="icon-box-title">Free Returns</h3>
+
+                                        <p>within 30 days</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-sm-6 col-lg-3">
+                                <div className="icon-box icon-box-side">
+                                    <span className="icon-box-icon text-dark">
+                                        <i className="icon-info-circle"></i>
+                                    </span>
+
+                                    <div className="icon-box-content">
+                                        <h3 className="icon-box-title">Get 20% Off 1 Item</h3>
+
+                                        <p>When you sign up</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-sm-6 col-lg-3">
+                                <div className="icon-box icon-box-side">
+                                    <span className="icon-box-icon text-dark">
+                                        <i className="icon-life-ring"></i>
+                                    </span>
+
+                                    <div className="icon-box-content">
+                                        <h3 className="icon-box-title">We Support</h3>
+
+                                        <p>24/7 amazing services</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Reveal>
+            <Reveal keyframes={ fadeIn } delay={ 200 } duration={ 1000 } triggerOnce>
+                <div
+                    className="footer-newsletter bg-image"
+                    style={ { backgroundImage: 'url(images/backgrounds/bg-2.jpg)' } }
+                >
+                    <div className="container">
+                        <div className="heading text-center">
+                            <h3 className="title">Get The Latest Deals</h3>
+
+                            <p className="title-desc">
+                                and receive&nbsp;
+                            <span>$20 coupon</span> for first shopping
+                        </p>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                                <form action="#">
+                                    <div className="input-group">
+                                        <input
+                                            type="email"
+                                            className="form-control"
+                                            placeholder="Enter your Email Address"
+                                            aria-label="Email Adress"
+                                            aria-describedby="newsletter-btn"
+                                            required
+                                        />
+                                        <div className="input-group-append">
+                                            <button
+                                                className="btn btn-primary"
+                                                type="submit"
+                                                id="newsletter-btn"
+                                            >
+                                                <span>Subscribe</span>
+                                                <i className="icon-long-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Reveal>
+            <NewsletterModal />
         </div>
     )
 }

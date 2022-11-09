@@ -58,6 +58,9 @@ $font-family: 'Jost';
 /*-------------------- 4.9.Banners --------------------*/
 @import 'elements/banners';
 
+/*-------------------- 4.12.Social Icons --------------------*/
+@import 'elements/social-icons';
+
 /*-------------------- 4.14.Forms --------------------*/
 @import 'elements/forms';
 
@@ -67,8 +70,14 @@ $font-family: 'Jost';
 /*-------------------- 4.19.Swiper --------------------*/
 @import 'elements/swiper';
 
+/*-------------------- 4.24.Countdown --------------------*/
+@import 'elements/countdown';
+
 /*-------------------- 4.26.Slider --------------------*/
 @import 'elements/slider';
+
+/*-------------------- 4.28.Skeleton --------------------*/
+@import 'elements/skeleton';
 
 /*-------------------- 4.31.Grid --------------------*/
 @import 'elements/grid';
@@ -76,8 +85,17 @@ $font-family: 'Jost';
 /*-------------------- 5.1.Home --------------------*/
 @import 'pages/home';
 
+/*-------------------- 5.2.Category --------------------*/
+@import 'pages/category';
+
+/*-------------------- 5.4.Blog --------------------*/
+@import 'pages/blog';
+
 /*-------------------- 5.11.Login --------------------*/
 @import 'pages/login';
+
+/*-------------------- 5.19.Category Market --------------------*/
+@import 'pages/category-market';
 
 /*-------------------- 6.Spacing + Helpers --------------------*/
 @import 'config/helpers';
