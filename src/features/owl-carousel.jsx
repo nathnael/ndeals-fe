@@ -28,8 +28,8 @@ function OwlCarousel ( props ) {
             onSlideChange={() => console.log('slide change')}
         >
             {
-                props.children.map(child => (
-                    <SwiperSlide>{child}</SwiperSlide>
+                props.children.map((child, index) => (
+                    <SwiperSlide key={index}>{child}</SwiperSlide>
                 ))
             }
         </Swiper>

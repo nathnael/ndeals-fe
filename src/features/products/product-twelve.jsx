@@ -110,7 +110,7 @@ function ProductTwelve ( props ) {
 
 
                 <div className="product-action-vertical">
-                    <a href="#" className="btn-product-icon btn-quickview" title="Quick View" onClick={ onQuickView }><span>quick view</span></a>
+                    <a href="/" className="btn-product-icon btn-quickview" title="Quick View" onClick={ onQuickView }><span>quick view</span></a>
                 </div>
             </figure>
 
@@ -119,7 +119,7 @@ function ProductTwelve ( props ) {
                     {
                         product.category.map( ( item, index ) => (
                             <React.Fragment key={ item.slug + '-' + index }>
-                                <a href={ { pathname: '/shop/sidebar/list', query: { category: item.slug } } }>
+                                <a href={`/shop/sidebar/list/${item.slug}`}>
                                     { item.name }
                                 </a>
                                 { index < product.category.length - 1 ? ', ' : "" }
@@ -155,7 +155,7 @@ function ProductTwelve ( props ) {
                         <div className="ratings-val" style={ { width: product.ratings * 20 + '%' } }></div>
                         <span className="tooltip-text">{ product.ratings.toFixed( 2 ) }</span>
                     </div>
-                    <span className="ratings-text">( { product.review } Reviews )</span>
+                    <span className="ratings-text">( { product.reviews.length } Reviews )</span>
                 </div>
 
                 {
@@ -164,7 +164,7 @@ function ProductTwelve ( props ) {
                             <div className="row no-gutters">
                                 {
                                     product.variants.map( ( item, index ) => (
-                                        <a href="#" style={ { backgroundColor: item.color } } key={ index }><span className="sr-only">Color Name</span></a>
+                                        <a href="/" style={ { backgroundColor: item.color } } key={ index }><span className="sr-only">Color Name</span></a>
                                     ) )
                                 }
                             </div>
@@ -191,12 +191,5 @@ function ProductTwelve ( props ) {
         </div>
     )
 }
-
-// const mapStateToProps = ( state ) => {
-//     return {
-//         wishlist: state.wishlist.data,
-//         comparelist: state.comparelist.data
-//     }
-// }
 
 export default ProductTwelve;

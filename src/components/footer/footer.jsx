@@ -38,7 +38,7 @@ function Footer () {
                                     <div className="row">
                                         <div className="col-sm-6 col-md-4">
                                             <span className="widget-about-title">Got Question? Call us 24/7</span>
-                                            <a href="tel:123456789">+0123 456 789</a>
+                                            <a href="tel:123456789">+251 911 474 539</a>
                                         </div>
                                         <div className="col-sm-6 col-md-8">
                                             <span className="widget-about-title">Payment Method</span>

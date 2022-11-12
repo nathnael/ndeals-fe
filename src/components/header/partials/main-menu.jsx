@@ -377,7 +377,7 @@ function MainMenu() {
                     </div>
                 </li>
                 <li className=''>
-                    <a href="/shop/sidebar/list" className="sf-with-ul" scroll={ false }>Shop</a>
+                    <a href="/shop/sidebar/list" className="sf-with-ul" scroll={ "false" }>Shop</a>
 
                     <div className="megamenu megamenu-md">
                         <div className="row no-gutters">
@@ -387,25 +387,25 @@ function MainMenu() {
                                         <div className="col-md-6">
                                             <div className="menu-title">Shop with sidebar</div>
                                             <ul>
-                                                <li className=''><a href="/shop/sidebar/list" scroll={ false }>Shop List</a></li>
-                                                <li className=''><a href="/shop/sidebar/2cols" scroll={ false }>Shop Grid 2 Columns</a></li>
-                                                <li className=''><a href="/shop/sidebar/3cols" scroll={ false }>Shop Grid 3 Columns</a></li>
-                                                <li className=''><a href="/shop/sidebar/4cols" scroll={ false }>Shop Grid 4 Columns</a></li>
+                                                <li className=''><a href="/shop/sidebar/list" scroll={ "false" }>Shop List</a></li>
+                                                <li className=''><a href="/shop/sidebar/2cols" scroll={ "false" }>Shop Grid 2 Columns</a></li>
+                                                <li className=''><a href="/shop/sidebar/3cols" scroll={ "false" }>Shop Grid 3 Columns</a></li>
+                                                <li className=''><a href="/shop/sidebar/4cols" scroll={ "false" }>Shop Grid 4 Columns</a></li>
                                                 <li className=''><a href="/shop/market"><span>Shop Market<span className="tip tip-new">New</span></span></a></li>
                                             </ul>
 
                                             <div className="menu-title">Shop no sidebar</div>
                                             <ul>
-                                                <li className=''><a href="/shop/nosidebar/boxed" scroll={ false }><span>Shop Boxed No Sidebar<span className="tip tip-hot">Hot</span></span></a></li>
-                                                <li className=''><a href="/shop/nosidebar/fullwidth" scroll={ false }>Shop Fullwidth No Sidebar</a></li>
+                                                <li className=''><a href="/shop/nosidebar/boxed" scroll={ "false" }><span>Shop Boxed No Sidebar<span className="tip tip-hot">Hot</span></span></a></li>
+                                                <li className=''><a href="/shop/nosidebar/fullwidth" scroll={ "false" }>Shop Fullwidth No Sidebar</a></li>
                                             </ul>
                                         </div>
 
                                         <div className="col-md-6">
                                             <div className="menu-title">Product Category</div>
                                             <ul>
-                                                <li className=''><a href="/shop/category/boxed" scroll={ false }>Product Category Boxed</a></li>
-                                                <li className=''><a href="/shop/category/fullwidth" scroll={ false }><span>Product Category Fullwidth<span className="tip tip-new">New</span></span></a></li>
+                                                <li className=''><a href="/shop/category/boxed" scroll={ "false" }>Product Category Boxed</a></li>
+                                                <li className=''><a href="/shop/category/fullwidth" scroll={ "false" }><span>Product Category Fullwidth<span className="tip tip-new">New</span></span></a></li>
                                             </ul>
                                             <div className="menu-title">Shop Pages</div>
                                             <ul>

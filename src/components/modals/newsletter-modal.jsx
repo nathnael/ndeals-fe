@@ -16,12 +16,12 @@ function NewsletterModal () {
     const [ open, setOpen ] = useState( false );
     const [ doNotShow, setDoNotShow ] = useState( false );
 
-    useEffect( () => {
+    useEffect( () => {        
         let timer;
-        Cookie.get( `hideNewsletter-${process.env.NEXT_PUBLIC_DEMO}` ) || ( timer = setTimeout( () => {
+        Cookie.get( `hideNewsletter` ) || ( timer = setTimeout( () => {
             setOpen( true );
         }, 5000 ) );
-
+        
         return () => {
             timer && clearTimeout( timer );
         };
