@@ -19,9 +19,10 @@ export const getProducts = () => async (dispatch) => {
         })
 
     } catch (error) {
+        // console.log("***************** Axios Error Thrown - " + error.message);
         dispatch({
             type: ALL_PRODUCTS_FAIL,
-            payload: error.response.data.message
+            payload: error.message
         })
     }
 };

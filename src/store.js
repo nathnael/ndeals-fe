@@ -14,7 +14,7 @@ const middleware = [thunk];
 
 const store = configureStore({
     reducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
     devTools: process.env.NODE_ENV !== 'production',
     initialState
 })

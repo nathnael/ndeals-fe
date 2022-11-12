@@ -22,21 +22,27 @@ import { attrFilter } from '../../utils';
 import BlogCollection from './blog-collection';
 import NewsletterModal from '../modals/newsletter-modal';
 import { getProducts } from '../../actions/productActions';
+import { useAlert } from 'react-alert';
 
 
 function Home() {
     
     const dispatch = useDispatch();
+    const alert = useAlert();
     const { loading, products, error, productsCount } = useSelector(state => state.products);
     const topProducts = attrFilter( products, 'top' );
     
     useEffect(() => {
-        dispatch(getProducts());
-    }, [dispatch]);
+        if(error) {
+            return alert.error(error);
+        }
+
+        dispatch(getProducts());        
+
+    }, [dispatch, alert, error]);
 
     return (
-        <>
-            
+        <>            
             <div className="main home-page skeleton-body">
                 <div className="intro-slider-container">
                     <OwlCarousel adclassName="owl-simple intro-slider" options={ introSlider }>
