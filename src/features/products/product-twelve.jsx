@@ -87,7 +87,7 @@ function ProductTwelve ( props ) {
                         : ""
                 }
 
-                <a href={ `/product/default/${product.slug}` }>
+                <a href={ `/product/${product._id}` }>
                     <LazyLoadImage
                         alt="product"
                         src={ product.sm_pictures[ 0 ].url }
@@ -129,7 +129,7 @@ function ProductTwelve ( props ) {
                 </div>
 
                 <h3 className="product-title">
-                    <a href={ `/product/default/${product.slug}` }>{ product.name }</a>
+                    <a href={ `/product/${product._id}` }>{ product.name }</a>
                 </h3>
 
                 {
@@ -177,7 +177,7 @@ function ProductTwelve ( props ) {
                     <div className="product-action">
                         {
                             product.variants.length > 0 ?
-                                <a href={ `/product/default/${product.slug}` } className="btn-product btn-cart btn-select">
+                                <a href={ `/product/${product._id}` } className="btn-product btn-cart btn-select">
                                     <span>select options</span>
                                 </a>
                                 :

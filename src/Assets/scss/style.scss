@@ -37,6 +37,9 @@ $font-family: 'Jost';
 /*-------------------- 4.1.Page Header --------------------*/
 @import 'elements/page-header';
 
+/*-------------------- 4.2.BreadCrumbs --------------------*/
+@import 'elements/breadcrumb';
+
 /*-------------------- 4.3.Titles --------------------*/
 @import 'elements/titles';
 
@@ -88,11 +91,17 @@ $font-family: 'Jost';
 /*-------------------- 5.2.Category --------------------*/
 @import 'pages/category';
 
+/*-------------------- 5.3.Product Pages --------------------*/
+@import 'pages/product';
+
 /*-------------------- 5.4.Blog --------------------*/
 @import 'pages/blog';
 
 /*-------------------- 5.11.Login --------------------*/
 @import 'pages/login';
+
+/*-------------------- 5.15.Cart --------------------*/
+@import 'pages/cart';
 
 /*-------------------- 5.19.Category Market --------------------*/
 @import 'pages/category-market';

@@ -13,8 +13,6 @@ import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 
 function OwlCarousel ( props ) {
     const { adClass, slidesPerView, spaceBetween, navigate } = props;
-    console.log(`slidesPerView - ${slidesPerView}`);
-    console.log(`spaceBetween - ${spaceBetween}`);
     return (
         <Swiper
             slidesPerView={slidesPerView}

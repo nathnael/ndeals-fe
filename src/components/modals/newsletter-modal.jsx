@@ -63,9 +63,9 @@ function NewsletterModal () {
 
                                 <div className="banner-content text-center">
 
-                                    <img src="images/logo/ncommerce-logos_white_orange.png" alt="logo" className="logo" width="60" height="15" />
+                                    <img src="/images/logo/ncommerce-logos_white_orange.png" alt="logo" className="logo" width="60" height="15" />
                                     <h2 className="banner-title">get <span>25<span style={ { fontWeight: '400' } }>%</span></span> off</h2>
-                                    <p>Subscribe to the Molla eCommerce newsletter to receive timely updates from your favorite products.</p>
+                                    <p>Subscribe to the NCommerce newsletter to receive timely updates from your favorite products.</p>
 
                                     <form action="#">
                                         <div className="input-group input-group-round">

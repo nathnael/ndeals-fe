@@ -7,6 +7,7 @@ import Footer from './components/footer/footer';
 import Header from './components/header/header';
 import Home from './components/home/home';
 import MetaData from './components/layout/MetaData';
+import ProductDetails from './components/product/product-details';
 
 function App() {
   return (  
@@ -18,6 +19,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} exact />
+            <Route path="/product/:id" element={<ProductDetails />} exact />
           </Routes>
         </BrowserRouter>
         <Footer />   

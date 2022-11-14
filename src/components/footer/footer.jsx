@@ -27,7 +27,7 @@ function Footer () {
                                 <div className="widget-about-info">
                                     <div className="row">
                                         <div className="col-sm-6 col-md-2">
-                                            <img src="images/logo/ncommerce-logos_white_orange.png" className="footer-logo" alt="Footer Logo" width="70" height="25" />
+                                            <img src="/images/logo/ncommerce-logos_white_orange.png" className="footer-logo" alt="Footer Logo" width="70" height="25" />
                                         </div>
                                         <div className="col-sm-6 col-md-10">
                                             <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus. </p>
@@ -43,7 +43,7 @@ function Footer () {
                                         <div className="col-sm-6 col-md-8">
                                             <span className="widget-about-title">Payment Method</span>
                                             <figure className="footer-payments">
-                                                <img src="images/payments.png" alt="Payment methods" width="272" height="20" />
+                                                <img src="/images/payments.png" alt="Payment methods" width="272" height="20" />
                                             </figure>
                                         </div>
                                     </div>
@@ -56,8 +56,8 @@ function Footer () {
                                 <h4 className="widget-title">Information</h4>
 
                                 <ul className="widget-list">
-                                    <li><a href="/pages/about">About Molla</a></li>
-                                    <li><a href="/pages/about">How to shop on Molla</a></li>
+                                    <li><a href="/pages/about">About NCommerce</a></li>
+                                    <li><a href="/pages/about">How to shop on NCommerce</a></li>
                                     <li><a href="/pages/faq">FAQ</a></li>
                                     <li><a href="/pages/contact">Contact us</a></li>
                                     <li><a href="/pages/login">Log in</a></li>

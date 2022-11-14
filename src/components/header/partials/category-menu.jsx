@@ -6,7 +6,8 @@ function CategoryMenu () {
                 Browse Categories
             </a>
 
-            <div className="dropdown-menu show">
+            {/* <div className="dropdown-menu show"> */}
+            <div className="dropdown-menu">
                 <nav className="side-nav">
                     <ul className="menu-vertical sf-arrows">
                         <li className='active'><a href="/shop/sidebar/3cols?category=electronics" scroll={ "false" }>Electronics</a></li>

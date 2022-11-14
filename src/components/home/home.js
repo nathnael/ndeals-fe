@@ -29,7 +29,7 @@ function Home() {
     
     const dispatch = useDispatch();
     const alert = useAlert();
-    const { loading, products, error, productsCount } = useSelector(state => state.products);
+    const { loading, products, error } = useSelector(state => state.products);
     const topProducts = attrFilter( products, 'top' );
     
     useEffect(() => {
@@ -50,7 +50,7 @@ function Home() {
                             <div className="container intro-content">
                                 <Reveal keyframes={ fadeInUpShorter } delay={ 100 } duration={ 1000 }>
                                     <div className="row">
-                                        <div className="col-auto offset-lg-3 intro-col">
+                                        <div className="col-auto intro-col">
                                             <h3 className="intro-subtitle">Trade-In Offer</h3>
 
                                             <h1 className="intro-title">
@@ -445,7 +445,7 @@ function Home() {
                 <Reveal keyframes={ fadeIn } delay={ 200 } duration={ 1000 } triggerOnce>
                     <div
                         className="footer-newsletter bg-image"
-                        style={ { backgroundImage: 'url(images/backgrounds/bg-2.jpg)' } }
+                        style={ { backgroundImage: 'url(/images/backgrounds/bg-2.jpg)' } }
                     >
                         <div className="container">
                             <div className="heading text-center">

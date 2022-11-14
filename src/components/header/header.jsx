@@ -70,7 +70,7 @@ function Header () {
                         </button>
 
                         <a href="/" className="logo">
-                            <img src="images/logo/ncommerce-logos_white_orange.png" alt="NCommerce Logo" width={ 70 } height={ 27 } />
+                            <img src="/images/logo/ncommerce-logos_white_orange.png" alt="NCommerce Logo" width={ 70 } height={ 27 } />
                         </a>
                     </div>
 

@@ -1,19 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { connect } from 'react-redux';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-import ALink from '~/components/features/alink';
 
-import { actions as wishlistAction } from '~/store/wishlist';
-import { actions as cartAction } from '~/store/cart';
-import { actions as compareAction } from '~/store/compare';
-import { actions as demoAction } from '~/store/demo';
-
-import { isInWishlist, isInCompare } from '~/utils';
+import { isInWishlist, isInCompare } from '../../utils';
 
 function ProductSix ( props ) {
-    const router = useRouter();
     const { product, wishlist } = props;
     const [ maxPrice, setMaxPrice ] = useState( 0 );
     const [ minPrice, setMinPrice ] = useState( 99999 );
@@ -47,7 +38,7 @@ function ProductSix ( props ) {
         if ( !isInWishlist( props.wishlist, product ) ) {
             props.addToWishlist( product );
         } else {
-            router.push( '/pages/wishlist' );
+            // router.push( '/pages/wishlist' );
         }
     }
 
@@ -90,10 +81,10 @@ function ProductSix ( props ) {
                         : ""
                 }
 
-                <ALink href={ `/product/default/${product.slug}` }>
+                <a href={ `/product/default/${product.slug}` }>
                     <LazyLoadImage
                         alt="product"
-                        src={ process.env.NEXT_PUBLIC_ASSET_URI + product.sm_pictures[ 0 ].url }
+                        src={ product.sm_pictures[ 0 ].url }
                         threshold={ 500 }
                         effect="black and white"
                         wrapperClassName="product-image"
@@ -102,23 +93,20 @@ function ProductSix ( props ) {
                         product.sm_pictures.length >= 2 ?
                             <LazyLoadImage
                                 alt="product"
-                                src={ process.env.NEXT_PUBLIC_ASSET_URI + product.sm_pictures[ 1 ].url }
+                                src={ product.sm_pictures[ 1 ].url }
                                 threshold={ 500 }
                                 effect="black and white"
                                 wrapperClassName="product-image-hover"
                             />
                             : ""
                     }
-                </ALink>
+                </a>
 
                 {
                     product.stock > 0 ?
                         <div className="product-action-vertical">
                             {
-                                isInWishlist( wishlist, product ) ?
-                                    <ALink href="/shop/wishlist" className="btn-product-icon btn-wishlist btn-expandable added-to-wishlist"><span>go to wishlist</span></ALink>
-                                    :
-                                    <a href="#" className="btn-product-icon btn-wishlist btn-expandable" onClick={ onWishlistClick }><span>add to wishlist</span></a>
+                                <a href="#" className="btn-product-icon btn-wishlist btn-expandable" onClick={ onWishlistClick }><span>add to wishlist</span></a>
                             }
                             <a href="#" className="btn-product-icon btn-quickview" title="Quick View" onClick={ onQuickView }><span>quick view</span></a>
                             <a href="#" className="btn-product-icon btn-compare" onClick={ onCompareClick }><span>compare</span></a>
@@ -126,10 +114,7 @@ function ProductSix ( props ) {
                         :
                         <div className="product-action-vertical">
                             {
-                                isInWishlist( wishlist, product ) ?
-                                    <ALink href="/shop/wishlist" className="btn-product-icon btn-wishlist btn-expandable added-to-wishlist"><span>go to wishlist</span></ALink>
-                                    :
-                                    <a href="#" className="btn-product-icon btn-wishlist btn-expandable" onClick={ onWishlistClick }><span>add to wishlist</span></a>
+                                <a href="#" className="btn-product-icon btn-wishlist btn-expandable" onClick={ onWishlistClick }><span>add to wishlist</span></a>
                             }
                             <a href="#" className="btn-product-icon btn-quickview" title="Quick View" onClick={ onQuickView }><span>quick view</span></a>
                             <a href="#" className="btn-product-icon btn-compare" onClick={ onCompareClick }><span>compare</span></a>
@@ -141,9 +126,9 @@ function ProductSix ( props ) {
                         <div className="product-action">
                             {
                                 product.variants.length > 0 ?
-                                    <ALink href={ `/product/default/${product.slug}` } className="btn-product btn-cart btn-select">
+                                    <a href={ `/product/default/${product.slug}` } className="btn-product btn-cart btn-select">
                                         <span>select options</span>
-                                    </ALink>
+                                    </a>
                                     :
                                     <button className="btn-product btn-cart" onClick={ onCartClick }>
                                         <span>add to cart</span>
@@ -157,7 +142,7 @@ function ProductSix ( props ) {
 
             <div className="product-body">
                 <h3 className="product-title">
-                    <ALink href={ `/product/default/${product.slug}` }>{ product.name }</ALink>
+                    <a href={ `/product/default/${product.slug}` }>{ product.name }</a>
                 </h3>
 
                 {
@@ -189,4 +174,4 @@ const mapStateToProps = ( state ) => {
     }
 }
 
-export default connect( mapStateToProps, { ...wishlistAction, ...cartAction, ...compareAction, ...demoAction } )( ProductSix );
+export default ProductSix;
