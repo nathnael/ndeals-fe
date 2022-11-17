@@ -64,6 +64,9 @@ $font-family: 'Jost';
 /*-------------------- 4.12.Social Icons --------------------*/
 @import 'elements/social-icons';
 
+/*-------------------- 4.13.Testimonials --------------------*/
+@import 'elements/testimonials';
+
 /*-------------------- 4.14.Forms --------------------*/
 @import 'elements/forms';
 
@@ -97,11 +100,23 @@ $font-family: 'Jost';
 /*-------------------- 5.4.Blog --------------------*/
 @import 'pages/blog';
 
+/*-------------------- 5.5.Single/Blog Post --------------------*/
+@import 'pages/single';
+
+/*-------------------- 5.7.About --------------------*/
+@import 'pages/about';
+
+/*-------------------- 5.9.Contact --------------------*/
+@import 'pages/contact';
+
 /*-------------------- 5.11.Login --------------------*/
 @import 'pages/login';
 
 /*-------------------- 5.15.Cart --------------------*/
 @import 'pages/cart';
+
+/*-------------------- 5.16.Dashboard --------------------*/
+@import 'pages/dashboard';
 
 /*-------------------- 5.19.Category Market --------------------*/
 @import 'pages/category-market';

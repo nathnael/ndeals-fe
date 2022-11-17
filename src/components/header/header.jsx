@@ -80,7 +80,7 @@ function Header () {
 
                     <div className="header-right">
                         <div className="account">
-                            <a href="/shop/dashboard" title="My account">
+                            <a href="/account/dashboard" title="My account">
                                 <div className="icon">
                                     <i className="icon-user"></i>
                                 </div>

@@ -1,10 +1,7 @@
 import { connect } from 'react-redux';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-import ALink from '~/components/features/alink';
-
-import OwlCarousel from '~/components/features/owl-carousel';
-import { actions as demoAction } from '~/store/demo';
+import OwlCarousel from '../../features/owl-carousel';
 
 function PostOne ( props ) {
     const { post, adClass = "", isContent = true, isAuthor = true } = props;
@@ -23,30 +20,32 @@ function PostOne ( props ) {
                     <figure className={ `entry-media ${post.type == 'video' ? 'entry-video' : ''}` } style={ { paddingTop: `${post.image[ 0 ].height / post.image[ 0 ].width * 100}%` } }>
                         {
                             post.type !== 'video' ?
-                                <ALink href={ `/blog/single/default/${post.slug}` }>
+                                <a href={ `/blog/${post._id}` }>
                                     <div className="lazy-overlay"></div>
 
                                     <LazyLoadImage
                                         alt="Post"
-                                        src={ process.env.NEXT_PUBLIC_ASSET_URI + post.image[ 0 ].url }
+                                        src={ post.image[ 0 ].url }
                                         threshold={ 500 }
                                         effect="blur"
                                         height="auto"
+                                        width="100%"
                                     />
-                                </ALink>
+                                </a>
                                 :
                                 <>
-                                    <ALink href={ `/blog/single/default/${post.slug}` }>
+                                    <a href={ `/blog/${post._id}` }>
                                         <div className="lazy-overlay"></div>
 
                                         <LazyLoadImage
                                             alt="Post"
-                                            src={ process.env.NEXT_PUBLIC_ASSET_URI + post.image[ 0 ].url }
+                                            src={ post.image[ 0 ].url }
                                             threshold={ 500 }
                                             effect="blur"
                                             height="auto"
+                                            width="100%"
                                         />
-                                    </ALink>
+                                    </a>
                                     <a
                                         href="https://www.youtube.com/watch?v=vBPgmASQ1A0"
                                         onClick={ openVideoModal }
@@ -60,16 +59,16 @@ function PostOne ( props ) {
                         <OwlCarousel adClass="owl-simple owl-light owl-nav-inside cols-1" options={ { dots: false, nav: true, responsive: { 992: { nav: true } } } }>
                             {
                                 post.image.map( ( item, index ) =>
-                                    <ALink href={ `/blog/single/default/${post.slug}` } key={ index }>
+                                    <a href={ `/blog/${post._id}` } key={ index }>
                                         <div className="lazy-overlay"></div>
 
                                         <LazyLoadImage
                                             alt="Post"
-                                            src={ `${process.env.NEXT_PUBLIC_ASSET_URI + item.url}` }
+                                            src={ `${item.url}` }
                                             threshold={ 500 }
                                             effect="blur"
                                         />
-                                    </ALink>
+                                    </a>
                                 )
                             }
                         </OwlCarousel>
@@ -81,21 +80,21 @@ function PostOne ( props ) {
                         isAuthor ?
                             <>
                                 <span className="entry-author">
-                                    by <ALink href={ `/blog/single/default/${post.slug}` }>{ post.author }</ALink>
+                                    by <a href={ `/blog/${post._id}` }>{ post.author }</a>
                                 </span>
                                 <span className="meta-separator">|</span>
                             </>
                             : ""
                     }
-                    <ALink href={ `/blog/single/default/${post.slug}` }>{ date.toLocaleDateString( 'en-US', options ) }</ALink>
+                    <a href={ `/blog/${post._id}` }>{ date.toLocaleDateString( 'en-US', options ) }</a>
                     <span className="meta-separator">|</span>
-                    <ALink href={ `/blog/single/default/${post.slug}` }>{ post.comments } Comments</ALink>
+                    <a href={ `/blog/${post._id}` }>{ post.comments } Comments</a>
                 </div>
 
                 <h2 className="entry-title">
-                    <ALink href={ `/blog/single/default/${post.slug}` }>
+                    <a href={ `/blog/${post._id}` }>
                         { post.title }
-                    </ALink>
+                    </a>
                 </h2>
 
                 <div className="entry-cats">
@@ -103,7 +102,7 @@ function PostOne ( props ) {
                     {
                         post.blog_categories.map( ( cat, index ) => (
                             <span key={ index }>
-                                <ALink href={ { pathname: '/blog/classic', query: { category: cat.slug } } }>{ cat.name }</ALink>
+                                <a href={ { pathname: '/blog/classic', query: { category: cat.slug } } }>{ cat.name }</a>
                                 { index < post.blog_categories.length - 1 ? ', ' : '' }
                             </span>
                         ) )
@@ -113,7 +112,7 @@ function PostOne ( props ) {
                     isContent ?
                         <div className="entry-content">
                             <p>{ post.content }</p>
-                            <ALink href={ `/blog/single/default/${post.slug}` } className="read-more">Continue Reading</ALink>
+                            <a href={ `/blog/${post._id}` } className="read-more">Continue Reading</a>
                         </div>
                         : ""
                 }
@@ -122,4 +121,4 @@ function PostOne ( props ) {
     );
 }
 
-export default connect( null, { ...demoAction } )( PostOne )
+export default PostOne;

@@ -85,9 +85,9 @@ function Footer () {
                                 <h4 className="widget-title">My Account</h4>
 
                                 <ul className="widget-list">
-                                    <li><a href="/">Sign In</a></li>
-                                    <li><a href="/shop/cart">View Cart</a></li>
-                                    <li><a href="/shop/wishlist">My Wishlist</a></li>
+                                    <li><a href="/account/login">Sign In</a></li>
+                                    <li><a href="/account/cart">View Cart</a></li>
+                                    <li><a href="/account/wishlist">My Wishlist</a></li>
                                     <li><a href="/">Track My Order</a></li>
                                     <li><a href="/">Help</a></li>
                                 </ul>

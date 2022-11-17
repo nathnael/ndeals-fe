@@ -81,7 +81,7 @@ function ProductSix ( props ) {
                         : ""
                 }
 
-                <a href={ `/product/default/${product.slug}` }>
+                <a href={ `/product/${product._id}` }>
                     <LazyLoadImage
                         alt="product"
                         src={ product.sm_pictures[ 0 ].url }

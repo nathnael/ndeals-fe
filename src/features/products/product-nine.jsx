@@ -1,19 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-import ALink from '~/components/features/alink';
+import { isInWishlist, isInCompare } from '../../utils';
 
-import { actions as wishlistAction } from '~/store/wishlist';
-import { actions as cartAction } from '~/store/cart';
-import { actions as compareAction } from '~/store/compare';
-import { actions as demoAction } from '~/store/demo';
-
-import { isInWishlist, isInCompare } from '~/utils';
-
-function ProductSix ( props ) {
-    const router = useRouter();
+function ProductNine ( props ) {
     const { product, wishlist } = props;
     const [ maxPrice, setMaxPrice ] = useState( 0 );
     const [ minPrice, setMinPrice ] = useState( 99999 );
@@ -47,7 +38,7 @@ function ProductSix ( props ) {
         if ( !isInWishlist( props.wishlist, product ) ) {
             props.addToWishlist( product );
         } else {
-            router.push( '/pages/wishlist' );
+            // router.push( '/pages/wishlist' );
         }
     }
 
@@ -92,7 +83,7 @@ function ProductSix ( props ) {
                                 : ""
                         }
 
-                        <ALink href={ `/product/default/${product.slug}` }>
+                        <a href={ `/product/${product._id}` }>
                             <LazyLoadImage
                                 alt="product"
                                 src={ process.env.NEXT_PUBLIC_ASSET_URI + product.sm_pictures[ 0 ].url }
@@ -111,7 +102,7 @@ function ProductSix ( props ) {
                                     />
                                     : ""
                             }
-                        </ALink>
+                        </a>
                     </figure>
                 </div>
                 <div className="col-md-6 order-last">
@@ -120,9 +111,9 @@ function ProductSix ( props ) {
                             {
                                 product.category.map( ( item, index ) => (
                                     <React.Fragment key={ item.slug + '-' + index }>
-                                        <ALink href={ { pathname: '/shop/sidebar/list', query: { category: item.slug } } }>
+                                        <a href={ { pathname: '/shop/sidebar/list', query: { category: item.slug } } }>
                                             { item.name }
-                                        </ALink>
+                                        </a>
                                         { index < product.category.length - 1 ? ', ' : "" }
                                     </React.Fragment>
                                 ) )
@@ -130,7 +121,7 @@ function ProductSix ( props ) {
                         </div>
 
                         <h3 className="product-title">
-                            <ALink href={ `/product/default/${product.slug}` }>{ product.name }</ALink>
+                            <a href={ `/product/default/${product.slug}` }>{ product.name }</a>
                         </h3>
 
                         <div className="product-content">
@@ -143,7 +134,7 @@ function ProductSix ( props ) {
                                     <div className="row no-gutters">
                                         {
                                             product.variants.map( ( item, index ) => (
-                                                <ALink href="#" style={ { backgroundColor: item.color } } key={ index }><span className="sr-only">Color Name</span></ALink>
+                                                <a href="#" style={ { backgroundColor: item.color } } key={ index }><span className="sr-only">Color Name</span></a>
                                             ) )
                                         }
                                     </div>
@@ -187,7 +178,7 @@ function ProductSix ( props ) {
                             </button>
                             {
                                 isInWishlist( wishlist, product ) ?
-                                    <ALink href="/shop/wishlist" className="btn-product btn-wishlist added-to-wishlist"><span>wishlist</span></ALink>
+                                    <a href="/shop/wishlist" className="btn-product btn-wishlist added-to-wishlist"><span>wishlist</span></a>
                                     :
                                     <a href="#" className="btn-product btn-wishlist" onClick={ onWishlistClick }><span>wishlist</span></a>
                             }
@@ -195,9 +186,9 @@ function ProductSix ( props ) {
                         {
                             product.stock > 0 ?
                                 product.variants.length > 0 ?
-                                    <ALink href={ `/product/default/${product.slug}` } className="btn-product btn-cart btn-select">
+                                    <a href={ `/product/default/${product.slug}` } className="btn-product btn-cart btn-select">
                                         <span>select options</span>
-                                    </ALink>
+                                    </a>
                                     :
                                     <button className="btn-product btn-cart" onClick={ onCartClick }>
                                         <span>add to cart</span>
@@ -211,11 +202,5 @@ function ProductSix ( props ) {
     )
 }
 
-const mapStateToProps = ( state ) => {
-    return {
-        wishlist: state.wishlist.data,
-        comparelist: state.comparelist.data
-    }
-}
 
-export default connect( mapStateToProps, { ...wishlistAction, ...cartAction, ...compareAction, ...demoAction } )( ProductSix );
+export default ProductNine;

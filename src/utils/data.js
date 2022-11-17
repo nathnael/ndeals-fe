@@ -1291,6 +1291,9 @@ export const posts = [
                 height: 250                
             }
         ],
+        blog_categories: [
+            { name: "Lifestyle", slug: "lifestyle" }
+        ],
         comments: 2,
         title: "Sed adipiscing odbrnare"
     },
@@ -1303,6 +1306,9 @@ export const posts = [
                 width: 376,
                 height: 250                
             }
+        ],
+        blog_categories: [
+            { name: "Shopping", slug: "shopping" }
         ],
         comments: 1,
         title: "Fusce lacifgbnia arcuet nulla."
@@ -1317,7 +1323,98 @@ export const posts = [
                 height: 250                
             }
         ],
+        blog_categories: [
+            { name: "Travel", slug: "travel" }
+        ],
         comments: 3,
         title: "Quisque volutpat mdbattis eros."
     },
+    {
+        slug: "",
+        date: Date.now(),
+        image: [
+            {
+                url: "https://res.cloudinary.com/ds6eldued/image/upload/v1667981397/posts/post_1_8285333d58_jkro4t.jpg",
+                width: 376,
+                height: 250                
+            }
+        ],
+        blog_categories: [
+            { name: "Lifestyle", slug: "lifestyle" }
+        ],
+        comments: 2,
+        title: "Sed adipiscing odbrnare"
+    },
+    {
+        slug: "",
+        date: Date.now(),
+        image: [
+            {
+                url: "https://res.cloudinary.com/ds6eldued/image/upload/v1667981397/posts/post_2_73cf3ad8f8_eg8wpg.jpg",
+                width: 376,
+                height: 250                
+            }
+        ],
+        blog_categories: [
+            { name: "Shopping", slug: "shopping" }
+        ],
+        comments: 1,
+        title: "Fusce lacifgbnia arcuet nulla."
+    },
+    {
+        slug: "",
+        date: Date.now(),
+        image: [
+            {
+                url: "https://res.cloudinary.com/ds6eldued/image/upload/v1667981397/posts/post_3_dbb5414ec7_oo3xic.jpg",
+                width: 376,
+                height: 250                
+            }
+        ],
+        blog_categories: [
+            { name: "Travel", slug: "travel" }
+        ],
+        comments: 3,
+        title: "Quisque volutpat mdbattis eros."
+    },
+];
+
+
+export const cartList = [
+    {
+        name: "FlashDisk",
+        slug: "FlashDisk",
+        qty: 1,
+        price: 3.12,
+        sale_price: 4.50,
+        sm_pictures: [{
+            public_id : "products/macbook_o2cj2k",
+            url : "https://res.cloudinary.com/ds6eldued/image/upload/v1667901329/products/product_7_2_300x300_6e6c2d02d3_fulnmm.jpg"
+        }],
+        sum: 0.00
+    },
+    {
+        name: "Laptop",
+        slug: "laptop",
+        qty: 1,
+        price: 3.12,
+        sale_price: 4.50,
+        sm_pictures: [{
+            public_id : "products/camera_ridc0i",
+            url : "https://res.cloudinary.com/ds6eldued/image/upload/v1667901329/products/product_4_2_300x300_ec63a5f054_pinofq.jpg"
+        }],
+        sum: 0.00
+    },
+    {
+        name: "Monitor",
+        slug: "monitor",
+        qty: 1,
+        price: 3.12,
+        sale_price: 4.50,
+        sm_pictures: [{
+            public_id : "products/eahhtj1bkn1k9gjgd3hn",
+            url : "https://res.cloudinary.com/ds6eldued/image/upload/v1667901329/products/product_2_2_300x300_798eabaee1_qbmhpo.jpg"
+        }],
+        sum: 0.00
+    }
 ];
