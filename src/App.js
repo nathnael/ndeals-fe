@@ -25,9 +25,9 @@ function App() {
     <>        
       <MetaData title={'Buy Best Products Online'} />
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Jost:400,500,600,700,800,900" />
-      <div className="page-wrapper">      
-        <Header />
+      <div className="page-wrapper">            
         <BrowserRouter>
+          <Header />
           <Routes>
             <Route path="/" element={<Home />} exact />
             <Route path="/shop" element={<ShopGrid />} />
@@ -43,8 +43,8 @@ function App() {
             <Route path="/account/cart" element={<Cart />} />
             <Route path="/account/checkout" element={<Checkout />} />
           </Routes>
+          <Footer />  
         </BrowserRouter>
-        <Footer />   
       </div>
     </>    
   );

@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+import { useAlert } from 'react-alert';
+import { useParams } from 'react-router-dom';
+
 import Breadcrumb from '../../partials/product/breadcrumb';
 import GalleryDefault from '../../partials/product/gallery/gallery-default';
 import DetailOne from '../../partials/product/details/detail-one';
@@ -5,9 +9,7 @@ import InfoOne from '../../partials/product/info-tabs/info-one';
 import RelatedProductsOne from '../../partials/product/related/related-one';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetails, clearErrors } from '../../actions/productActions';
-import { useEffect } from 'react';
-import { useAlert } from 'react-alert';
-import { useParams } from 'react-router-dom';
+
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -15,9 +17,6 @@ const ProductDetails = () => {
     const alert = useAlert();
     
     const { loading, error, product } = useSelector(state => state.productDetails);
-
-    // console.log("***************** Related products: " + JSON.stringify(product.relatedProducts))
-
 
     const prev = product.product;
     const next = product.product;
@@ -76,9 +75,9 @@ const ProductDetails = () => {
                     }
 
                     <RelatedProductsOne products={ product.relatedProducts } loading={ loading } />
-                </div >
-            </div >
-        </div >
+                </div>
+            </div>
+        </div>
     )
 }
 

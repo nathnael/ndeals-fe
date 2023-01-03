@@ -17,7 +17,7 @@ function ProductEleven ( props ) {
             if ( max < item.price ) max = item.price;
         }, [] );
 
-        if ( product.variants.length == 0 ) {
+        if ( product.variants.length === 0 ) {
             min = product.sale_price
                 ? product.sale_price
                 : product.price;
@@ -26,7 +26,7 @@ function ProductEleven ( props ) {
 
         setMinPrice( min );
         setMaxPrice( max );
-    }, [] )
+    }, [product, minPrice, maxPrice] )
 
     function onCartClick ( e ) {
         e.preventDefault();
@@ -106,18 +106,18 @@ function ProductEleven ( props ) {
                     product.stock > 0 ?
                         <div className="product-action-vertical">
                             {
-                                <a href="#" className="btn-product-icon btn-wishlist btn-expandable" onClick={ onWishlistClick }><span>add to wishlist</span></a>
+                                <a href="/" className="btn-product-icon btn-wishlist btn-expandable" onClick={ onWishlistClick }><span>add to wishlist</span></a>
                             }
-                            <a href="#" className="btn-product-icon btn-quickview" title="Quick View" onClick={ onQuickView }><span>quick view</span></a>
-                            <a href="#" className="btn-product-icon btn-compare" onClick={ onCompareClick }><span>compare</span></a>
+                            <a href="/" className="btn-product-icon btn-quickview" title="Quick View" onClick={ onQuickView }><span>quick view</span></a>
+                            <a href="/" className="btn-product-icon btn-compare" onClick={ onCompareClick }><span>compare</span></a>
                         </div>
                         :
                         <div className="product-action-vertical">
                             {
-                                <a href="#" className="btn-product-icon btn-wishlist btn-expandable" onClick={ onWishlistClick }><span>add to wishlist</span></a>
+                                <a href="/" className="btn-product-icon btn-wishlist btn-expandable" onClick={ onWishlistClick }><span>add to wishlist</span></a>
 
                             }
-                            <a href="#" className="btn-product-icon btn-quickview" title="Quick View" onClick={ onQuickView }><span>quick view</span></a>
+                            <a href="/" className="btn-product-icon btn-quickview" title="Quick View" onClick={ onQuickView }><span>quick view</span></a>
                         </div>
                 }
 
@@ -159,15 +159,15 @@ function ProductEleven ( props ) {
                 </h3>
 
                 {
-                    !product.stock || product.stock == 0 ?
+                    !product.stock || product.stock === 0 ?
                         <div className="product-price">
                             <span className="out-price">${ product.price.toFixed( 2 ) }</span>
                         </div>
                         :
-                        minPrice == maxPrice ?
+                        minPrice === maxPrice ?
                             <div className="product-price">${ minPrice.toFixed( 2 ) }</div>
                             :
-                            product.variants.length == 0 ?
+                            product.variants.length === 0 ?
                                 <div className="product-price">
                                     <span className="new-price">${ minPrice.toFixed( 2 ) }</span>
                                     <span className="old-price">${ maxPrice.toFixed( 2 ) }</span>
@@ -190,7 +190,7 @@ function ProductEleven ( props ) {
                             <div className="row no-gutters">
                                 {
                                     product.variants.map( ( item, index ) => (
-                                        <a href="#" style={ { backgroundColor: item.color } } key={ index }><span className="sr-only">Color Name</span></a>
+                                        <a href="/" style={ { backgroundColor: item.color } } key={ index }><span className="sr-only">Color Name</span></a>
                                     ) )
                                 }
                             </div>

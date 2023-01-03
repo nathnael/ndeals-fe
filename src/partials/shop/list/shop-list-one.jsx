@@ -20,8 +20,7 @@ function ShopListOne ( props ) {
     useEffect( () => {
         if ( type === 'list' || type === '2cols' ) setGridClass( 'col-6' );
         if ( type === '3cols' ) setGridClass( 'col-6 col-md-4 col-lg-4' );
-        if ( type === '4cols' )
-            setGridClass( 'col-6 col-md-4 col-lg-4 col-xl-3' );
+        if ( type === '4cols' ) setGridClass( 'col-6 col-md-4 col-lg-4 col-xl-3' );
     }, [ type ] )
 
     return (
@@ -29,7 +28,7 @@ function ShopListOne ( props ) {
             {
                 ( products.length == 0 && !loading ) ?
                     <p
-                        className="no-results"
+                        className="no-results" style = {{ textAlign: 'center'}}
                     >No products matching your selection.</p>
                     :
                     <>
@@ -41,7 +40,7 @@ function ShopListOne ( props ) {
                                     ) )
                                     :
                                     products.map( ( product, index ) => (
-                                        <ProductNine
+                                        <ProductEleven
                                             product={ product }
                                             key={ index }
                                         />

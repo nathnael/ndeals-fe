@@ -2,35 +2,56 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import StickyBox from 'react-sticky-box';
 import { useAlert } from 'react-alert';
-
+import { useLocation } from 'react-router-dom';
 
 import PageHeader from '../../features/page-header';
 import ShopListOne from '../../partials/shop/list/shop-list-one';
 import Pagination from '../../features/pagination';
 import ShopSidebarOne from '../../partials/shop/sidebar/shop-sidebar-one';
-import { getProducts } from '../../actions/productActions';
+import { getProducts, getUniqueCategories, getUniqueSizes } from '../../actions/productActions';
+import { useSearchParams } from 'react-router-dom';
+
 
 import { scrollToPageContent } from '../../utils';
 
 function ShopGrid() {
     const dispatch = useDispatch();
     const alert = useAlert();
-    const { loading, products, error } = useSelector(state => state.products);
+    const { loading, products, error, productsCount } = useSelector(state => state.products);
+    const { categories } = useSelector(state => state.uniqueCategories.uniqueCategories);
+    const { sizes } = useSelector(state => state.uniqueSizes.uniqueSizes);
     const [ firstLoading, setFirstLoading ] = useState( false );
-    const [ perPage, setPerPage ] = useState( 5 );
+    const [ perPage, setPerPage ] = useState( 12 );
     const [ pageTitle, setPageTitle ] = useState( 'NDeals' );
     const [ toggle, setToggle ] = useState( false );
     const [ type, setType ] = useState( "4col" );
-    const totalCount = products.productsCount;
+    const totalCount = productsCount;
+    const pathname = useLocation();
+    const [searchParams] = useSearchParams();
+    
+    // const router = useRouter();
+    const page = 1;
+    const searchTerm = searchParams.get('searchTerm');
+    // const category = searchParams.get('category');
+
+    const [ priceRange, setRange ] = useState( { min: 0, max: 1000 } );
+    const [ category, setCategory ] = useState('');
+    const [ size, setSize ] = useState('');
+
+    console.log(`Categories: ${JSON.stringify(categories)}`)
 
     useEffect(() => {
         if(error) {
             return alert.error(error);
         }
+        
+        dispatch(getProducts(page, perPage, searchTerm, priceRange, category));
 
-        dispatch(getProducts());        
+        dispatch(getUniqueCategories());
 
-    }, [dispatch, alert, error]);
+        dispatch(getUniqueSizes());
+
+    }, [dispatch, page, perPage, alert, error, searchTerm, priceRange, category]);
 
     useEffect( () => {
         window.addEventListener( "resize", resizeHandle );
@@ -108,7 +129,11 @@ function ShopGrid() {
                         </li>
                         <li className="breadcrumb-item active">{ pageTitle }</li>
                         {
-                            ""
+                            searchTerm ?
+                                <li className="breadcrumb-item">
+                                    <span>Search - { searchTerm }</span>
+                                </li>
+                                : ""
                         }
                     </ol>
                 </div>
@@ -126,7 +151,12 @@ function ShopGrid() {
                                         !loading && products ?
                                             <div className="toolbox-info">
                                                 Showing
-                                                <span> { products.length } of { totalCount }</span> Products
+                                                { 
+                                                    perPage > products.length ? 
+                                                    <span> { products.length } of { totalCount }</span>  :
+                                                    <span> { perPage } of { totalCount }</span>
+                                                }
+                                                Products
                                             </div>
                                             : ""
                                     }
@@ -151,16 +181,16 @@ function ShopGrid() {
                                         </div>
                                     </div>                                    
                                 </div>
-                            </div >
+                            </div>
 
                             <ShopListOne products={ products } perPage={ perPage } loading={ loading }></ShopListOne>
 
                             {
                                 totalCount > perPage ?
-                                    <Pagination perPage={ perPage } total={ totalCount }></Pagination>
+                                    <Pagination perPage={ perPage } total={ totalCount } pathname={pathname}></Pagination>
                                     : ""
                             }
-                        </div >
+                        </div>
 
                         <aside className={ `col-lg-3 skel-shop-sidebar order-lg-first skeleton-body ${ ( !loading || firstLoading ) ? 'loaded' : '' }` }>
                             <div className="skel-widget"></div>
@@ -168,7 +198,7 @@ function ShopGrid() {
                             <div className="skel-widget"></div>
                             <div className="skel-widget"></div>
                             <StickyBox className="sticky-content" offsetTop={ 70 }>
-                                <ShopSidebarOne toggle={ toggle }></ShopSidebarOne>
+                                <ShopSidebarOne toggle={ toggle } priceRange={priceRange} setRange={setRange} cat={category} setCategory={setCategory} categories={categories} _size={size} setSize={setSize} sizes={sizes}></ShopSidebarOne>
                             </StickyBox>
                             {
                                 toggle ?
@@ -178,11 +208,11 @@ function ShopGrid() {
                                     : ''
                             }
                             <div className="sidebar-filter-overlay" onClick={ hideSidebar }></div>
-                        </aside >
-                    </div >
-                </div >
-            </div >
-        </main >
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </main>
     )
 }
 

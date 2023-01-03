@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk';
 
-import { productReducers, productDetailsReducer } from './reducers/productReducers';
+import { productReducers, productDetailsReducer, uniqueCategoriesReducer } from './reducers/productReducers';
 
 const reducer = {
     products: productReducers,
-    productDetails: productDetailsReducer
+    productDetails: productDetailsReducer,
+    uniqueCategories: uniqueCategoriesReducer
 }
 
 let initialState = {};

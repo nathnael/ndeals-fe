@@ -6,12 +6,12 @@ import 'react-input-range/lib/css/index.css';
 import { shopData } from '../../../utils/data';
 
 function ShopSidebarOne ( props ) {
-    const { toggle = false } = props;
-    const [ priceRange, setRange ] = useState( { min: 0, max: 1000 } );
+    const { toggle = false, priceRange, setRange, cat, setCategory, categories, _size, setSize, sizes } = props;
+    
 
     useEffect( () => {
         setRange( { min: 0, max: 1000 } );
-    }, [] )
+    }, [setRange] )
 
     function onChangePriceRange ( value ) {
         setRange( value );
@@ -45,30 +45,33 @@ function ShopSidebarOne ( props ) {
                         <a href={ "/" } className="sidebar-filter-clear" scroll={ "false" }>Clean All</a>
                     </div>
 
-                    <SlideToggle collapsed={ false }>
-                        { ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                            <div className="widget widget-collapsible">
-                                <h3 className="widget-title mb-2">
-                                    <a href="#category" className={ `${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}` } onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }>Category</a>
-                                </h3>
+                    { 
+                        categories ?
+                            <SlideToggle collapsed={ false }>
+                                { ( { onToggle, setCollapsibleElement, toggleState } ) => (
+                                    <div className="widget widget-collapsible">
+                                        <h3 className="widget-title mb-2">
+                                            <a href="#category" className={ `${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}` } onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }>Category</a>
+                                        </h3>
 
-                                <div ref={ setCollapsibleElement }>
-                                    <div className="widget-body pt-0">
-                                        <div className="filter-items filter-items-count">
-                                            {
-                                                shopData.categories.map( ( item, index ) =>
-                                                    <div className="filter-item" key={ `cat_${index}` }>
-                                                        <a className={ `${index == 0 ? 'active' : ''}` }  href="/" scroll={ "false" }>{ item.name }</a>
-                                                        <span className="item-count">{ item.count }</span>
-                                                    </div>
-                                                )
-                                            }
+                                        <div ref={ setCollapsibleElement }>
+                                            <div className="widget-body pt-0">
+                                                <div className="filter-items filter-items-count">
+                                                    {
+                                                        categories.map( ( item, index ) =>
+                                                            <div className="filter-item" key={ `cat_${index}` }>
+                                                                <a className={ `${item.category === cat ? 'active' : ''}` }  href="/" scroll={ "false" } onClick={(e) => {e.preventDefault(); setCategory(item.category);}}>{ item.category }</a>
+                                                                <span className="item-count">{ item.count }</span>
+                                                            </div>
+                                                        )
+                                                    }
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        ) }
-                    </SlideToggle>
+                                ) }
+                            </SlideToggle> : ""
+                    }
 
                     <SlideToggle collapsed={ false }>
                         {
@@ -79,14 +82,14 @@ function ShopSidebarOne ( props ) {
                                         <div className="widget-body pt-0">
                                             <div className="filter-items">
                                                 {
-                                                    shopData.sizes.map( ( item, index ) => (
+                                                    sizes.map( ( item, index ) => (
                                                         <div className="filter-item" key={ index }>
                                                             <div className="custom-control custom-checkbox">
                                                                 <input type="checkbox"
                                                                     className="custom-control-input"
                                                                     id={ `size-${index + 1}` }
                                                                     onChange={ e => {} }
-                                                                    checked={ containsAttrInUrl( 'size', item.slug ) ? true : false }
+                                                                    checked={ containsAttrInUrl( 'size', item.size ) ? true : false }
                                                                 />
                                                                 <label className="custom-control-label" htmlFor={ `size-${index + 1}` }>{ item.size }</label>
                                                             </div>
