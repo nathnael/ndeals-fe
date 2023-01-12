@@ -6,7 +6,7 @@ import 'react-input-range/lib/css/index.css';
 import { shopData } from '../../../utils/data';
 
 function ShopSidebarOne ( props ) {
-    const { toggle = false, priceRange, setRange, cat, setCategory, categories, _size, setSize, sizes } = props;
+    const { toggle = false, priceRange, setRange, categoryState, setCategoryState, categories, sizeState, sizes, setSizeState, clearFilter} = props;
     
 
     useEffect( () => {
@@ -20,6 +20,10 @@ function ShopSidebarOne ( props ) {
     function containsAttrInUrl ( type, value ) {
         const currentQueries = [];
         return currentQueries && currentQueries.includes( value );
+    }    
+
+    function isSizeSelected(size) {
+        return sizeState.includes(size);
     }
 
     function getUrlForAttrs ( type, value ) {
@@ -35,6 +39,26 @@ function ShopSidebarOne ( props ) {
         }
     }
 
+    function updateSizeState(size) {
+        if(sizeState.includes(size)){
+            const newSizeState = sizeState.filter((s) => s !== size);
+            setSizeState( newSizeState);
+        }            
+        else {
+            setSizeState(current => [...current, size]);
+        }            
+    }
+
+    function updateCategoryState(e, category) {
+        if (categoryState === category) {
+            setCategoryState('');
+            e.target.className = '';
+        } else {
+            setCategoryState(category);
+        }
+
+    }
+
 
     return (
         <>
@@ -42,7 +66,7 @@ function ShopSidebarOne ( props ) {
                 <div className={ toggle ? 'sidebar-filter-wrapper' : '' }>
                     <div className="widget widget-clean">
                         <label>Filters:</label>
-                        <a href={ "/" } className="sidebar-filter-clear" scroll={ "false" }>Clean All</a>
+                        <a href="/" className="sidebar-filter-clear" onClick={(e) => { clearFilter(); e.preventDefault() }} scroll={ "false" }>Clean All</a>
                     </div>
 
                     { 
@@ -60,7 +84,7 @@ function ShopSidebarOne ( props ) {
                                                     {
                                                         categories.map( ( item, index ) =>
                                                             <div className="filter-item" key={ `cat_${index}` }>
-                                                                <a className={ `${item.category === cat ? 'active' : ''}` }  href="/" scroll={ "false" } onClick={(e) => {e.preventDefault(); setCategory(item.category);}}>{ item.category }</a>
+                                                                <p className={ `${item.category === categoryState ? 'active' : ''}` } style={{ cursor: "pointer" }} scroll={ "false" } onClick={(e) => {e.preventDefault(); updateCategoryState(e, item.category);}}>{ item.category }</p>
                                                                 <span className="item-count">{ item.count }</span>
                                                             </div>
                                                         )
@@ -73,37 +97,39 @@ function ShopSidebarOne ( props ) {
                             </SlideToggle> : ""
                     }
 
-                    <SlideToggle collapsed={ false }>
-                        {
-                            ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                <div className="widget widget-collapsible">
-                                    <h3 className="widget-title mb-2"><a href="#Size" className={ `${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}` } onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }>Size</a></h3>
-                                    <div ref={ setCollapsibleElement }>
-                                        <div className="widget-body pt-0">
-                                            <div className="filter-items">
-                                                {
-                                                    sizes.map( ( item, index ) => (
-                                                        <div className="filter-item" key={ index }>
-                                                            <div className="custom-control custom-checkbox">
-                                                                <input type="checkbox"
-                                                                    className="custom-control-input"
-                                                                    id={ `size-${index + 1}` }
-                                                                    onChange={ e => {} }
-                                                                    checked={ containsAttrInUrl( 'size', item.size ) ? true : false }
-                                                                />
-                                                                <label className="custom-control-label" htmlFor={ `size-${index + 1}` }>{ item.size }</label>
+                    {
+                        sizes ?
+                        <SlideToggle collapsed={ false }>
+                            {
+                                ( { onToggle, setCollapsibleElement, toggleState } ) => (
+                                    <div className="widget widget-collapsible">
+                                        <h3 className="widget-title mb-2"><a href="#Size" className={ `${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}` } onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }>Size</a></h3>
+                                        <div ref={ setCollapsibleElement }>
+                                            <div className="widget-body pt-0">
+                                                <div className="filter-items">
+                                                    {
+                                                        sizes.map( ( item, index ) => (
+                                                            <div className="filter-item" key={ index }>
+                                                                <div className="custom-control custom-checkbox">
+                                                                    <input type="checkbox"
+                                                                        className="custom-control-input"
+                                                                        id={ `size-${index + 1}` }
+                                                                        onChange={ () => updateSizeState(item.size) }
+                                                                        checked={ isSizeSelected(item.size) }
+                                                                    />
+                                                                    <label className="custom-control-label" htmlFor={ `size-${index + 1}` }>{ item.size }</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    ) )
-                                                }
+                                                        ) )
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            )
-                        }
-                    </SlideToggle>
-
+                                )
+                            }
+                        </SlideToggle> : ""
+                    }
                     <SlideToggle collapsed={ false }>
                         {
                             ( { onToggle, setCollapsibleElement, toggleState } ) => (

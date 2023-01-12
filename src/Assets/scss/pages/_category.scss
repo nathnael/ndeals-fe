@@ -313,6 +313,14 @@
 			color: $primary-color;
 		}
 	}
+
+	p {
+		color: $dark-text;
+
+		&.active {
+			color: $primary-color;
+		}
+	}
 }
 
 .filter-items-count {

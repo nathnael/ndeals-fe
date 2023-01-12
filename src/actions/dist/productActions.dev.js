@@ -16,7 +16,8 @@ var getProducts = function getProducts() {
   var perPage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 12;
   var searchTerm = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
   var priceRange = arguments.length > 3 ? arguments[3] : undefined;
-  var category = arguments.length > 4 ? arguments[4] : undefined;
+  var categoryState = arguments.length > 4 ? arguments[4] : undefined;
+  var sizeState = arguments.length > 5 ? arguments[5] : undefined;
   return function _callee(dispatch) {
     var link, _ref, data;
 
@@ -38,14 +39,18 @@ var getProducts = function getProducts() {
               if (priceRange.min !== "" && priceRange.min !== null && priceRange.max !== "" && priceRange.max !== null) link += "&price[gte]=".concat(priceRange.min, "&price[lte]=").concat(priceRange.max);
             }
 
-            if (category) {
-              link += "&category=".concat(category);
+            if (categoryState) {
+              link += "&category=".concat(categoryState);
             }
 
-            _context.next = 8;
+            if (sizeState) {
+              link += "&size[in]=".concat(new Array(sizeState));
+            }
+
+            _context.next = 9;
             return regeneratorRuntime.awrap(_axios["default"].get(link));
 
-          case 8:
+          case 9:
             _ref = _context.sent;
             data = _ref.data;
             console.log("*********************** data: " + JSON.stringify(data));
@@ -55,11 +60,11 @@ var getProducts = function getProducts() {
               type: _productConstants.ALL_PRODUCTS_SUCCESS,
               payload: data
             });
-            _context.next = 19;
+            _context.next = 20;
             break;
 
-          case 16:
-            _context.prev = 16;
+          case 17:
+            _context.prev = 17;
             _context.t0 = _context["catch"](0);
             // console.log("***************** Axios Error Thrown - " + error.message);
             dispatch({
@@ -67,12 +72,12 @@ var getProducts = function getProducts() {
               payload: _context.t0.message
             });
 
-          case 19:
+          case 20:
           case "end":
             return _context.stop();
         }
       }
-    }, null, null, [[0, 16]]);
+    }, null, null, [[0, 17]]);
   };
 };
 

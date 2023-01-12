@@ -35,23 +35,23 @@ function ShopGrid() {
     // const category = searchParams.get('category');
 
     const [ priceRange, setRange ] = useState( { min: 0, max: 1000 } );
-    const [ category, setCategory ] = useState('');
-    const [ size, setSize ] = useState('');
+    const [ categoryState, setCategoryState ] = useState('');
+    const [ sizeState, setSizeState ] = useState([]);
 
-    console.log(`Categories: ${JSON.stringify(categories)}`)
+    // console.log(`Categories: ${JSON.stringify(categories)}`);
 
     useEffect(() => {
         if(error) {
             return alert.error(error);
         }
         
-        dispatch(getProducts(page, perPage, searchTerm, priceRange, category));
+        dispatch(getProducts(page, perPage, searchTerm, priceRange, categoryState, sizeState));
 
         dispatch(getUniqueCategories());
 
         dispatch(getUniqueSizes());
 
-    }, [dispatch, page, perPage, alert, error, searchTerm, priceRange, category]);
+    }, [dispatch, page, perPage, alert, error, searchTerm, priceRange, categoryState, sizeState]);
 
     useEffect( () => {
         window.addEventListener( "resize", resizeHandle );
@@ -66,7 +66,7 @@ function ShopGrid() {
             setToggle( true );
         else
             setToggle( false );
-    }
+    }    
 
     useEffect( () => {
         if ( type == 'list' ) {
@@ -109,6 +109,19 @@ function ShopGrid() {
         document
             .querySelector( 'body' )
             .classList.remove( 'sidebar-filter-active' );
+    }
+
+    function onSizeClick(size) {
+        if (sizeState.includes(size))
+            setSizeState(sizeState.map(s => s !== size));
+        else
+            setSizeState([...sizeState, size]);
+    }
+
+    function clearFilter() {
+        setRange({ min: 0, max: 1000 });
+        setCategoryState('');
+        setSizeState([]);
     }
 
     if ( error ) {
@@ -198,7 +211,7 @@ function ShopGrid() {
                             <div className="skel-widget"></div>
                             <div className="skel-widget"></div>
                             <StickyBox className="sticky-content" offsetTop={ 70 }>
-                                <ShopSidebarOne toggle={ toggle } priceRange={priceRange} setRange={setRange} cat={category} setCategory={setCategory} categories={categories} _size={size} setSize={setSize} sizes={sizes}></ShopSidebarOne>
+                                <ShopSidebarOne toggle={ toggle } priceRange={priceRange} setRange={setRange} categoryState={categoryState} setCategoryState={setCategoryState} categories={categories} sizeState={sizeState} sizes={sizes} setSizeState={setSizeState} clearFilter={clearFilter}></ShopSidebarOne>
                             </StickyBox>
                             {
                                 toggle ?

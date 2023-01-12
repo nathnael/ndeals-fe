@@ -16,7 +16,7 @@ import {
     CLEAR_ERRORS
 } from "../constants/productConstants";
 
-export const getProducts = (currentPage=1, perPage=12, searchTerm="", priceRange, category) => async (dispatch) => {
+export const getProducts = (currentPage=1, perPage=12, searchTerm="", priceRange, categoryState, sizeState) => async (dispatch) => {
     try {
         dispatch({ type: ALL_PRODUCTS_REQUEST });
 
@@ -29,8 +29,11 @@ export const getProducts = (currentPage=1, perPage=12, searchTerm="", priceRange
             if (priceRange.min!=="" && priceRange.min!==null&&priceRange.max!=="" && priceRange.max!==null)
                 link += `&price[gte]=${priceRange.min}&price[lte]=${priceRange.max}`;
         }
-        if (category) {
-            link += `&category=${category}`;
+        if (categoryState) {
+            link += `&category=${categoryState}`;
+        }
+        if (sizeState) {
+            link += `&size[in]=${new Array(sizeState)}`;
         }
 
         let { data } = await axios.get(link);        

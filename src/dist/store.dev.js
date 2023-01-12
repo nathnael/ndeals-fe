@@ -16,7 +16,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 var reducer = {
   products: _productReducers.productReducers,
   productDetails: _productReducers.productDetailsReducer,
-  uniqueCategories: _productReducers.uniqueCategoriesReducer
+  uniqueCategories: _productReducers.uniqueCategoriesReducer,
+  uniqueSizes: _productReducers.uniqueSizesReducer
 };
 var initialState = {};
 var _middleware = [_reduxThunk["default"]];
