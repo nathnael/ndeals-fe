@@ -8,7 +8,14 @@ import PageHeader from '../../features/page-header';
 import ShopListOne from '../../partials/shop/list/shop-list-one';
 import Pagination from '../../features/pagination';
 import ShopSidebarOne from '../../partials/shop/sidebar/shop-sidebar-one';
-import { getProducts, getUniqueCategories, getUniqueSizes } from '../../actions/productActions';
+import { 
+    getProducts, 
+    getUniqueBrands, 
+    getUniqueCategories, 
+    getUniqueColors, 
+    getUniqueSizes,
+    getPriceRange
+} from '../../actions/productActions';
 import { useSearchParams } from 'react-router-dom';
 
 
@@ -20,7 +27,11 @@ function ShopGrid() {
     const { loading, products, error, productsCount } = useSelector(state => state.products);
     const { categories } = useSelector(state => state.uniqueCategories.uniqueCategories);
     const { sizes } = useSelector(state => state.uniqueSizes.uniqueSizes);
+    const { colors } = useSelector(state => state.uniqueColors.uniqueColors);
+    const { brands } = useSelector(state => state.uniqueBrands.uniqueBrands);
+    const { minPrice, maxPrice } = useSelector(state => state.priceRange.priceRange);
     const [ firstLoading, setFirstLoading ] = useState( false );
+    const [ page, setPage ] = useState( 1 );
     const [ perPage, setPerPage ] = useState( 12 );
     const [ pageTitle, setPageTitle ] = useState( 'NDeals' );
     const [ toggle, setToggle ] = useState( false );
@@ -30,13 +41,15 @@ function ShopGrid() {
     const [searchParams] = useSearchParams();
     
     // const router = useRouter();
-    const page = 1;
+    // const page = 1;
     const searchTerm = searchParams.get('searchTerm');
     // const category = searchParams.get('category');
 
     const [ priceRange, setRange ] = useState( { min: 0, max: 1000 } );
     const [ categoryState, setCategoryState ] = useState('');
     const [ sizeState, setSizeState ] = useState([]);
+    const [ colorState, setColorState ] = useState([]);
+    const [ brandState, setBrandState ] = useState([]);
 
     // console.log(`Categories: ${JSON.stringify(categories)}`);
 
@@ -45,13 +58,21 @@ function ShopGrid() {
             return alert.error(error);
         }
         
-        dispatch(getProducts(page, perPage, searchTerm, priceRange, categoryState, sizeState));
+        dispatch(getProducts(page, perPage, searchTerm, priceRange, categoryState, sizeState, colorState, brandState));
 
         dispatch(getUniqueCategories());
 
         dispatch(getUniqueSizes());
 
-    }, [dispatch, page, perPage, alert, error, searchTerm, priceRange, categoryState, sizeState]);
+        dispatch(getUniqueColors());
+
+        dispatch(getUniqueBrands());
+
+        dispatch(getPriceRange());
+
+        // initPriceRange();
+
+    }, [dispatch, page, perPage, alert, error, searchTerm, priceRange, categoryState, sizeState, colorState, brandState, minPrice, maxPrice]);
 
     useEffect( () => {
         window.addEventListener( "resize", resizeHandle );
@@ -67,6 +88,10 @@ function ShopGrid() {
         else
             setToggle( false );
     }    
+
+    // useEffect(() => {
+    //     setRange({ min: minPrice, max: maxPrice })
+    // }, [minPrice, maxPrice])
 
     useEffect( () => {
         if ( type == 'list' ) {
@@ -118,10 +143,17 @@ function ShopGrid() {
             setSizeState([...sizeState, size]);
     }
 
+    const handlePerPageChange = e => {
+        setPerPage(e.target.value);
+        setPage(1);
+    };
+
     function clearFilter() {
-        setRange({ min: 0, max: 1000 });
+        setRange({ min: minPrice, max: maxPrice });
         setCategoryState('');
         setSizeState([]);
+        setColorState([]);
+        setBrandState([]);
     }
 
     if ( error ) {
@@ -162,15 +194,25 @@ function ShopGrid() {
                                 <div className="toolbox-left">
                                     {
                                         !loading && products ?
-                                            <div className="toolbox-info">
-                                                Showing
-                                                { 
-                                                    perPage > products.length ? 
-                                                    <span> { products.length } of { totalCount }</span>  :
-                                                    <span> { perPage } of { totalCount }</span>
-                                                }
-                                                Products
-                                            </div>
+                                            <div className="toolbox-sort">
+                                                <span className='mr-2'>Showing</span>
+                                                <div className="select-custom mr-2">
+                                                    <select 
+                                                        name="perPage"
+                                                        id="perPage"
+                                                        className="form-control form-control-sm"
+                                                        value={perPage} 
+                                                        onChange={handlePerPageChange}
+                                                    >
+                                                        {[12, 20, 60, 120].map(option => (
+                                                            <option key={option} value={option}>
+                                                                {option}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                                <span className='mr-2'> of { totalCount }</span> Products
+                                            </div> 
                                             : ""
                                     }
                                 </div>
@@ -200,7 +242,7 @@ function ShopGrid() {
 
                             {
                                 totalCount > perPage ?
-                                    <Pagination perPage={ perPage } total={ totalCount } pathname={pathname}></Pagination>
+                                    <Pagination page={page} setPage={setPage} perPage={ perPage } total={ totalCount } pathname={pathname}></Pagination>
                                     : ""
                             }
                         </div>
@@ -211,7 +253,7 @@ function ShopGrid() {
                             <div className="skel-widget"></div>
                             <div className="skel-widget"></div>
                             <StickyBox className="sticky-content" offsetTop={ 70 }>
-                                <ShopSidebarOne toggle={ toggle } priceRange={priceRange} setRange={setRange} categoryState={categoryState} setCategoryState={setCategoryState} categories={categories} sizeState={sizeState} sizes={sizes} setSizeState={setSizeState} clearFilter={clearFilter}></ShopSidebarOne>
+                                <ShopSidebarOne toggle={ toggle } priceRange={priceRange} setRange={setRange} categoryState={categoryState} setCategoryState={setCategoryState} categories={categories} sizeState={sizeState} sizes={sizes} setSizeState={setSizeState} clearFilter={clearFilter} colors={colors} colorState={colorState} setColorState={setColorState} brands={brands} brandState={brandState} setBrandState={setBrandState} minPrice={minPrice} maxPrice={maxPrice}></ShopSidebarOne>
                             </StickyBox>
                             {
                                 toggle ?

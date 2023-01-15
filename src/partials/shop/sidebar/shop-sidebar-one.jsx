@@ -6,12 +6,31 @@ import 'react-input-range/lib/css/index.css';
 import { shopData } from '../../../utils/data';
 
 function ShopSidebarOne ( props ) {
-    const { toggle = false, priceRange, setRange, categoryState, setCategoryState, categories, sizeState, sizes, setSizeState, clearFilter} = props;
+    const { 
+        toggle = false, 
+        priceRange, 
+        setRange, 
+        categoryState, 
+        setCategoryState, 
+        categories, 
+        sizeState, 
+        sizes, 
+        setSizeState, 
+        clearFilter, 
+        colors, 
+        colorState, 
+        setColorState,
+        brands,
+        brandState,
+        setBrandState,
+        minPrice,
+        maxPrice
+    } = props;
     
 
     useEffect( () => {
-        setRange( { min: 0, max: 1000 } );
-    }, [setRange] )
+        // setRange( { min: minPrice, max: maxPrice } );
+    }, [minPrice, maxPrice] )
 
     function onChangePriceRange ( value ) {
         setRange( value );
@@ -24,6 +43,14 @@ function ShopSidebarOne ( props ) {
 
     function isSizeSelected(size) {
         return sizeState.includes(size);
+    }
+
+    function isColorSelected(color) {
+        return colorState.includes(color);
+    }
+
+    function isBrandSelected(brand) {
+        return brandState.includes(brand);
     }
 
     function getUrlForAttrs ( type, value ) {
@@ -56,7 +83,26 @@ function ShopSidebarOne ( props ) {
         } else {
             setCategoryState(category);
         }
+    }
 
+    function updateColorState(color) {
+        if(colorState.includes(color)){
+            const newColorState = colorState.filter((c) => c !== color);
+            setColorState( newColorState);
+        }            
+        else {
+            setColorState(current => [...current, color]);
+        }            
+    }
+
+    function updateBrandState(brand) {
+        if(brandState.includes(brand)){
+            const newBrandState = brandState.filter((s) => s !== brand);
+            setBrandState( newBrandState);
+        }
+        else {
+            setBrandState(current => [...current, brand]);
+        }
     }
 
 
@@ -69,7 +115,7 @@ function ShopSidebarOne ( props ) {
                         <a href="/" className="sidebar-filter-clear" onClick={(e) => { clearFilter(); e.preventDefault() }} scroll={ "false" }>Clean All</a>
                     </div>
 
-                    { 
+                    {
                         categories ?
                             <SlideToggle collapsed={ false }>
                                 { ( { onToggle, setCollapsibleElement, toggleState } ) => (
@@ -107,7 +153,7 @@ function ShopSidebarOne ( props ) {
                                         <div ref={ setCollapsibleElement }>
                                             <div className="widget-body pt-0">
                                                 <div className="filter-items">
-                                                    {
+                                                    {                                                        
                                                         sizes.map( ( item, index ) => (
                                                             <div className="filter-item" key={ index }>
                                                                 <div className="custom-control custom-checkbox">
@@ -130,61 +176,65 @@ function ShopSidebarOne ( props ) {
                             }
                         </SlideToggle> : ""
                     }
-                    <SlideToggle collapsed={ false }>
-                        {
-                            ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                <div className="widget widget-collapsible">
-                                    <h3 className="widget-title mb-2"><a href="#colour" className={ `${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}` } onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }>Colour</a></h3>
-                                    <div ref={ setCollapsibleElement }>
-                                        <div className="widget-body pt-0">
-                                            <div className="filter-colors">
-                                                {
-                                                    shopData.colors.map( ( item, index ) => (
-                                                        <a href={ getUrlForAttrs( 'color', item.color_name ) } className={ containsAttrInUrl( 'color', item.color_name ) ? 'selected' : '' } style={ { backgroundColor: item.color } } key={ index } scroll={ "false" }>
-                                                            <span className="sr-only">Color Name</span>
-                                                        </a>
-                                                    ) )
-                                                }
+                    { 
+                        colors ?
+                        <SlideToggle collapsed={ false }>
+                            {
+                                ( { onToggle, setCollapsibleElement, toggleState } ) => (
+                                    <div className="widget widget-collapsible">
+                                        <h3 className="widget-title mb-2"><a href="#color" className={ `${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}` } onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }>Color</a></h3>
+                                        <div ref={ setCollapsibleElement }>
+                                            <div className="widget-body pt-0">
+                                                <div className="filter-colors">
+                                                    {
+                                                        colors.map( ( item, index ) => (
+                                                            <a href="/" onClick={ (e) => { updateColorState(item.color); e.preventDefault(); } } className={ isColorSelected( item.color ) ? 'selected' : '' } style={ { backgroundColor: item.color } } key={ index } scroll={ "false" }>
+                                                                <span className="sr-only">Color Name</span>
+                                                            </a>
+                                                        ) )
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            )
-                        }
-                    </SlideToggle>
+                                )
+                            }
+                        </SlideToggle> : ""
+                    }
 
-                    <SlideToggle collapsed={ false }>
-                        {
-                            ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                <div className="widget widget-collapsible">
-                                    <h3 className="widget-title mb-2"><a href="#brand" className={ `${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}` } onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }>Brand</a></h3>
-                                    <div ref={ setCollapsibleElement }>
-                                        <div className="widget-body pt-0">
-                                            <div className="filter-items">
-                                                {
-                                                    shopData.brands.map( ( item, index ) => (
-
-                                                        <div className="filter-item" key={ index }>
-                                                            <div className="custom-control custom-checkbox">
-
-                                                                <input type="checkbox"
-                                                                    className="custom-control-input"
-                                                                    id={ `brand-${index + 1}` }
-                                                                    onChange={ e => {} }
-                                                                    checked={ containsAttrInUrl( 'brand', item.slug ) ? true : false }
-                                                                />
-                                                                <label className="custom-control-label" htmlFor={ `brand-${index + 1}` }>{ item.brand }</label>
+                    {
+                        brands ?
+                        <SlideToggle collapsed={ false }>
+                            {
+                                ( { onToggle, setCollapsibleElement, toggleState } ) => (
+                                    <div className="widget widget-collapsible">
+                                        <h3 className="widget-title mb-2"><a href="#Brand" className={ `${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}` } onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }>Brand</a></h3>
+                                        <div ref={ setCollapsibleElement }>
+                                            <div className="widget-body pt-0">
+                                                <div className="filter-items">
+                                                    {                                                        
+                                                        shopData.brands.map( ( item, index ) => (
+                                                            <div className="filter-item" key={ index }>
+                                                                <div className="custom-control custom-checkbox">
+                                                                    <input type="checkbox"
+                                                                        className="custom-control-input"
+                                                                        id={ `brand-${index + 1}` }
+                                                                        onChange={ () => updateBrandState(item.brand) }
+                                                                        checked={ isBrandSelected(item.brand) }
+                                                                    />
+                                                                    <label className="custom-control-label" htmlFor={ `brand-${index + 1}` }>{ item.brand }</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    ) )
-                                                }
+                                                        ) )
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            )
-                        }
-                    </SlideToggle>
+                                )
+                            }
+                        </SlideToggle> : ""
+                    }
 
                     <SlideToggle collapsed={ false }>
                         { ( { onToggle, setCollapsibleElement, toggleState } ) => (
@@ -199,7 +249,7 @@ function ShopSidebarOne ( props ) {
                                             <div className="filter-price-text d-flex justify-content-between">
                                                 <span>
                                                     Price Range:&nbsp;
-                                                    <span className="filter-price-range">${ priceRange.min } - ${ priceRange.max }</span>
+                                                    <span className="filter-price-range">${ minPrice } - ${ maxPrice }</span>
                                                 </span>
 
                                                 <a href="/" className="pr-2" scroll={ "false" }>Filter</a>
@@ -208,10 +258,10 @@ function ShopSidebarOne ( props ) {
                                             <div className="price-slider">
                                                 <InputRange
                                                     formatLabel={ value => `$${value}` }
-                                                    maxValue={ 1000 }
-                                                    minValue={ 0 }
+                                                    maxValue={ maxPrice }
+                                                    minValue={ minPrice }
                                                     step={ 50 }
-                                                    value={ priceRange }
+                                                    value={ { min: priceRange.min, max: priceRange.max } }
                                                     onChange={ onChangePriceRange }
                                                 />
                                             </div>

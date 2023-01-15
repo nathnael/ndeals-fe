@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.uniqueSizesReducer = exports.uniqueCategoriesReducer = exports.productDetailsReducer = exports.productReducers = void 0;
+exports.priceRangeReducer = exports.uniqueBrandsReducer = exports.uniqueColorsReducer = exports.uniqueSizesReducer = exports.uniqueCategoriesReducer = exports.productDetailsReducer = exports.productReducers = void 0;
 
 var _productConstants = require("../constants/productConstants");
 
@@ -155,3 +155,108 @@ var uniqueSizesReducer = function uniqueSizesReducer() {
 };
 
 exports.uniqueSizesReducer = uniqueSizesReducer;
+
+var uniqueColorsReducer = function uniqueColorsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    uniqueColors: []
+  };
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _productConstants.UNIQUE_COLORS_REQUEST:
+      return _objectSpread({}, state, {
+        loading: true
+      });
+
+    case _productConstants.UNIQUE_COLORS_SUCCESS:
+      return {
+        loading: false,
+        uniqueColors: action.payload
+      };
+
+    case _productConstants.UNIQUE_COLORS_FAIL:
+      return _objectSpread({}, state, {
+        error: null
+      });
+
+    case _productConstants.CLEAR_ERRORS:
+      return _objectSpread({}, state, {
+        error: null
+      });
+
+    default:
+      return state;
+  }
+};
+
+exports.uniqueColorsReducer = uniqueColorsReducer;
+
+var uniqueBrandsReducer = function uniqueBrandsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    uniqueBrands: []
+  };
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _productConstants.UNIQUE_BRANDS_REQUEST:
+      return _objectSpread({}, state, {
+        loading: true
+      });
+
+    case _productConstants.UNIQUE_BRANDS_SUCCESS:
+      return {
+        loading: false,
+        uniqueBrands: action.payload
+      };
+
+    case _productConstants.UNIQUE_BRANDS_FAIL:
+      return _objectSpread({}, state, {
+        error: null
+      });
+
+    case _productConstants.CLEAR_ERRORS:
+      return _objectSpread({}, state, {
+        error: null
+      });
+
+    default:
+      return state;
+  }
+};
+
+exports.uniqueBrandsReducer = uniqueBrandsReducer;
+
+var priceRangeReducer = function priceRangeReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    priceRange: []
+  };
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _productConstants.PRICE_RANGE_REQUEST:
+      return _objectSpread({}, state, {
+        loading: true
+      });
+
+    case _productConstants.PRICE_RANGE_SUCCESS:
+      return {
+        loading: false,
+        priceRange: action.payload
+      };
+
+    case _productConstants.PRICE_RANGE_FAIL:
+      return _objectSpread({}, state, {
+        error: null
+      });
+
+    case _productConstants.CLEAR_ERRORS:
+      return _objectSpread({}, state, {
+        error: null
+      });
+
+    default:
+      return state;
+  }
+};
+
+exports.priceRangeReducer = priceRangeReducer;

@@ -17,7 +17,10 @@ var reducer = {
   products: _productReducers.productReducers,
   productDetails: _productReducers.productDetailsReducer,
   uniqueCategories: _productReducers.uniqueCategoriesReducer,
-  uniqueSizes: _productReducers.uniqueSizesReducer
+  uniqueSizes: _productReducers.uniqueSizesReducer,
+  uniqueColors: _productReducers.uniqueColorsReducer,
+  uniqueBrands: _productReducers.uniqueBrandsReducer,
+  priceRange: _productReducers.priceRangeReducer
 };
 var initialState = {};
 var _middleware = [_reduxThunk["default"]];

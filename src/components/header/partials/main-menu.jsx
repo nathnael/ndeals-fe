@@ -1,23 +1,18 @@
+import { useLocation } from 'react-router-dom';
+
+
 function MainMenu() {
 
-    function showAllDemos( e ) {
-        let demoItems = document.querySelectorAll( '.demo-item.hidden' );
-
-        for ( let i = 0; i < demoItems.length; i++ ) {
-            demoItems[ i ].classList.toggle( 'show' );
-        }
-
-        document.querySelector( '.view-all-demos' ).classList.toggle( 'disabled-hidden' );
-        e.preventDefault();
-    }
+    // let path = router.asPath;
+    const path = useLocation().pathname;
 
     return (
         <nav className="main-nav">
             <ul className="menu sf-arrows">
-                <li className={ 'megamenu-container active' } id="menu-home">
+                <li className={ `megamenu-container ${ path === '/' ? 'active' : '' }` } id="menu-home">
                     <a href="/">Home</a>                    
                 </li>
-                <li className=''>
+                <li className={ path.indexOf( "/shop" ) > -1 ? 'active' : '' }>
                     <a href="/shop" className="sf-with-ul">Shop</a>
                     <div className="megamenu megamenu-sm">
                         <div className="row no-gutters">
@@ -46,16 +41,16 @@ function MainMenu() {
                         </div>
                     </div>
                 </li>
-                <li className=''>
+                <li className={ path.indexOf( "/about-us" ) > -1 ? 'active' : '' }>
                     <a href="/about-us">About Us</a>
                 </li>
-                <li className=''>
+                <li className={ path.indexOf( "/contact-us" ) > -1 ? 'active' : '' }>
                     <a href="/contact-us">Contact Us</a>
                 </li>
-                <li className=''>
+                <li className={ path.indexOf( "/faqs" ) > -1 ? 'active' : '' }>
                     <a href="/faqs">FAQs</a>
                 </li>
-                <li className=''>
+                <li className={ path.indexOf( "/blog" ) > -1 ? 'active' : '' }>
                     <a href="/blog">Blog</a>
                 </li>
             </ul>

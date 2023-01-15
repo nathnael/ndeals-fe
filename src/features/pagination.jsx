@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 
 function Pagination ( props ) {
-    const { perPage, total, pathname } = props;
-    const [searchParams] = useSearchParams();
+    const { page, setPage, perPage, total, pathname } = props;
+    // const [searchParams] = useSearchParams();
     
     // const router = useRouter();
-    const page = searchParams.get('page');
+    // const page = searchParams.get('page');
     const [ currentPage, setCurrentPage ] = useState( 1 );
     const [ lastPage, setLastPage ] = useState( 1 );
     const [ pageNumbers, setPageNumbers ] = useState( [] );
@@ -46,7 +46,7 @@ function Pagination ( props ) {
         <nav>
             <ul className="pagination justify-content-center">
                 <li className={ `page-item ${currentPage < 2 ? 'disabled' : ''}` }>
-                    <a className="page-link page-link-prev" href={`${pathname.pathname}?page=${currentPage - 1}`} scroll={ "false" }>
+                    <a className="page-link page-link-prev" href="/" onClick={(e) => { setPage(currentPage - 1); e.preventDefault(); }} scroll={ "false" }>
                         <span aria-hidden="true">
                             <i className="icon-long-arrow-left"></i>
                         </span>Prev
@@ -59,7 +59,9 @@ function Pagination ( props ) {
                             <li className={ `page-item ${currentPage == page ? 'active' : ''}` } key={ index }>
                                 <a
                                     className="page-link"
-                                    href={`${pathname.pathname}?page=${page}`}
+                                    // href={`${pathname.pathname}?page=${page}`}
+                                    href={"/"}
+                                    onClick={(e) => { setPage(page); e.preventDefault(); }}
                                     scroll={ "false" }
                                 >{ page }</a>
                             </li>
@@ -74,7 +76,7 @@ function Pagination ( props ) {
                 }
 
                 <li className={ `page-item ${currentPage == lastPage ? 'disabled' : ''}` }>
-                    <a className="page-link page-link-next" href={`${pathname.pathname}?page=${currentPage + 1}`} scroll={ "false" }>
+                    <a className="page-link page-link-next" href="/" onClick={(e) => { setPage(currentPage + 1); e.preventDefault(); }} scroll={ "false" }>
                         Next
                         <span aria-hidden="true">
                             <i className="icon-long-arrow-right"></i>

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.clearErrors = exports.getUniqueSizes = exports.getUniqueCategories = exports.getProductDetails = exports.getProducts = void 0;
+exports.clearErrors = exports.getPriceRange = exports.getUniqueBrands = exports.getUniqueColors = exports.getUniqueSizes = exports.getUniqueCategories = exports.getProductDetails = exports.getProducts = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -18,6 +18,8 @@ var getProducts = function getProducts() {
   var priceRange = arguments.length > 3 ? arguments[3] : undefined;
   var categoryState = arguments.length > 4 ? arguments[4] : undefined;
   var sizeState = arguments.length > 5 ? arguments[5] : undefined;
+  var colorState = arguments.length > 6 ? arguments[6] : undefined;
+  var brandState = arguments.length > 7 ? arguments[7] : undefined;
   return function _callee(dispatch) {
     var link, _ref, data;
 
@@ -47,14 +49,24 @@ var getProducts = function getProducts() {
               link += "&size[in]=".concat(new Array(sizeState));
             }
 
-            _context.next = 9;
+            if (colorState) {
+              link += "&color[in]=".concat(new Array(colorState.map(function (c) {
+                return c.substring(1);
+              })));
+            }
+
+            if (brandState) {
+              link += "&brand[in]=".concat(new Array(brandState));
+            }
+
+            _context.next = 11;
             return regeneratorRuntime.awrap(_axios["default"].get(link));
 
-          case 9:
+          case 11:
             _ref = _context.sent;
             data = _ref.data;
-            console.log("*********************** data: " + JSON.stringify(data));
-            console.log("Page: ".concat(currentPage));
+            // console.log("*********************** data: " + JSON.stringify(data))
+            // console.log(`Page: ${currentPage}`);
             console.log("Link: ".concat(link));
             dispatch({
               type: _productConstants.ALL_PRODUCTS_SUCCESS,
@@ -66,7 +78,6 @@ var getProducts = function getProducts() {
           case 17:
             _context.prev = 17;
             _context.t0 = _context["catch"](0);
-            // console.log("***************** Axios Error Thrown - " + error.message);
             dispatch({
               type: _productConstants.ALL_PRODUCTS_FAIL,
               payload: _context.t0.message
@@ -111,7 +122,6 @@ var getProductDetails = function getProductDetails(id) {
           case 9:
             _context2.prev = 9;
             _context2.t0 = _context2["catch"](0);
-            // console.log("***************** Axios Error Thrown - " + error.message);
             dispatch({
               type: _productConstants.PRODUCT_DETAILS_FAIL,
               payload: _context2.t0.message
@@ -156,7 +166,6 @@ var getUniqueCategories = function getUniqueCategories() {
           case 9:
             _context3.prev = 9;
             _context3.t0 = _context3["catch"](0);
-            // console.log("***************** Axios Error Thrown - " + error.message);
             dispatch({
               type: _productConstants.UNIQUE_CATEGORIES_FAIL,
               payload: _context3.t0.message
@@ -201,7 +210,6 @@ var getUniqueSizes = function getUniqueSizes() {
           case 9:
             _context4.prev = 9;
             _context4.t0 = _context4["catch"](0);
-            // console.log("***************** Axios Error Thrown - " + error.message);
             dispatch({
               type: _productConstants.UNIQUE_SIZES_FAIL,
               payload: _context4.t0.message
@@ -214,16 +222,148 @@ var getUniqueSizes = function getUniqueSizes() {
       }
     }, null, null, [[0, 9]]);
   };
-}; // Clear Errors
-
+};
 
 exports.getUniqueSizes = getUniqueSizes;
 
-var clearErrors = function clearErrors() {
+var getUniqueColors = function getUniqueColors() {
   return function _callee5(dispatch) {
+    var _ref5, data;
+
     return regeneratorRuntime.async(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.prev = 0;
+            dispatch({
+              type: _productConstants.UNIQUE_COLORS_REQUEST
+            });
+            _context5.next = 4;
+            return regeneratorRuntime.awrap(_axios["default"].get("/api/v1/getUniqueColors"));
+
+          case 4:
+            _ref5 = _context5.sent;
+            data = _ref5.data;
+            dispatch({
+              type: _productConstants.UNIQUE_COLORS_SUCCESS,
+              payload: data
+            });
+            _context5.next = 12;
+            break;
+
+          case 9:
+            _context5.prev = 9;
+            _context5.t0 = _context5["catch"](0);
+            dispatch({
+              type: _productConstants.UNIQUE_COLORS_FAIL,
+              payload: _context5.t0.message
+            });
+
+          case 12:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, null, null, [[0, 9]]);
+  };
+};
+
+exports.getUniqueColors = getUniqueColors;
+
+var getUniqueBrands = function getUniqueBrands() {
+  return function _callee6(dispatch) {
+    var _ref6, data;
+
+    return regeneratorRuntime.async(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.prev = 0;
+            dispatch({
+              type: _productConstants.UNIQUE_BRANDS_REQUEST
+            });
+            _context6.next = 4;
+            return regeneratorRuntime.awrap(_axios["default"].get("/api/v1/getUniqueBrands"));
+
+          case 4:
+            _ref6 = _context6.sent;
+            data = _ref6.data;
+            dispatch({
+              type: _productConstants.UNIQUE_BRANDS_SUCCESS,
+              payload: data
+            });
+            _context6.next = 12;
+            break;
+
+          case 9:
+            _context6.prev = 9;
+            _context6.t0 = _context6["catch"](0);
+            dispatch({
+              type: _productConstants.UNIQUE_BRANDS_FAIL,
+              payload: _context6.t0.message
+            });
+
+          case 12:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, null, null, [[0, 9]]);
+  };
+};
+
+exports.getUniqueBrands = getUniqueBrands;
+
+var getPriceRange = function getPriceRange() {
+  return function _callee7(dispatch) {
+    var _ref7, data;
+
+    return regeneratorRuntime.async(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            _context7.prev = 0;
+            dispatch({
+              type: _productConstants.PRICE_RANGE_REQUEST
+            });
+            _context7.next = 4;
+            return regeneratorRuntime.awrap(_axios["default"].get("/api/v1/getPriceRange"));
+
+          case 4:
+            _ref7 = _context7.sent;
+            data = _ref7.data;
+            dispatch({
+              type: _productConstants.PRICE_RANGE_SUCCESS,
+              payload: data
+            });
+            _context7.next = 12;
+            break;
+
+          case 9:
+            _context7.prev = 9;
+            _context7.t0 = _context7["catch"](0);
+            dispatch({
+              type: _productConstants.PRICE_RANGE_FAIL,
+              payload: _context7.t0.message
+            });
+
+          case 12:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, null, null, [[0, 9]]);
+  };
+}; // Clear Errors
+
+
+exports.getPriceRange = getPriceRange;
+
+var clearErrors = function clearErrors() {
+  return function _callee8(dispatch) {
+    return regeneratorRuntime.async(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
           case 0:
             dispatch({
               type: _productConstants.CLEAR_ERRORS
@@ -231,7 +371,7 @@ var clearErrors = function clearErrors() {
 
           case 1:
           case "end":
-            return _context5.stop();
+            return _context8.stop();
         }
       }
     });

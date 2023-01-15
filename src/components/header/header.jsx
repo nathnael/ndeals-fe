@@ -7,6 +7,7 @@ import CategoryMenu from "./partials/category-menu";
 import HeaderSearch from "./partials/header-search";
 import MainMenu from "./partials/main-menu";
 import WishlistMenu from "./partials/wishlist-menu";
+import StickyHeader from "../../features/sticky-header";
 
 function Header () {
     
@@ -110,6 +111,24 @@ function Header () {
                     </div>
                 </div>
             </div>
+
+            <StickyHeader>
+                <div className="header-bottom sticky-header">
+                    <div className="container">
+                        <div className="header-left">
+                            <CategoryMenu />
+                        </div>
+
+                        <div className="header-center">
+                            <MainMenu />
+                        </div>
+
+                        <div className="header-right overflow-hidden">
+                            <i className="la la-lightbulb-o"></i><p>Clearance Up to 30% Off</p>
+                        </div>
+                    </div>
+                </div>
+            </StickyHeader>
         </header>
     )
 }

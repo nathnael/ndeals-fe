@@ -11,6 +11,15 @@ import {
     UNIQUE_SIZES_REQUEST,
     UNIQUE_SIZES_SUCCESS,
     UNIQUE_SIZES_FAIL,
+    UNIQUE_COLORS_REQUEST,
+    UNIQUE_COLORS_SUCCESS,
+    UNIQUE_COLORS_FAIL,
+    UNIQUE_BRANDS_REQUEST,
+    UNIQUE_BRANDS_SUCCESS,
+    UNIQUE_BRANDS_FAIL,
+    PRICE_RANGE_REQUEST,
+    PRICE_RANGE_SUCCESS,
+    PRICE_RANGE_FAIL,
     CLEAR_ERRORS
 } from "../constants/productConstants";
 
@@ -109,6 +118,87 @@ export const uniqueSizesReducer = (state = {uniqueSizes : []}, action) => {
                 uniqueSizes: action.payload
             }
         case UNIQUE_SIZES_FAIL:
+            return {
+                ...state,
+                error: null
+            }
+        case CLEAR_ERRORS: 
+            return {
+                ...state,
+                error: null
+            }
+        default:
+            return state;
+    }
+}
+
+export const uniqueColorsReducer = (state = {uniqueColors : []}, action) => {
+    switch (action.type) {
+        case UNIQUE_COLORS_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case UNIQUE_COLORS_SUCCESS:
+            return {
+                loading: false,
+                uniqueColors: action.payload
+            }
+        case UNIQUE_COLORS_FAIL:
+            return {
+                ...state,
+                error: null
+            }
+        case CLEAR_ERRORS: 
+            return {
+                ...state,
+                error: null
+            }
+        default:
+            return state;
+    }
+}
+
+export const uniqueBrandsReducer = (state = {uniqueBrands : []}, action) => {
+    switch (action.type) {
+        case UNIQUE_BRANDS_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case UNIQUE_BRANDS_SUCCESS:
+            return {
+                loading: false,
+                uniqueBrands: action.payload
+            }
+        case UNIQUE_BRANDS_FAIL:
+            return {
+                ...state,
+                error: null
+            }
+        case CLEAR_ERRORS: 
+            return {
+                ...state,
+                error: null
+            }
+        default:
+            return state;
+    }
+}
+
+export const priceRangeReducer = (state = {priceRange : []}, action) => {
+    switch (action.type) {
+        case PRICE_RANGE_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case PRICE_RANGE_SUCCESS:
+            return {
+                loading: false,
+                priceRange: action.payload
+            }
+        case PRICE_RANGE_FAIL:
             return {
                 ...state,
                 error: null
