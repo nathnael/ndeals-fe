@@ -1,14 +1,20 @@
 import { useEffect, useState, useRef } from 'react';
+import { connect } from 'react-redux';
 import SlideToggle from 'react-slide-toggle';
+import { useLocation, useNavigate, useRouteMatch } from 'react-router-dom';
 
 import Qty from '../../../features/qty';
 
+import { actions as wishlistAction } from '../../../store/wishlist';
+import { actions as cartAction } from '../../../store/cart';
 
 import { canAddToCart, isInWishlist } from '../../../utils';
 
 function DetailOne ( props ) {
+    const location = useLocation();
+    const navigate = useNavigate();
     const ref = useRef( null );
-    const { product } = props;
+    const product = props.product;
     const [ qty, setQty ] = useState( 1 );
     const [ qty2, setQty2 ] = useState( 1 );
     const [ colorArray, setColorArray ] = useState( [] );
@@ -19,6 +25,220 @@ function DetailOne ( props ) {
     const [ showVariationPrice, setShowVariationPrice ] = useState( false );
     const [ maxPrice, setMaxPrice ] = useState( 0 );
     const [ minPrice, setMinPrice ] = useState( 99999 );
+
+    useEffect( () => {
+        window.addEventListener( 'scroll', scrollHandler, {
+            passive: true
+        } );
+
+        return () => {
+            window.removeEventListener( 'scroll', scrollHandler );
+        }
+    }, [] );
+
+    useEffect( () => {
+        let min = 0;
+        let max = 99999;
+
+        // setVariationGroup( product.variants.reduce( ( acc, cur ) => {
+        //     cur.size.map( item => {
+        //         acc.push( {
+        //             color: cur.color,
+        //             colorName: cur.color_name,
+        //             size: item.name,
+        //             price: cur.price
+        //         } );
+        //     } );
+        //     if ( min > cur.price ) min = cur.price;
+        //     if ( max < cur.price ) max = cur.price;
+        //     return acc;
+        // }, [] ) );
+
+        // if ( product.variants.length == 0 ) {
+        //     min = product.sale_price
+        //         ? product.sale_price
+        //         : product.price;
+        //     max = product.price;
+        // }
+
+        setMinPrice( min );
+        setMaxPrice( max );
+    }, [ product ] )
+
+    useEffect( () => {
+        setSelectedVariant( { color: null, colorName: null, price: null, size: "" } );
+        setQty( 1 );
+        setQty2( 1 );
+    // }, [ router.query.slug ] );
+    }, [  ] );
+
+    useEffect( () => {
+        // refreshSelectableGroup();
+    }, [ variationGroup, selectedVariant ] )
+
+    useEffect( () => {
+        scrollHandler();
+    }, [ location.pathname ] )
+
+    function scrollHandler () {
+        if ( location.pathname.includes( '/product/default' ) ) {
+            let stickyBar = ref.current.querySelector( '.sticky-bar' );
+            if ( stickyBar.classList.contains( 'd-none' ) && ref.current.getBoundingClientRect().bottom < 0 ) {
+                stickyBar.classList.remove( 'd-none' );
+                return;
+            }
+            if ( !stickyBar.classList.contains( 'd-none' ) && ref.current.getBoundingClientRect().bottom > 0 ) {
+                stickyBar.classList.add( 'd-none' );
+            }
+        }
+    }
+
+    function onWishlistClick ( e ) {
+        e.preventDefault();
+        if ( !isInWishlist( props.wishlist, product ) ) {
+            props.addToWishlist( product );
+        } else {
+            navigate( '/pages/wishlist' );
+        }
+    }
+
+    function refreshSelectableGroup () {
+        let tempArray = [ ...variationGroup ];
+        if ( selectedVariant.color ) {
+            tempArray = variationGroup.reduce( ( acc, cur ) => {
+                if ( selectedVariant.color !== cur.color ) {
+                    return acc;
+                }
+                return [ ...acc, cur ];
+            }, [] );
+        }
+
+        setSizeArray( tempArray.reduce( ( acc, cur ) => {
+            if ( acc.findIndex( item => item.size == cur.size ) !== -1 )
+                return acc;
+            return [ ...acc, cur ];
+        }, [] ) );
+
+        tempArray = [ ...variationGroup ];
+        if ( selectedVariant.size ) {
+            tempArray = variationGroup.reduce( ( acc, cur ) => {
+                if ( selectedVariant.size !== cur.size ) {
+                    return acc;
+                }
+                return [ ...acc, cur ];
+            }, [] );
+        }
+
+        setColorArray( product.variants.reduce( ( acc, cur ) => {
+            if (
+                tempArray.findIndex( item => item.color == cur.color ) == -1
+            ) {
+                return [
+                    ...acc,
+                    {
+                        color: cur.color,
+                        colorName: cur.color_name,
+                        price: cur.price,
+                        disabled: true
+                    }
+                ];
+            }
+            return [
+                ...acc,
+                {
+                    color: cur.color,
+                    colorName: cur.color_name,
+                    price: cur.price,
+                    disabled: false
+                }
+            ];
+        }, [] ) );
+    }
+
+    function selectColor ( e, item ) {
+        e.preventDefault()
+        if ( item.color == selectedVariant.color ) {
+            setSelectedVariant( {
+                ...selectedVariant,
+                color: null,
+                colorName: null,
+                price: item.price
+            } );
+        } else {
+            setSelectedVariant( {
+                ...selectedVariant,
+                color: item.color,
+                colorName: item.colorName,
+                price: item.price
+            } );
+        }
+    }
+
+    function selectSize ( e ) {
+        if ( e.target.value == "" ) {
+            setSelectedVariant( { ...selectedVariant, size: "" } );
+        } else {
+            setSelectedVariant( { ...selectedVariant, size: e.target.value } );
+        }
+    }
+
+    function onChangeQty ( current ) {
+        setQty( current );
+    }
+
+    function onChangeQty2 ( current ) {
+        setQty2( current );
+    }
+
+    function clearSelection ( e ) {
+        e.preventDefault();
+        setSelectedVariant( ( {
+            ...selectedVariant,
+            color: null,
+            colorName: null,
+            size: ""
+        } ) );
+        refreshSelectableGroup();
+    }
+
+    function onCartClick ( e, index = 0 ) {
+        e.preventDefault();
+        if ( e.currentTarget.classList.contains( 'btn-disabled' ) ) return;
+
+        let newProduct = { ...product };
+        if ( product.variants.length > 0 ) {
+            newProduct = {
+                ...product,
+                name:
+                    product.name +
+                    ' - ' +
+                    selectedVariant.colorName +
+                    ', ' +
+                    selectedVariant.size,
+                price: selectedVariant.price
+            };
+        }
+        props.addToCart(
+            newProduct,
+            index == 0 ? qty : qty2
+        );
+    }
+
+    useEffect( () => {
+        setShowClear( ( selectedVariant.color || selectedVariant.size != "" ) ? true : false );
+        setShowVariationPrice( ( selectedVariant.color && selectedVariant.size != "" ) ? true : false );
+        let toggle = ref.current.querySelector( '.variation-toggle' );
+
+        if ( toggle ) {
+            if ( ( selectedVariant.color && selectedVariant.size != "" ) && toggle.classList.contains( 'collapsed' ) ) {
+                toggle.click();
+            }
+
+            if ( ( !( selectedVariant.color && selectedVariant.size != "" ) ) && !toggle.classList.contains( 'collapsed' ) ) {
+                toggle.click();
+            }
+        }
+    }, [ selectedVariant ] )
 
 
     if ( !product ) {
@@ -116,7 +336,7 @@ function DetailOne ( props ) {
                                     <a href="#" onClick={ () => {} }>clear</a>
                                     : ""
                             }
-                        </div >
+                        </div>
                         <SlideToggle collapsed={ true }>
                             { ( { onToggle, setCollapsibleElement, toggleState } ) => (
                                 <div>
@@ -136,23 +356,26 @@ function DetailOne ( props ) {
             <div className="details-filter-row details-row-size">
                 <label htmlFor="qty">Qty:</label>
                 <Qty changeQty={ () => {} } max={ product.stock } value={ qty }></Qty>
-            </div >
+            </div>
 
             <div className="product-details-action">
                 <a
-                    href="#"
-                    className={ `btn-product btn-cart` }
-                    onClick={ e => {} }
+                    href="/"
+                    className={ `btn-product btn-cart ${( !canAddToCart( props.cartlist, product, qty ) ) ? 'btn-disabled' : ''}` }
+                    onClick={ e => onCartClick( e, 0 ) }
                 >
                     <span>add to cart</span>
                 </a>
                 <div className="details-action-wrapper">
                     {
-                        <a href="#" className="btn-product btn-wishlist" onClick={ () => {} }><span>Add to Wishlist</span></a>
+                        isInWishlist( props.wishlist, product ) ?
+                            <a href="/shop/wishlist" className="btn-product btn-wishlist added-to-wishlist"><span>Go to Wishlist</span></a>
+                            :
+                            <a href="/" className="btn-product btn-wishlist" onClick={ onWishlistClick }><span>Add to Wishlist</span></a>
 
                     }
                 </div>
-            </div >
+            </div>
 
             <div className="product-details-footer">
                 <div className="product-cat w-100 text-truncate">
@@ -167,7 +390,7 @@ function DetailOne ( props ) {
                             </span>
                         ) )
                     }
-                </div >
+                </div>
 
                 <div className="social-icons social-icons-sm">
                     <span className="social-label">Share:</span>
@@ -184,7 +407,7 @@ function DetailOne ( props ) {
                         <i className="icon-pinterest"></i>
                     </a>
                 </div>
-            </div >
+            </div>
             <div className="sticky-bar d-none">
                 <div className="container">
                     <div className="row">
@@ -204,27 +427,38 @@ function DetailOne ( props ) {
                                     <span className="out-price">${ product.price && product.price.toFixed( 2 ) }</span>
                                 </div>
                             }
-                            <Qty changeQty={ () => {} } max={ product.stock } value={ qty2 }></Qty>
+                            <Qty changeQty={ onChangeQty2 } max={ product.stock } value={ qty2 }></Qty>
                             <div className="product-details-action">
                                 <a
-                                    href="#"
-                                    className={ `btn-product btn-cart` }
-                                    onClick={ e => {} }
+                                    href="/"
+                                    className={ `btn-product btn-cart ${( !canAddToCart( props.cartlist, product, qty ) || (product.variants && product.variants.length > 0 && !showVariationPrice ) ) ? 'btn-disabled' : ''}` }
+                                    onClick={ e => onCartClick( e, 1 ) }
                                 >
                                     <span>add to cart</span>
                                 </a>
                                 {
-                                    <a href="#" className="btn-product btn-wishlist" onClick={() => {} }><span>Add to Wishlist</span></a>
+                                    isInWishlist( props.wishlist, product ) ?
+                                        <a href="/shop/wishlist" className="btn-product btn-wishlist added-to-wishlist"><span>Go to Wishlist</span></a>
+                                        :
+                                        <a href="/" className="btn-product btn-wishlist" onClick={ onWishlistClick }><span>Add to Wishlist</span></a>
 
                                 }
-                            </div >
-                        </div >
-                    </div >
-                </div >
-            </div >
-        </div >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
 
+const mapStateToProps = ( state, ownProps ) => {
+    const { product } = ownProps;
+    return {
+        product,
+        cartlist: state.cartlist.data,
+        wishlist: state.wishlist.data,
+    }
+}
 
-export default DetailOne;
+export default connect( mapStateToProps, { ...wishlistAction, ...cartAction } )( DetailOne );

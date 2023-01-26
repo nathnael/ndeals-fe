@@ -21,15 +21,17 @@ import TopCollection from './top-collection';
 import { attrFilter } from '../../utils';
 import BlogCollection from './blog-collection';
 import NewsletterModal from '../modals/newsletter-modal';
-import { getProducts } from '../../actions/productActions';
+// import { getProducts } from '../../actions/productActions';
 import { useAlert } from 'react-alert';
+import { actions as productsAction } from '../../store/product';
 
 
 function Home() {
     
     const dispatch = useDispatch();
     const alert = useAlert();
-    const { loading, products, error } = useSelector(state => state.products);
+    let { loading, products, error } = useSelector(state => state.productList);
+    products = products ? products.products : [];
     const topProducts = attrFilter( products, 'top' );
     
     useEffect(() => {
@@ -37,7 +39,7 @@ function Home() {
             return alert.error(error);
         }
 
-        dispatch(getProducts());        
+        dispatch(productsAction.getProductsRequest());        
 
     }, [dispatch, alert, error]);
 

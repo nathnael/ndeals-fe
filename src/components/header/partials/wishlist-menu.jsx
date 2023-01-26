@@ -1,13 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 function WishlistMenu ( props ) {
+    const { wishlist } = props;
 
     return (
         <div className="wishlist">
             <a href="/account/wishlist" title="Wishlist">
                 <div className="icon">
                     <i className="icon-heart-o"></i>
-                    <span className="wishlist-count badge">5</span>
+                    <span className="wishlist-count badge">{ wishlist.length }</span>
                 </div>
                 <p>Wishlist</p>
             </a>
@@ -15,5 +17,10 @@ function WishlistMenu ( props ) {
     );
 }
 
+function mapStateToProps ( state ) {
+    return {
+        wishlist: state.wishlist.data
+    }
+}
 
-export default WishlistMenu;
+export default connect( mapStateToProps, {} )( WishlistMenu );

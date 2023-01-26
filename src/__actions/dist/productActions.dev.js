@@ -7,7 +7,7 @@ exports.clearErrors = exports.getPriceRange = exports.getUniqueBrands = exports.
 
 var _axios = _interopRequireDefault(require("axios"));
 
-var _productConstants = require("../constants/productConstants");
+var _productConstants = require("../__constants/productConstants");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -67,28 +67,28 @@ var getProducts = function getProducts() {
             data = _ref.data;
             // console.log("*********************** data: " + JSON.stringify(data))
             // console.log(`Page: ${currentPage}`);
-            console.log("Link: ".concat(link));
+            // console.log(`Link: ${link}`);
             dispatch({
               type: _productConstants.ALL_PRODUCTS_SUCCESS,
               payload: data
             });
-            _context.next = 20;
+            _context.next = 19;
             break;
 
-          case 17:
-            _context.prev = 17;
+          case 16:
+            _context.prev = 16;
             _context.t0 = _context["catch"](0);
             dispatch({
               type: _productConstants.ALL_PRODUCTS_FAIL,
               payload: _context.t0.message
             });
 
-          case 20:
+          case 19:
           case "end":
             return _context.stop();
         }
       }
-    }, null, null, [[0, 17]]);
+    }, null, null, [[0, 16]]);
   };
 };
 

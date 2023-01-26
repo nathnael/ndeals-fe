@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 
 import Qty from '../../features/qty';
 import PageHeader from '../../features/page-header';
 
+import { actions as cartAction } from '../../store/cart';
 import { cartPriceTotal } from '../../utils/index';
-import { cartList as sampleCartList } from '../../utils/data';
+// import { cartList as sampleCartList } from '../../utils/data';
 
 function Cart ( props ) {
     const [ cartList, setCartList ] = useState( [] );
@@ -12,8 +14,8 @@ function Cart ( props ) {
     
 
     useEffect( () => {
-        setCartList( sampleCartList );
-    }, )
+        setCartList( props.cartItems );
+    }, [ props.cartItems ] )
 
     function onChangeShipping ( value ) {
         setShippingCost( value );
@@ -103,8 +105,9 @@ function Cart ( props ) {
                                                                 ${
                                                                     item.sale_price ?
                                                                         item.sale_price.toLocaleString( undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 } )
-                                                                        :
-                                                                        item.price.toLocaleString( undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 } )
+                                                                        : 0
+                                                                        /* item.price.toLocaleString( undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 } ) */
+                                                                        
 
                                                                 }
                                                             </td>
@@ -256,4 +259,10 @@ function Cart ( props ) {
     )
 }
 
-export default Cart;
+const mapStateToProps = ( state ) => (
+    {
+        cartItems: state.cartlist.data
+    }
+)
+
+export default connect( mapStateToProps, { ...cartAction } )( Cart );

@@ -23,7 +23,7 @@ import {
     PRICE_RANGE_SUCCESS,
     PRICE_RANGE_FAIL,
     CLEAR_ERRORS
-} from "../constants/productConstants";
+} from "../__constants/productConstants";
 
 export const getProducts = (currentPage=1, perPage=12, searchTerm="", priceRange, categoryState, sizeState, colorState, brandState) => async (dispatch) => {
     try {
@@ -55,7 +55,7 @@ export const getProducts = (currentPage=1, perPage=12, searchTerm="", priceRange
 
         // console.log("*********************** data: " + JSON.stringify(data))
         // console.log(`Page: ${currentPage}`);
-        console.log(`Link: ${link}`);
+        // console.log(`Link: ${link}`);
 
         dispatch({
             type: ALL_PRODUCTS_SUCCESS,

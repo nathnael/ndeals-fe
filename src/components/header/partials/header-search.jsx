@@ -4,8 +4,9 @@ import { useAlert } from 'react-alert';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { safeContent } from '../../../utils';
+import { actions as productsAction } from '../../../store/product';
 
-import { getProducts } from '../../../actions/productActions';
+// import { getProducts } from '../../../actions/productActions';
 
 function HeaderSearch () {
     const pathname = useLocation();
@@ -18,14 +19,15 @@ function HeaderSearch () {
     const [ timer, setTimer ] = useState( null );
     const dispatch = useDispatch();
     const alert = useAlert();
-    const { loading, products, error } = useSelector(state => state.products);
+    let { loading, products, error } = useSelector(state => state.productList);
+    // products = products.products;
     let navigate = useNavigate();
 
     useEffect(() => {
         if (error) {
             return alert.error(error);
         }
-        dispatch(getProducts(1, 12, searchTerm));
+        dispatch(productsAction.getProductsRequest(1, 12, searchTerm));
         
     }, [dispatch, error, alert, searchTerm]);
 

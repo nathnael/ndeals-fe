@@ -1,11 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 
 import PageHeader from '../../features/page-header';
+
+import { actions as wishlistAction } from '../../store/wishlist';
+import { actions as cartAction } from '../../store/cart';
 
 
 function Wishlist ( props ) {
     const [ wishItems, setWishItems ] = useState( [] );
 
+    useEffect( () => {
+        setWishItems( props.wishlist.reduce( ( acc, product ) => {
+            let max = 0;
+            let min = 999999;
+            product.variants.map( item => {
+                if ( min > item.price ) min = item.price;
+                if ( max < item.price ) max = item.price;
+            }, [] );
+
+            if ( product.variants.length == 0 ) {
+                min = product.sale_price
+                    ? product.sale_price
+                    : product.price;
+                max = product.price;
+            }
+
+            return [
+                ...acc,
+                {
+                    ...product,
+                    minPrice: min,
+                    maxPrice: max
+                }
+            ];
+        }, [] ) );
+    }, [ props.wishlist ] )
 
     function moveToCart ( product ) {
         props.removeFromWishlist( product );
@@ -59,7 +89,7 @@ function Wishlist ( props ) {
                                                     <div className="product">
                                                         <figure className="product-media">
                                                             <a href={ `/product/default/${product.slug}` } className="product-image">
-                                                                <img src={ process.env.NEXT_PUBLIC_ASSET_URI + product.sm_pictures[ 0 ].url } alt="product" />
+                                                                <img src={ product.sm_pictures[ 0 ].url } alt="product" />
                                                             </a>
                                                         </figure>
 
@@ -124,35 +154,35 @@ function Wishlist ( props ) {
                                 <div className="social-icons social-icons-sm mb-2">
                                     <label className="social-label">Share on:</label>
                                     <a
-                                        href="#"
+                                        href="/"
                                         className="social-icon"
                                         title="Facebook"
                                     >
                                         <i className="icon-facebook-f"></i>
                                     </a>
                                     <a
-                                        href="#"
+                                        href="/"
                                         className="social-icon"
                                         title="Twitter"
                                     >
                                         <i className="icon-twitter"></i>
                                     </a>
                                     <a
-                                        href="#"
+                                        href="/"
                                         className="social-icon"
                                         title="Instagram"
                                     >
                                         <i className="icon-instagram"></i>
                                     </a>
                                     <a
-                                        href="#"
+                                        href="/"
                                         className="social-icon"
                                         title="Youtube"
                                     >
                                         <i className="icon-youtube"></i>
                                     </a>
                                     <a
-                                        href="#"
+                                        href="/"
                                         className="social-icon"
                                         title="Pinterest"
                                     >
@@ -181,4 +211,8 @@ function Wishlist ( props ) {
     )
 }
 
-export default Wishlist;
+const mapStateToProps = ( state ) => ( {
+    wishlist: state.wishlist.data
+} )
+
+export default connect( mapStateToProps, { ...wishlistAction, ...cartAction } )( Wishlist );

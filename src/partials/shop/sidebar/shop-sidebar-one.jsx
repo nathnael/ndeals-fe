@@ -112,7 +112,7 @@ function ShopSidebarOne ( props ) {
                 <div className={ toggle ? 'sidebar-filter-wrapper' : '' }>
                     <div className="widget widget-clean">
                         <label>Filters:</label>
-                        <a href="/" className="sidebar-filter-clear" onClick={(e) => { clearFilter(); e.preventDefault() }} scroll={ "false" }>Clean All</a>
+                        <a href="/" className="sidebar-filter-clear" onClick={(e) => { clearFilter(); e.preventDefault() }} scroll={ "false" }>Clear All</a>
                     </div>
 
                     {

@@ -21,7 +21,7 @@ import {
     PRICE_RANGE_SUCCESS,
     PRICE_RANGE_FAIL,
     CLEAR_ERRORS
-} from "../constants/productConstants";
+} from "../__constants/productConstants";
 
 export const productReducers = (state = { products: []}, action) => {
     switch(action.type) {

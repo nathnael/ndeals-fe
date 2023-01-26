@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.priceRangeReducer = exports.uniqueBrandsReducer = exports.uniqueColorsReducer = exports.uniqueSizesReducer = exports.uniqueCategoriesReducer = exports.productDetailsReducer = exports.productReducers = void 0;
 
-var _productConstants = require("../constants/productConstants");
+var _productConstants = require("../__constants/productConstants");
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 

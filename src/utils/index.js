@@ -36,7 +36,7 @@ export const isInCart = ( cartItems, product ) => {
  * @param { Number } qty 
  */
 export const canAddToCart = ( cartItems, product, qty ) => {
-    let find = cartItems.find( item => item.id === product.id );
+    let find = cartItems.find( item => item._id === product._id );
     if ( find ) {
         if ( product.stock === 0 || ( product.stock < ( find.qty + qty ) ) ) return false;
         else return true;

@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
+import { actions as wishlistAction } from '../../store/wishlist';
+import { actions as cartAction } from '../../store/cart';
+import { actions as compareAction } from '../../store/compare';
+import { actions as demoAction } from '../../store/demo';
+
 import { isInWishlist, isInCompare } from '../../utils';
 
 function ProductEleven ( props ) {
@@ -202,4 +207,11 @@ function ProductEleven ( props ) {
     )
 }
 
-export default ProductEleven;
+const mapStateToProps = ( state ) => {
+    return {
+        wishlist: state.wishlist.data,
+        comparelist: state.comparelist.data
+    }
+}
+
+export default connect( mapStateToProps, { ...wishlistAction, ...cartAction, ...compareAction, ...demoAction } )( ProductEleven );

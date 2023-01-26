@@ -9,7 +9,7 @@ import {
     uniqueColorsReducer, 
     uniqueBrandsReducer,
     priceRangeReducer
-} from './reducers/productReducers';
+} from './__reducers/productReducers';
 
 const reducer = {
     products: productReducers,

@@ -27,12 +27,7 @@ function StickyHeader( props ) {
             window.removeEventListener( 'scroll', scrollHandler );
             window.removeEventListener( 'resize', resizeHandler );
         }
-    }, [ path.pathname ] )
-
-    function initSticky() {
-        let stickyContent = ref.current.children[ 0 ];
-        setHeight( stickyContent.offsetHeight + 'px' );
-    }
+    }, [] )
 
     function scrollHandler() {
         let stickyContent = ref.current.children[ 0 ];

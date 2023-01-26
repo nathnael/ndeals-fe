@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import StickyBox from 'react-sticky-box';
 import { useAlert } from 'react-alert';
 import { useLocation } from 'react-router-dom';
@@ -8,35 +8,37 @@ import PageHeader from '../../features/page-header';
 import ShopListOne from '../../partials/shop/list/shop-list-one';
 import Pagination from '../../features/pagination';
 import ShopSidebarOne from '../../partials/shop/sidebar/shop-sidebar-one';
-import { 
-    getProducts, 
-    getUniqueBrands, 
-    getUniqueCategories, 
-    getUniqueColors, 
-    getUniqueSizes,
-    getPriceRange
-} from '../../actions/productActions';
+// import { 
+//     getProducts, 
+//     getUniqueBrands, 
+//     getUniqueCategories, 
+//     getUniqueColors, 
+//     getUniqueSizes,
+//     getPriceRange
+// } from '../../actions/productActions';
+import { actions as productsAction } from '../../store/product';
 import { useSearchParams } from 'react-router-dom';
 
 
 import { scrollToPageContent } from '../../utils';
 
-function ShopGrid() {
+function ShopGrid(props) {
     const dispatch = useDispatch();
     const alert = useAlert();
-    const { loading, products, error, productsCount } = useSelector(state => state.products);
-    const { categories } = useSelector(state => state.uniqueCategories.uniqueCategories);
-    const { sizes } = useSelector(state => state.uniqueSizes.uniqueSizes);
-    const { colors } = useSelector(state => state.uniqueColors.uniqueColors);
-    const { brands } = useSelector(state => state.uniqueBrands.uniqueBrands);
-    const { minPrice, maxPrice } = useSelector(state => state.priceRange.priceRange);
+    // let { loading, products, error, productsCount } = useSelector(state => state.productList.products);
+    // // products = products.products ? products.products : [];
+    // const { categories } = useSelector(state => state.productList.uniqueCategories.uniqueCategories);
+    // const { sizes } = useSelector(state => state.productList.uniqueSizes.uniqueSizes);
+    // const { colors } = useSelector(state => state.productList.uniqueColors.uniqueColors);
+    // const { brands } = useSelector(state => state.productList.uniqueBrands.uniqueBrands);
+    // const { minPrice, maxPrice } = useSelector(state => state.productList.priceRange.priceRange);
     const [ firstLoading, setFirstLoading ] = useState( false );
     const [ page, setPage ] = useState( 1 );
     const [ perPage, setPerPage ] = useState( 12 );
     const [ pageTitle, setPageTitle ] = useState( 'NDeals' );
     const [ toggle, setToggle ] = useState( false );
     const [ type, setType ] = useState( "4col" );
-    const totalCount = productsCount;
+    const totalCount = props.productsCount;
     const pathname = useLocation();
     const [searchParams] = useSearchParams();
     
@@ -54,25 +56,25 @@ function ShopGrid() {
     // console.log(`Categories: ${JSON.stringify(categories)}`);
 
     useEffect(() => {
-        if(error) {
-            return alert.error(error);
+        if(props.error) {
+            return alert.error(props.error);
         }
         
-        dispatch(getProducts(page, perPage, searchTerm, priceRange, categoryState, sizeState, colorState, brandState));
+        // props.getProductsRequest(page, perPage, searchTerm, priceRange, categoryState, sizeState, colorState, brandState)
 
-        dispatch(getUniqueCategories());
+        // props.uniqueCategoriesRequest()
 
-        dispatch(getUniqueSizes());
+        // props.uniqueSizesRequest()
 
-        dispatch(getUniqueColors());
+        // props.uniqueColorsRequest()
 
-        dispatch(getUniqueBrands());
+        // props.uniqueBrandsRequest()
 
-        dispatch(getPriceRange());
+        // props.priceRangeRequest()
 
         // initPriceRange();
 
-    }, [dispatch, page, perPage, alert, error, searchTerm, priceRange, categoryState, sizeState, colorState, brandState, minPrice, maxPrice]);
+    }, [props, page, perPage, alert, searchTerm, priceRange, categoryState, sizeState, colorState, brandState]);
 
     useEffect( () => {
         window.addEventListener( "resize", resizeHandle );
@@ -110,8 +112,8 @@ function ShopGrid() {
     }, [ type ] )
 
     useEffect( () => {
-        if ( products ) setFirstLoading( true );
-    }, [ products ] )
+        if ( props.products ) setFirstLoading( true );
+    }, [ props.products ] )
 
     
     function toggleSidebar() {
@@ -149,14 +151,14 @@ function ShopGrid() {
     };
 
     function clearFilter() {
-        setRange({ min: minPrice, max: maxPrice });
+        setRange({ min: props.priceRange.minPrice, max: props.priceRange.maxPrice });
         setCategoryState('');
         setSizeState([]);
         setColorState([]);
         setBrandState([]);
     }
 
-    if ( error ) {
+    if ( props.error ) {
         return <div></div>
     }
 
@@ -188,12 +190,12 @@ function ShopGrid() {
                 <div className="container">
                     <div className="row skeleton-body">
                         <div
-                            className={ `col-lg-9 skel-shop-products ${ !loading ? 'loaded' : '' }` }
+                            className={ `col-lg-9 skel-shop-products ${ !props.loading ? 'loaded' : '' }` }
                         >
                             <div className="toolbox">
                                 <div className="toolbox-left">
                                     {
-                                        !loading && products ?
+                                        !props.loading && props.products ?
                                             <div className="toolbox-sort">
                                                 <span className='mr-2'>Showing</span>
                                                 <div className="select-custom mr-2">
@@ -238,7 +240,7 @@ function ShopGrid() {
                                 </div>
                             </div>
 
-                            <ShopListOne products={ products } perPage={ perPage } loading={ loading }></ShopListOne>
+                            <ShopListOne products={ props.products } perPage={ perPage } loading={ props.loading }></ShopListOne>
 
                             {
                                 totalCount > perPage ?
@@ -247,13 +249,13 @@ function ShopGrid() {
                             }
                         </div>
 
-                        <aside className={ `col-lg-3 skel-shop-sidebar order-lg-first skeleton-body ${ ( !loading || firstLoading ) ? 'loaded' : '' }` }>
+                        <aside className={ `col-lg-3 skel-shop-sidebar order-lg-first skeleton-body ${ ( !props.loading || firstLoading ) ? 'loaded' : '' }` }>
                             <div className="skel-widget"></div>
                             <div className="skel-widget"></div>
                             <div className="skel-widget"></div>
                             <div className="skel-widget"></div>
                             <StickyBox className="sticky-content" offsetTop={ 70 }>
-                                <ShopSidebarOne toggle={ toggle } priceRange={priceRange} setRange={setRange} categoryState={categoryState} setCategoryState={setCategoryState} categories={categories} sizeState={sizeState} sizes={sizes} setSizeState={setSizeState} clearFilter={clearFilter} colors={colors} colorState={colorState} setColorState={setColorState} brands={brands} brandState={brandState} setBrandState={setBrandState} minPrice={minPrice} maxPrice={maxPrice}></ShopSidebarOne>
+                                <ShopSidebarOne toggle={ toggle } priceRange={priceRange} setRange={setRange} categoryState={categoryState} setCategoryState={setCategoryState} categories={props.categories} sizeState={sizeState} sizes={props.sizes} setSizeState={setSizeState} clearFilter={clearFilter} colors={props.colors} colorState={colorState} setColorState={setColorState} brands={props.brands} brandState={brandState} setBrandState={setBrandState} minPrice={props.minPrice} maxPrice={props.maxPrice}></ShopSidebarOne>
                             </StickyBox>
                             {
                                 toggle ?
@@ -271,4 +273,18 @@ function ShopGrid() {
     )
 }
 
-export default ShopGrid;
+const mapStateToProps = (state) => {
+    return {
+        products: state.productList.products.products,
+        productsCount: state.productList.products.productsCount,
+        categories: state.productList.uniqueCategories.uniqueCategories.categories,
+        sizes: state.productList.uniqueSizes.uniqueSizes.sizes,
+        colors: state.productList.uniqueColors.uniqueColors.colors,
+        brands: state.productList.uniqueBrands.uniqueBrands.brands,
+        priceRange: state.productList.priceRange.priceRange,
+        loading: state.productList.products.loading,
+        error: state.productList.products.error
+    };
+};
+
+export default connect(mapStateToProps, {...productsAction})(ShopGrid);

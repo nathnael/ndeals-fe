@@ -1,45 +1,11 @@
+import { connect } from 'react-redux';
+
+import { actions } from '../../../store/cart';
 import { cartQtyTotal, cartPriceTotal } from '../../../utils/index';
-import { cartList } from '../../../utils/data';
+// import { cartList } from '../../../utils/data';
 
 function CartMenu ( props ) {
-    // const cartList = [
-    //     {
-    //         name: "FlashDisk",
-    //         slug: "FlashDisk",
-    //         qty: 1,
-    //         price: 3.12,
-    //         sale_price: 4.50,
-    //         sm_pictures: [{
-    //             public_id : "products/macbook_o2cj2k",
-    //             url : "https://res.cloudinary.com/ds6eldued/image/upload/v1667901329/products/product_7_2_300x300_6e6c2d02d3_fulnmm.jpg"
-    //         }],
-    //         sum: 0.00
-    //     },
-    //     {
-    //         name: "Laptop",
-    //         slug: "laptop",
-    //         qty: 1,
-    //         price: 3.12,
-    //         sale_price: 4.50,
-    //         sm_pictures: [{
-    //             public_id : "products/camera_ridc0i",
-    //             url : "https://res.cloudinary.com/ds6eldued/image/upload/v1667901329/products/product_4_2_300x300_ec63a5f054_pinofq.jpg"
-    //         }],
-    //         sum: 0.00
-    //     },
-    //     {
-    //         name: "Monitor",
-    //         slug: "monitor",
-    //         qty: 1,
-    //         price: 3.12,
-    //         sale_price: 4.50,
-    //         sm_pictures: [{
-    //             public_id : "products/eahhtj1bkn1k9gjgd3hn",
-    //             url : "https://res.cloudinary.com/ds6eldued/image/upload/v1667901329/products/product_2_2_300x300_798eabaee1_qbmhpo.jpg"
-    //         }],
-    //         sum: 0.00
-    //     }
-    // ];
+    const { cartList } = props;
 
     return (
         <div className="dropdown cart-dropdown">
@@ -66,7 +32,7 @@ function CartMenu ( props ) {
 
                                             <span className="cart-product-info">
                                                 <span className="cart-product-qty">{ item.qty } </span>
-                                                 x ${ item.sale_price ? item.sale_price.toFixed( 2 ) : item.price.toFixed( 2 ) }
+                                                 {/* x ${ item.sale_price ? item.sale_price.toFixed( 2 ) : item.price.toFixed( 2 ) } */}
                                             </span>
                                         </div>
 
@@ -96,5 +62,10 @@ function CartMenu ( props ) {
     );
 }
 
+function mapStateToProps ( state ) {
+    return {
+        cartList: state.cartlist.data
+    }
+}
 
-export default CartMenu;
+export default connect( mapStateToProps, { ...actions } )( CartMenu );
