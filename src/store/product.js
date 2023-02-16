@@ -263,10 +263,10 @@ export function* getProductsSaga (currentPage=1, perPage=12, searchTerm="", pric
     try {
         const products = yield call(getAllProducts, currentPage, perPage, searchTerm, priceRange, categoryState, sizeState, colorState, brandState);
         yield put(actions.getProductsSuccess(products));
-        toast.success( "Successfully fetched Filtered products list" );
+        // toast.success( "Successfully fetched Filtered products list" );
     }catch(err) {
         yield put(actions.getAllProductsFail(err));
-        toast.success( "Fetching filtered products list failed" );
+        // toast.success( "Fetching filtered products list failed" );
     }
 }
 
@@ -274,10 +274,10 @@ export function* uniqueCategoriesSaga () {
     try {
         const uniqueCategories = yield call(getUniqueCategories);
         yield put(actions.uniqueCategoriesSuccess(uniqueCategories));
-        toast.success( "Successfully fetched unique categories list" );
+        // toast.success( "Successfully fetched unique categories list" );
     }catch(err) {
         yield put(actions.uniqueCategoriesFail(err));
-        toast.success( "Fetching unique categories list failed" );
+        // toast.success( "Fetching unique categories list failed" );
     }
 }
 
@@ -285,10 +285,10 @@ export function* uniqueSizesSaga () {
     try {
         const uniqueSizes = yield call(getUniqueSizes);
         yield put(actions.uniqueSizesSuccess(uniqueSizes));
-        toast.success( "Successfully fetched unique sizes list" );
+        // toast.success( "Successfully fetched unique sizes list" );
     }catch(err) {
         yield put(actions.uniqueSizesFail(err));
-        toast.success( "Fetching unique sizes list failed" );
+        // toast.success( "Fetching unique sizes list failed" );
     }
 }
 
@@ -296,10 +296,10 @@ export function* uniqueColorsSaga () {
     try {
         const uniqueColors = yield call(getUniqueColors);
         yield put(actions.uniqueColorsSuccess(uniqueColors));
-        toast.success( "Successfully fetched unique colors list" );
+        // toast.success( "Successfully fetched unique colors list" );
     }catch(err) {
         yield put(actions.uniqueColorsFail(err));
-        toast.success( "Fetching unique colors list failed" );
+        // toast.success( "Fetching unique colors list failed" );
     }
 }
 
@@ -307,10 +307,10 @@ export function* uniqueBrandsSaga () {
     try {
         const uniqueBrands = yield call(getUniqueBrands);
         yield put(actions.uniqueBrandsSuccess(uniqueBrands));
-        toast.success( "Successfully fetched unique brands list" );
+        // toast.success( "Successfully fetched unique brands list" );
     }catch(err) {
         yield put(actions.uniqueBrandsFail(err));
-        toast.success( "Fetching unique brands list failed" );
+        // toast.success( "Fetching unique brands list failed" );
     }
 }
 
@@ -318,10 +318,10 @@ export function* priceRangeSaga () {
     try {
         const priceRange = yield call(getPriceRange);
         yield put(actions.priceRangeSuccess(priceRange));
-        toast.success( "Successfully fetched price range" );
+        // toast.success( "Successfully fetched price range" );
     }catch(err) {
         yield put(actions.priceRangeFail(err));
-        toast.success( "Fetching price range failed" );
+        // toast.success( "Fetching price range failed" );
     }
 }
 

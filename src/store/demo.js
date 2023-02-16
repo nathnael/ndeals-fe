@@ -79,7 +79,7 @@ export const actions = {
 }
 
 const persistConfig = {
-    keyPrefix: "molla-",
+    keyPrefix: "ndeals-",
     key: "demo",
     storage
 }

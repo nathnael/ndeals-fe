@@ -1,4 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+
+import 'react-image-lightbox/style.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 import './Assets/css/bootstrap.min.css';
 import './Assets/css/fonts-molla.min.css';
@@ -46,6 +50,17 @@ function App() {
           <Footer />  
         </BrowserRouter>
       </div>
+      <ToastContainer
+          autoClose={ 3000 }
+          duration={ 300 }
+          newestOnTo={ true }
+          className="toast-container"
+          position="top-right"
+          closeButton={ false }
+          hideProgressBar={ true }
+          newestOnTop={ true }
+          draggable={ false }
+      />
     </>    
   );
 }

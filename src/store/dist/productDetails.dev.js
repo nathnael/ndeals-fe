@@ -118,26 +118,21 @@ function productDetailsSaga(id) {
           return (0, _effects.put)(actions.productDetailsSuccess(product));
 
         case 6:
-          _reactToastify.toast.success("Successfully fetched product details");
-
-          _context.next = 14;
+          _context.next = 12;
           break;
 
-        case 9:
-          _context.prev = 9;
+        case 8:
+          _context.prev = 8;
           _context.t0 = _context["catch"](0);
-          _context.next = 13;
+          _context.next = 12;
           return (0, _effects.put)(actions.productDetailsFail(_context.t0));
 
-        case 13:
-          _reactToastify.toast.success("Fetching product details failed");
-
-        case 14:
+        case 12:
         case "end":
           return _context.stop();
       }
     }
-  }, _marked, null, [[0, 9]]);
+  }, _marked, null, [[0, 8]]);
 }
 
 function watchProductDetails() {

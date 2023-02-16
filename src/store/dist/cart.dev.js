@@ -209,7 +209,7 @@ function cartSaga() {
 }
 
 var persistConfig = {
-  keyPrefix: "molla-",
+  keyPrefix: "ndeals-",
   key: "cart",
   storage: _storage["default"]
 };

@@ -77,7 +77,7 @@ export function* compareSaga () {
 }
 
 const persistConfig = {
-    keyPrefix: 'molla-',
+    keyPrefix: 'ndeals-',
     key: 'compare',
     storage
 }

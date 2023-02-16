@@ -401,26 +401,21 @@ function getProductsSaga() {
           return (0, _effects.put)(actions.getProductsSuccess(products));
 
         case 14:
-          _reactToastify.toast.success("Successfully fetched Filtered products list");
-
-          _context.next = 22;
+          _context.next = 20;
           break;
 
-        case 17:
-          _context.prev = 17;
+        case 16:
+          _context.prev = 16;
           _context.t0 = _context["catch"](8);
-          _context.next = 21;
+          _context.next = 20;
           return (0, _effects.put)(actions.getAllProductsFail(_context.t0));
 
-        case 21:
-          _reactToastify.toast.success("Fetching filtered products list failed");
-
-        case 22:
+        case 20:
         case "end":
           return _context.stop();
       }
     }
-  }, _marked, null, [[8, 17]]);
+  }, _marked, null, [[8, 16]]);
 }
 
 function uniqueCategoriesSaga() {
@@ -439,26 +434,21 @@ function uniqueCategoriesSaga() {
           return (0, _effects.put)(actions.uniqueCategoriesSuccess(uniqueCategories));
 
         case 6:
-          _reactToastify.toast.success("Successfully fetched unique categories list");
-
-          _context2.next = 14;
+          _context2.next = 12;
           break;
 
-        case 9:
-          _context2.prev = 9;
+        case 8:
+          _context2.prev = 8;
           _context2.t0 = _context2["catch"](0);
-          _context2.next = 13;
+          _context2.next = 12;
           return (0, _effects.put)(actions.uniqueCategoriesFail(_context2.t0));
 
-        case 13:
-          _reactToastify.toast.success("Fetching unique categories list failed");
-
-        case 14:
+        case 12:
         case "end":
           return _context2.stop();
       }
     }
-  }, _marked2, null, [[0, 9]]);
+  }, _marked2, null, [[0, 8]]);
 }
 
 function uniqueSizesSaga() {
@@ -477,26 +467,21 @@ function uniqueSizesSaga() {
           return (0, _effects.put)(actions.uniqueSizesSuccess(uniqueSizes));
 
         case 6:
-          _reactToastify.toast.success("Successfully fetched unique sizes list");
-
-          _context3.next = 14;
+          _context3.next = 12;
           break;
 
-        case 9:
-          _context3.prev = 9;
+        case 8:
+          _context3.prev = 8;
           _context3.t0 = _context3["catch"](0);
-          _context3.next = 13;
+          _context3.next = 12;
           return (0, _effects.put)(actions.uniqueSizesFail(_context3.t0));
 
-        case 13:
-          _reactToastify.toast.success("Fetching unique sizes list failed");
-
-        case 14:
+        case 12:
         case "end":
           return _context3.stop();
       }
     }
-  }, _marked3, null, [[0, 9]]);
+  }, _marked3, null, [[0, 8]]);
 }
 
 function uniqueColorsSaga() {
@@ -515,26 +500,21 @@ function uniqueColorsSaga() {
           return (0, _effects.put)(actions.uniqueColorsSuccess(uniqueColors));
 
         case 6:
-          _reactToastify.toast.success("Successfully fetched unique colors list");
-
-          _context4.next = 14;
+          _context4.next = 12;
           break;
 
-        case 9:
-          _context4.prev = 9;
+        case 8:
+          _context4.prev = 8;
           _context4.t0 = _context4["catch"](0);
-          _context4.next = 13;
+          _context4.next = 12;
           return (0, _effects.put)(actions.uniqueColorsFail(_context4.t0));
 
-        case 13:
-          _reactToastify.toast.success("Fetching unique colors list failed");
-
-        case 14:
+        case 12:
         case "end":
           return _context4.stop();
       }
     }
-  }, _marked4, null, [[0, 9]]);
+  }, _marked4, null, [[0, 8]]);
 }
 
 function uniqueBrandsSaga() {
@@ -553,26 +533,21 @@ function uniqueBrandsSaga() {
           return (0, _effects.put)(actions.uniqueBrandsSuccess(uniqueBrands));
 
         case 6:
-          _reactToastify.toast.success("Successfully fetched unique brands list");
-
-          _context5.next = 14;
+          _context5.next = 12;
           break;
 
-        case 9:
-          _context5.prev = 9;
+        case 8:
+          _context5.prev = 8;
           _context5.t0 = _context5["catch"](0);
-          _context5.next = 13;
+          _context5.next = 12;
           return (0, _effects.put)(actions.uniqueBrandsFail(_context5.t0));
 
-        case 13:
-          _reactToastify.toast.success("Fetching unique brands list failed");
-
-        case 14:
+        case 12:
         case "end":
           return _context5.stop();
       }
     }
-  }, _marked5, null, [[0, 9]]);
+  }, _marked5, null, [[0, 8]]);
 }
 
 function priceRangeSaga() {
@@ -591,26 +566,21 @@ function priceRangeSaga() {
           return (0, _effects.put)(actions.priceRangeSuccess(priceRange));
 
         case 6:
-          _reactToastify.toast.success("Successfully fetched price range");
-
-          _context6.next = 14;
+          _context6.next = 12;
           break;
 
-        case 9:
-          _context6.prev = 9;
+        case 8:
+          _context6.prev = 8;
           _context6.t0 = _context6["catch"](0);
-          _context6.next = 13;
+          _context6.next = 12;
           return (0, _effects.put)(actions.priceRangeFail(_context6.t0));
 
-        case 13:
-          _reactToastify.toast.success("Fetching price range failed");
-
-        case 14:
+        case 12:
         case "end":
           return _context6.stop();
       }
     }
-  }, _marked6, null, [[0, 9]]);
+  }, _marked6, null, [[0, 8]]);
 }
 
 function watchGetProducts() {

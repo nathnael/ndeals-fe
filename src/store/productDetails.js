@@ -71,10 +71,10 @@ export function* productDetailsSaga (id) {
     try {
         const product = yield call(getProductDetails, id);
         yield put(actions.productDetailsSuccess(product));
-        toast.success( "Successfully fetched product details" );
+        // toast.success( "Successfully fetched product details" );
     }catch(err) {
         yield put(actions.productDetailsFail(err));
-        toast.success( "Fetching product details failed" );
+        // toast.success( "Fetching product details failed" );
     }
 }
 

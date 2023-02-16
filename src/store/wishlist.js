@@ -31,6 +31,13 @@ const wishlistReducer = ( state = initialState, action ) => {
                 data: state.data.filter( item => item.id !== action.payload.product.id )
             };
 
+        case actionTypes.updateWishlist:
+            return {
+                data: [
+                    ...action.payload.wishlistItems
+                ]
+            };
+
         case actionTypes.refreshStore:
             return initialState;
 
@@ -52,17 +59,20 @@ export const actions = {
         payload: {
             product
         }
-    } )
+    } ),
 }
 
 export function* wishlistSaga () {
     yield takeEvery( actionTypes.addToWishlist, function* saga ( e ) {
         toast.success( "Product added to Wishlist" );
-    } )
+    } );
+    yield takeEvery( actionTypes.removeFromWishlist, function* saga ( e ) {
+        toast.success( "Product removed from Wishlist" );
+    } );
 }
 
 const persistConfig = {
-    keyPrefix: "molla-",
+    keyPrefix: "ndeals-",
     key: 'wishlist',
     storage,
 }

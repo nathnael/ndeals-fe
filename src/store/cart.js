@@ -118,7 +118,7 @@ export function* cartSaga () {
 }
 
 const persistConfig = {
-    keyPrefix: "molla-",
+    keyPrefix: "ndeals-",
     key: "cart",
     storage
 }

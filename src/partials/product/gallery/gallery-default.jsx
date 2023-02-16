@@ -80,17 +80,23 @@ function GalleryDefault ( props ) {
                                 <span className="product-label label-out">Out of Stock</span>
                                 : ""
                         }
-
-                        <Magnifier
-                            imageSrc={ product.sm_pictures && product.sm_pictures[ 0 ].url }
-                            imageAlt="product"
-                            largeImageSrc={ product.sm_pictures && product.sm_pictures[ 0 ].url } // Optional
-                            dragToMove={ false }
-                            mouseActivation="hover"
-                            cursorStyleActive="crosshair"
-                            id="product-zoom"
-                            className="zoom-image position-relative"
-                        />
+                        {
+                            product.sm_pictures ?
+                                <Magnifier
+                                    imageSrc={ product.sm_pictures[ 0 ].url }
+                                    imageAlt="product"
+                                    largeImageSrc={ product.sm_pictures[ 0 ].url } // Optional
+                                    dragToMove={ false }
+                                    mouseActivation="hover"
+                                    cursorStyleActive="crosshair"
+                                    id="product-zoom"
+                                    className="zoom-image position-relative"
+                                    // width={ product.pictures[ 0 ].width }
+                                    // height={ product.pictures[ 0 ].height }
+                                    // style={ { paddingTop: `${product.pictures[ 0 ].height / product.pictures[ 0 ].width * 100}%` } }
+                                />
+                            : ""
+                        }                     
 
                         <button id="btn-product-gallery" className="btn-product-gallery" onClick={ openLightBox }>
                             <i className="icon-arrows"></i>
@@ -114,9 +120,9 @@ function GalleryDefault ( props ) {
             {
                 isOpen ?
                     <LightBox
-                        mainSrc={ process.env.NEXT_PUBLIC_ASSET_URI + product.sm_pictures[ photoIndex ].url }
-                        nextSrc={ process.env.NEXT_PUBLIC_ASSET_URI + product.sm_pictures[ ( photoIndex + 1 ) % product.pictures.length ].url }
-                        prevSrc={ process.env.NEXT_PUBLIC_ASSET_URI + product.sm_pictures[ ( photoIndex + product.pictures.length - 1 ) % product.pictures.length ].url }
+                        mainSrc={ product.sm_pictures[ photoIndex ].url }
+                        nextSrc={ product.sm_pictures[ ( photoIndex + 1 ) % product.pictures.length ].url }
+                        prevSrc={ product.sm_pictures[ ( photoIndex + product.pictures.length - 1 ) % product.pictures.length ].url }
                         onCloseRequest={ closeLightBox }
                         onMovePrevRequest={ moveNextPhoto }
                         onMoveNextRequest={ movePrevPhoto }
@@ -133,4 +139,5 @@ function GalleryDefault ( props ) {
     )
 }
 
+// export default React.memo( GalleryDefault );
 export default React.memo( GalleryDefault );
