@@ -8,14 +8,22 @@ import {
     uniqueBrandsSaga, 
     uniqueCategoriesSaga, 
     uniqueColorsSaga, 
-    uniqueSizesSaga, 
+    uniqueSizesSaga,
     watchGetProducts,
     watchPriceRange,    
     watchUniqueBrands,
     watchUniqueCategories,
     watchUniqueColors,
-    watchUniqueSizes
+    watchUniqueSizes,
 } from './product';
+import {
+    userLoginSaga,
+    userRegisterSaga,
+    userLogoutSaga,
+    watchUserLogin,
+    watchUserRegister,
+    watchUserLogout,
+} from './user';
 
 import {
     productDetailsSaga,
@@ -32,6 +40,9 @@ export default function* rootSaga () {
         productDetailsSaga(),
         watchProductDetails(),
         uniqueCategoriesSaga(),
+        userLoginSaga(),
+        userRegisterSaga(),
+        userLogoutSaga(),
         watchUniqueCategories(),
         uniqueSizesSaga(),
         watchUniqueSizes(),
@@ -40,6 +51,9 @@ export default function* rootSaga () {
         uniqueBrandsSaga(),
         watchUniqueBrands(),
         priceRangeSaga(),
-        watchPriceRange()
+        watchPriceRange(),
+        watchUserLogin(),
+        watchUserRegister(),
+        watchUserLogout(),
     ] );
 }

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
+import { connect } from 'react-redux';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
+import { actions as userLoginAction } from '../../store/user';
 
 
 const customStyles = {
@@ -12,15 +14,33 @@ const customStyles = {
 
 Modal.setAppElement( 'body' );
 
-function LoginModal () {
+function LoginModal (props) {
     const [ open, setOpen ] = useState( false );
+    const [ email, setEmail ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const [ userData, setUserData ] = useState({
+        newName: '',
+        newEmail: '',
+        newPassword: '',        
+    });
+    const { newName, newEmail, newPassword } = userData;
+    const [ newAvatar, setNewAvatar ] = useState('');
+    const [ newAvatarPreview, setNewAvatarPreview ] = useState('/images/team/about-2/member-1.jpg');
+    const user = props.user ? props.user.user : undefined;
+    const error = props.error ? props.error : undefined;
+
     let timer;
 
     useEffect( () => {
+        if (error && error.length > 0) {
+            setOpen( true );
+        } else {
+            setOpen( false );
+        }
         return () => {
             if ( timer ) clearTimeout( timer );
         }
-    } );
+    }, [error] );
 
     function closeModal () {
         document.getElementById( "login-modal" ).classList.remove( "ReactModal__Content--after-open" );
@@ -39,11 +59,64 @@ function LoginModal () {
         setOpen( true );
     }
 
+    function handleEmailChange(e) {
+        setEmail(e.target.value);
+    }
+
+    function handlePasswordChange(e) {
+        setPassword(e.target.value);
+    }
+
+    function onChange(e) {
+        if (e.target.name === 'avatar') {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setNewAvatarPreview(reader.result);
+                    setNewAvatar(reader.result);
+                }
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        } else {
+            setUserData({ ...userData, [e.target.name]: e.target.value})
+        }
+    }
+
+    function onUserLogin (e) {
+        e.preventDefault();        
+        props.getLoginRequest(email, password);   
+        if (!error) {
+            setOpen( false );
+        } else {
+            setOpen( true );
+        }
+    }
+
+    function onUserRegister (e) {
+        e.preventDefault();
+
+        props.getRegisterUserRequest({...userData, 'avatar': newAvatar});   
+    }
+
+    function onUserLogout (e) {
+        e.preventDefault();        
+        props.getLogoutRequest();
+    }
+
     return (
         <li>
-            <a href="/" onClick={ openModal }>Sign in / Sign up</a>
             {
-                open ?
+                user ?   
+                <>
+                    { `Logged in as ${user.name}` } | <a href="/logout" onClick={ onUserLogout }>Logout</a>
+
+                </>
+                    
+                    :             
+                    <a href="/" onClick={ openModal }>Sign in / Sign up</a>
+            }
+            {
+                error || open ?
                     <Modal
                         isOpen={ open }
                         style={ customStyles }
@@ -75,23 +148,40 @@ function LoginModal () {
                                             <div className="tab-content">
                                                 <TabPanel style={ { paddingTop: "2rem" } }>
                                                     <div>
-                                                        <form action="#">
+                                                        <form action="#" onSubmit={ onUserLogin }>
                                                             <div className="form-group">
                                                                 <label htmlFor="singin-email-2">Username or email address *</label>
-                                                                <input type="text" className="form-control" id="singin-email-2" name="singin-email" required />
+                                                                <input 
+                                                                    type="text" 
+                                                                    className="form-control" 
+                                                                    id="singin-email-2" 
+                                                                    name="singin-email" 
+                                                                    value={email}
+                                                                    onChange={ handleEmailChange }
+                                                                    required                                                                         
+                                                                    />
                                                             </div>
 
                                                             <div className="form-group">
                                                                 <label htmlFor="singin-password-2">Password *</label>
-                                                                <input type="password" className="form-control" id="singin-password-2" name="singin-password" required />
+                                                                <input 
+                                                                    type="password" 
+                                                                    className="form-control" 
+                                                                    id="singin-password-2" 
+                                                                    name="singin-password" 
+                                                                    value={password}
+                                                                    onChange={ handlePasswordChange }
+                                                                    required />
                                                             </div>
+
+                                                            { error && <div className='alert alert-danger'>{error.error}</div>}
 
                                                             <div className="form-footer">
                                                                 <button type="submit" className="btn btn-outline-primary-2">
                                                                     <span>LOG IN</span>
                                                                     <i className="icon-long-arrow-right"></i>
                                                                 </button>
-
+                                                                
                                                                 <div className="custom-control custom-checkbox">
                                                                     <input type="checkbox" className="custom-control-input" id="signin-remember-2" />
                                                                     <label className="custom-control-label" htmlFor="signin-remember-2">Remember Me</label>
@@ -121,19 +211,79 @@ function LoginModal () {
                                                 </TabPanel>
 
                                                 <TabPanel>
-                                                    <form action="#">
+                                                    <form action="#" onSubmit={onUserRegister} encType='multipart/form-data'>
+                                                        <div className="form-group">
+                                                            <label htmlFor="register-name-2">Your full name *</label>
+                                                            <input 
+                                                                type="name" 
+                                                                className="form-control" 
+                                                                id="register-name-2" 
+                                                                name="newName" 
+                                                                value={newName}
+                                                                onChange={onChange}
+                                                                required                                                                 
+                                                            />
+                                                        </div>
+
                                                         <div className="form-group">
                                                             <label htmlFor="register-email-2">Your email address *</label>
-                                                            <input type="email" className="form-control" id="register-email-2" name="register-email" required />
+                                                            <input 
+                                                                type="email" 
+                                                                className="form-control" 
+                                                                id="register-email-2" 
+                                                                name="newEmail" 
+                                                                value={newEmail}
+                                                                onChange={onChange}
+                                                                required                                                                 
+                                                            />
                                                         </div>
 
                                                         <div className="form-group">
                                                             <label htmlFor="register-password-2">Password *</label>
-                                                            <input type="password" className="form-control" id="register-password-2" name="register-password" required />
+                                                            <input 
+                                                                type="password" 
+                                                                className="form-control" 
+                                                                id="register-password-2" 
+                                                                name="newPassword"
+                                                                value={newPassword}
+                                                                onChange={onChange} 
+                                                                required />
+                                                        </div>
+
+                                                        <div className="form-group">
+                                                            <label htmlFor="avatar_upload">Avatar *</label>
+                                                            <div className='d-flex align-items-center'>
+                                                                <div>
+                                                                    <figure className='avatar mr-3 item-rtl'>
+                                                                        <img 
+                                                                            src={newAvatarPreview}
+                                                                            className='rounded-circle'
+                                                                            alt='Avatar Preview'
+                                                                        />
+                                                                    </figure>
+                                                                </div>
+                                                                <div className='custom-file'>
+                                                                    <input
+                                                                        type='file'
+                                                                        name='avatar'
+                                                                        className='custom-file-input'
+                                                                        id='customFile'
+                                                                        accept='images/all'
+                                                                        onChange={onChange}
+                                                                    />
+                                                                    <label className='custom-file-label' htmlFor='customFile'>
+                                                                        Choose Avatar
+                                                                    </label>
+                                                                </div>
+                                                            </div>
                                                         </div>
 
                                                         <div className="form-footer">
-                                                            <button type="submit" className="btn btn-outline-primary-2">
+                                                            <button 
+                                                                type="submit" 
+                                                                className="btn btn-outline-primary-2"
+                                                                // disabled={loading}
+                                                            >
                                                                 <span>SIGN UP</span>
                                                                 <i className="icon-long-arrow-right"></i>
                                                             </button>
@@ -175,4 +325,11 @@ function LoginModal () {
     )
 }
 
-export default LoginModal;
+const mapStateToProps = (state) => {
+    return {
+        user: state.user.user ? state.user.user.user : undefined,
+        error: state.user.error ? state.user.error : undefined,
+    }
+}
+
+export default connect(mapStateToProps, {...userLoginAction})(LoginModal);

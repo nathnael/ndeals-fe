@@ -25,6 +25,8 @@ var _product = _interopRequireDefault(require("./product"));
 
 var _productDetails = _interopRequireDefault(require("./productDetails"));
 
+var _user = _interopRequireDefault(require("./user"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // Import Reducers
@@ -34,7 +36,8 @@ var rootReducers = (0, _toolkit.combineReducers)({
   wishlist: _wishlist["default"],
   comparelist: _compare["default"],
   productList: _product["default"],
-  productDetails: _productDetails["default"]
+  productDetails: _productDetails["default"],
+  user: _user["default"]
 }); // Create a persist config for the root reducer
 
 var persistConfig = {

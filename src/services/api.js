@@ -121,3 +121,75 @@ export const getPriceRange = async () => {
         console.log(`Error: ${error}`)
     }
 };
+
+export const userLogin = async (email, password) => {
+    try {
+        if (email && password) {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            const { data } = await axios.post(`/api/v1/login`, {email, password}, config);
+
+            // console.log(`email: ${email}`)
+            // console.log(`password: ${password}`)
+
+            return data;
+        }
+
+    } catch (error) {
+        // console.log(`Error: ${error}`);
+    }
+};
+
+export const userRegister = async (userData) => {
+    try {
+        if (userData) {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+
+            // console.log(`userData: ${JSON.stringify(userData)}`)
+
+            const { data } = await axios.post(`/api/v1/register`, userData, config);
+
+            // console.log(`password: ${password}`)
+
+            return data;
+        }
+
+    } catch (error) {
+        // console.log(`Error: ${error}`);
+    }
+};
+
+// export const loadUser = async () => {
+//     try {
+
+//         // console.log(`userData: ${JSON.stringify(userData)}`)
+
+//         const { data } = await axios.get(`/api/v1/me`);
+
+//         // console.log(`password: ${password}`)
+
+//         return data;
+
+//     } catch (error) {
+//         // console.log(`Error: ${error}`);
+//     }
+// };
+
+export const userLogout = async () => {
+    try {
+
+        const { data } = await axios.get(`/api/v1/logout`);
+
+        return data;
+
+    } catch (error) {
+        console.log(`Error: ${error}`)
+    }
+};

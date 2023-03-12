@@ -488,7 +488,7 @@ function Home() {
                         </div>
                     </div>
                 </Reveal>
-                <NewsletterModal />
+                {/* <NewsletterModal /> */}
             </div>
         </>
     )

@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.fetchImages = fetchImages;
-exports.getPriceRange = exports.getUniqueBrands = exports.getUniqueColors = exports.getUniqueSizes = exports.getUniqueCategories = exports.getProductDetails = exports.getAllProducts = void 0;
+exports.userLogout = exports.userRegister = exports.userLogin = exports.getPriceRange = exports.getUniqueBrands = exports.getUniqueColors = exports.getUniqueSizes = exports.getUniqueCategories = exports.getProductDetails = exports.getAllProducts = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -294,3 +294,138 @@ var getPriceRange = function getPriceRange() {
 };
 
 exports.getPriceRange = getPriceRange;
+
+var userLogin = function userLogin(email, password) {
+  var config, _ref9, data;
+
+  return regeneratorRuntime.async(function userLogin$(_context8) {
+    while (1) {
+      switch (_context8.prev = _context8.next) {
+        case 0:
+          _context8.prev = 0;
+
+          if (!(email && password)) {
+            _context8.next = 8;
+            break;
+          }
+
+          config = {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          };
+          _context8.next = 5;
+          return regeneratorRuntime.awrap(_axios["default"].post("/api/v1/login", {
+            email: email,
+            password: password
+          }, config));
+
+        case 5:
+          _ref9 = _context8.sent;
+          data = _ref9.data;
+          return _context8.abrupt("return", data);
+
+        case 8:
+          _context8.next = 12;
+          break;
+
+        case 10:
+          _context8.prev = 10;
+          _context8.t0 = _context8["catch"](0);
+
+        case 12:
+        case "end":
+          return _context8.stop();
+      }
+    }
+  }, null, null, [[0, 10]]);
+};
+
+exports.userLogin = userLogin;
+
+var userRegister = function userRegister(userData) {
+  var config, _ref10, data;
+
+  return regeneratorRuntime.async(function userRegister$(_context9) {
+    while (1) {
+      switch (_context9.prev = _context9.next) {
+        case 0:
+          _context9.prev = 0;
+
+          if (!userData) {
+            _context9.next = 8;
+            break;
+          }
+
+          config = {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }; // console.log(`userData: ${JSON.stringify(userData)}`)
+
+          _context9.next = 5;
+          return regeneratorRuntime.awrap(_axios["default"].post("/api/v1/register", userData, config));
+
+        case 5:
+          _ref10 = _context9.sent;
+          data = _ref10.data;
+          return _context9.abrupt("return", data);
+
+        case 8:
+          _context9.next = 12;
+          break;
+
+        case 10:
+          _context9.prev = 10;
+          _context9.t0 = _context9["catch"](0);
+
+        case 12:
+        case "end":
+          return _context9.stop();
+      }
+    }
+  }, null, null, [[0, 10]]);
+}; // export const loadUser = async () => {
+//     try {
+//         // console.log(`userData: ${JSON.stringify(userData)}`)
+//         const { data } = await axios.get(`/api/v1/me`);
+//         // console.log(`password: ${password}`)
+//         return data;
+//     } catch (error) {
+//         // console.log(`Error: ${error}`);
+//     }
+// };
+
+
+exports.userRegister = userRegister;
+
+var userLogout = function userLogout() {
+  var _ref11, data;
+
+  return regeneratorRuntime.async(function userLogout$(_context10) {
+    while (1) {
+      switch (_context10.prev = _context10.next) {
+        case 0:
+          _context10.prev = 0;
+          _context10.next = 3;
+          return regeneratorRuntime.awrap(_axios["default"].get("/api/v1/logout"));
+
+        case 3:
+          _ref11 = _context10.sent;
+          data = _ref11.data;
+          return _context10.abrupt("return", data);
+
+        case 8:
+          _context10.prev = 8;
+          _context10.t0 = _context10["catch"](0);
+          console.log("Error: ".concat(_context10.t0));
+
+        case 11:
+        case "end":
+          return _context10.stop();
+      }
+    }
+  }, null, null, [[0, 8]]);
+};
+
+exports.userLogout = userLogout;

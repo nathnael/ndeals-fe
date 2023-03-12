@@ -90,8 +90,6 @@ function ProductDetails(props) {
 const mapStateToProps = (state) => {
     return {
         productDetails: state.productDetails.productDetails,
-        // loading: state.productList.productDetails.product.loading,
-        // error: state.productList.productDetails.product.error
     };
 }
 

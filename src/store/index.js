@@ -10,6 +10,7 @@ import wishlistReducer from './wishlist';
 import compareReducer from './compare';
 import productReducer from './product';
 import productDetailsReducer from './productDetails';
+import userReducer from './user';
 
 // Create a root reducer by combining the individual reducers
 const rootReducers = combineReducers({
@@ -17,7 +18,8 @@ const rootReducers = combineReducers({
     wishlist: wishlistReducer,
     comparelist: compareReducer,
     productList: productReducer,
-    productDetails: productDetailsReducer
+    productDetails: productDetailsReducer,
+    user: userReducer,
 });
 
 // Create a persist config for the root reducer

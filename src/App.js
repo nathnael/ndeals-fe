@@ -24,6 +24,7 @@ import MetaData from './components/layout/MetaData';
 import ProductDetails from './components/product/product-details';
 import ShopGrid from './components/shop/shop-grid';
 
+
 function App() {
   return (  
     <>        
