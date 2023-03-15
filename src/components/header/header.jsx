@@ -54,7 +54,7 @@ function Header () {
                                             </div>
                                         </div>
                                     </li>
-                                    <LoginModal />
+                                    <LoginModal />                                  
                                 </ul>
                             </li>
                         </ul>

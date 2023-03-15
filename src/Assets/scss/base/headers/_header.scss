@@ -113,6 +113,11 @@
 		}
 	}
 
+	div.with-gutter {
+		padding-top: .80rem;
+		padding-bottom: .80rem;
+	}
+
 	ul {
 		display: flex;
 		align-items: center;
@@ -1557,8 +1562,10 @@
 	}
 
 	.header-dropdown {
-		padding-top: .75rem;
-		padding-bottom: .75rem;
+		// padding-top: .75rem;
+		// padding-bottom: .75rem;		
+		padding-top: 0;
+		padding-bottom: 0;	
 
 		+ .header-dropdown {
 			margin-left: 4rem;

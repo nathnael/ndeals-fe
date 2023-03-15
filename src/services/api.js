@@ -166,21 +166,21 @@ export const userRegister = async (userData) => {
     }
 };
 
-// export const loadUser = async () => {
-//     try {
+export const loadUser = async () => {
+    try {
 
-//         // console.log(`userData: ${JSON.stringify(userData)}`)
+        // console.log(`userData: ${JSON.stringify(userData)}`)
 
-//         const { data } = await axios.get(`/api/v1/me`);
+        const { data } = await axios.get(`/api/v1/me`);
 
-//         // console.log(`password: ${password}`)
+        console.log(`data: ${JSON.stringify(data)}`)
 
-//         return data;
+        return data;
 
-//     } catch (error) {
-//         // console.log(`Error: ${error}`);
-//     }
-// };
+    } catch (error) {
+        console.log(`Error: ${error}`);
+    }
+};
 
 export const userLogout = async () => {
     try {

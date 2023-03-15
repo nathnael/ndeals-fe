@@ -6,6 +6,7 @@ import {
     userLogin,
     userRegister,
     userLogout,
+    loadUser,
 } from "../services/api";
 
 export const actionTypes = {
@@ -31,14 +32,14 @@ const userReducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case actionTypes.getLoginRequest:
         case actionTypes.getRegisterUserRequest:
-        // case actionTypes.getLoadUserRequest:
+        case actionTypes.getLoadUserRequest:
             return {
                 loading: true,
                 isAuthenticated: false
             }
         case actionTypes.getLoginSuccess:
         case actionTypes.getRegisterUserSuccess:
-        // case actionTypes.getLoadUserSuccess:
+        case actionTypes.getLoadUserSuccess:
             return {
                 ...state,
                 loading: false,
@@ -46,13 +47,6 @@ const userReducer = ( state = initialState, action ) => {
                 user: action.payload,
                 error: null,
             }
-        // case actionTypes.getLoadUserFail:
-        //     return {
-        //         loading: false,
-        //         isAuthenticated: false,
-        //         user: null,
-        //         error: action.payload
-        //     }
         case actionTypes.getLoginFail:
         case actionTypes.getRegisterUserFail:        
             return {
@@ -77,6 +71,13 @@ const userReducer = ( state = initialState, action ) => {
                 ...state,
                 loading: false,
                 error: action.payload,
+            }
+        case actionTypes.getLoadUserFail:
+            return {
+                loading: false,
+                isAuthenticated: false,
+                user: null,
+                error: action.payload
             }
         case actionTypes.clearErrors: 
             return {
@@ -126,6 +127,22 @@ export const actions = {
             error
         }
     }),
+    getLoadUserRequest: () => ({
+        type: actionTypes.getLoadUserRequest,
+        payload: {}
+    }),
+    getLoadUserSuccess: (user) => ({
+        type: actionTypes.getLoadUserSuccess,
+        payload: {
+            user
+        }
+    }),
+    getLoadUserFail: (error) => ({
+        type: actionTypes.getLoadUserFail,
+        payload: {
+            error
+        }
+    }),
     getLogoutRequest: () => ({
         type: actionTypes.getLogoutRequest
     }),
@@ -169,6 +186,17 @@ export function* userRegisterSaga (userData) {
     }
 }
 
+export function* userLoadSaga () {
+    try {
+        const user = yield call(loadUser);
+        yield put(actions.getLoadUserSuccess(user));
+        // toast.success( "Successfully fetched unique categories list" );
+    }catch(err) {
+        yield put(actions.getLoadUserFail(err));
+        // toast.success( "Fetching unique categories list failed" );
+    }
+}
+
 export function* userLogoutSaga () {
     try {
         yield call(userLogout);
@@ -189,6 +217,13 @@ export function* watchUserRegister() {
     while (true) {
         const action = yield take(actionTypes.getRegisterUserRequest);
         yield call(userRegisterSaga, action.payload.userData);
+    }
+}
+
+export function* watchUserLoad() {
+    while (true) {
+        yield take(actionTypes.getLoadUserRequest);
+        yield call(userLoadSaga);
     }
 }
 

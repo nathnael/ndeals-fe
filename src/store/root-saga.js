@@ -23,6 +23,8 @@ import {
     watchUserLogin,
     watchUserRegister,
     watchUserLogout,
+    userLoadSaga,
+    watchUserLoad,
 } from './user';
 
 import {
@@ -42,6 +44,7 @@ export default function* rootSaga () {
         uniqueCategoriesSaga(),
         userLoginSaga(),
         userRegisterSaga(),
+        userLoadSaga(),
         userLogoutSaga(),
         watchUniqueCategories(),
         uniqueSizesSaga(),
@@ -54,6 +57,7 @@ export default function* rootSaga () {
         watchPriceRange(),
         watchUserLogin(),
         watchUserRegister(),
+        watchUserLoad(),
         watchUserLogout(),
     ] );
 }

@@ -23,9 +23,16 @@ import Home from './components/home/home';
 import MetaData from './components/layout/MetaData';
 import ProductDetails from './components/product/product-details';
 import ShopGrid from './components/shop/shop-grid';
+import { actions as userActions } from './store/user';
+import { connect } from 'react-redux';
+import { useEffect } from 'react';
 
+function App(props) {
 
-function App() {
+  useEffect(() => {
+    props.getLoadUserRequest();
+  }, [])
+
   return (  
     <>        
       <MetaData title={'Buy Best Products Online'} />
@@ -66,4 +73,12 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  console.log(JSON.stringify(state.user));
+  return {
+    user: state.user.user ? state.user.user.user : undefined,
+    error: state.user.error ? state.user.error : undefined,
+  };
+}
+
+export default connect(mapStateToProps, {...userActions})(App);

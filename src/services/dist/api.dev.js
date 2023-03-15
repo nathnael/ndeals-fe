@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.fetchImages = fetchImages;
-exports.userLogout = exports.userRegister = exports.userLogin = exports.getPriceRange = exports.getUniqueBrands = exports.getUniqueColors = exports.getUniqueSizes = exports.getUniqueCategories = exports.getProductDetails = exports.getAllProducts = void 0;
+exports.userLogout = exports.loadUser = exports.userRegister = exports.userLogin = exports.getPriceRange = exports.getUniqueBrands = exports.getUniqueColors = exports.getUniqueSizes = exports.getUniqueCategories = exports.getProductDetails = exports.getAllProducts = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -385,44 +385,66 @@ var userRegister = function userRegister(userData) {
       }
     }
   }, null, null, [[0, 10]]);
-}; // export const loadUser = async () => {
-//     try {
-//         // console.log(`userData: ${JSON.stringify(userData)}`)
-//         const { data } = await axios.get(`/api/v1/me`);
-//         // console.log(`password: ${password}`)
-//         return data;
-//     } catch (error) {
-//         // console.log(`Error: ${error}`);
-//     }
-// };
-
+};
 
 exports.userRegister = userRegister;
 
-var userLogout = function userLogout() {
+var loadUser = function loadUser() {
   var _ref11, data;
 
-  return regeneratorRuntime.async(function userLogout$(_context10) {
+  return regeneratorRuntime.async(function loadUser$(_context10) {
     while (1) {
       switch (_context10.prev = _context10.next) {
         case 0:
           _context10.prev = 0;
           _context10.next = 3;
-          return regeneratorRuntime.awrap(_axios["default"].get("/api/v1/logout"));
+          return regeneratorRuntime.awrap(_axios["default"].get("/api/v1/me"));
 
         case 3:
           _ref11 = _context10.sent;
           data = _ref11.data;
+          console.log("data: ".concat(JSON.stringify(data)));
           return _context10.abrupt("return", data);
 
-        case 8:
-          _context10.prev = 8;
+        case 9:
+          _context10.prev = 9;
           _context10.t0 = _context10["catch"](0);
           console.log("Error: ".concat(_context10.t0));
 
-        case 11:
+        case 12:
         case "end":
           return _context10.stop();
+      }
+    }
+  }, null, null, [[0, 9]]);
+};
+
+exports.loadUser = loadUser;
+
+var userLogout = function userLogout() {
+  var _ref12, data;
+
+  return regeneratorRuntime.async(function userLogout$(_context11) {
+    while (1) {
+      switch (_context11.prev = _context11.next) {
+        case 0:
+          _context11.prev = 0;
+          _context11.next = 3;
+          return regeneratorRuntime.awrap(_axios["default"].get("/api/v1/logout"));
+
+        case 3:
+          _ref12 = _context11.sent;
+          data = _ref12.data;
+          return _context11.abrupt("return", data);
+
+        case 8:
+          _context11.prev = 8;
+          _context11.t0 = _context11["catch"](0);
+          console.log("Error: ".concat(_context11.t0));
+
+        case 11:
+        case "end":
+          return _context11.stop();
       }
     }
   }, null, null, [[0, 8]]);

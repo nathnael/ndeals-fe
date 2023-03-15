@@ -5,9 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.userLoginSaga = userLoginSaga;
 exports.userRegisterSaga = userRegisterSaga;
+exports.userLoadSaga = userLoadSaga;
 exports.userLogoutSaga = userLogoutSaga;
 exports.watchUserLogin = watchUserLogin;
 exports.watchUserRegister = watchUserRegister;
+exports.watchUserLoad = watchUserLoad;
 exports.watchUserLogout = watchUserLogout;
 exports["default"] = exports.actions = exports.actionTypes = void 0;
 
@@ -31,14 +33,20 @@ regeneratorRuntime.mark(userLoginSaga),
 regeneratorRuntime.mark(userRegisterSaga),
     _marked3 =
 /*#__PURE__*/
-regeneratorRuntime.mark(userLogoutSaga),
+regeneratorRuntime.mark(userLoadSaga),
     _marked4 =
 /*#__PURE__*/
-regeneratorRuntime.mark(watchUserLogin),
+regeneratorRuntime.mark(userLogoutSaga),
     _marked5 =
 /*#__PURE__*/
-regeneratorRuntime.mark(watchUserRegister),
+regeneratorRuntime.mark(watchUserLogin),
     _marked6 =
+/*#__PURE__*/
+regeneratorRuntime.mark(watchUserRegister),
+    _marked7 =
+/*#__PURE__*/
+regeneratorRuntime.mark(watchUserLoad),
+    _marked8 =
 /*#__PURE__*/
 regeneratorRuntime.mark(watchUserLogout);
 
@@ -75,7 +83,7 @@ var userReducer = function userReducer() {
   switch (action.type) {
     case actionTypes.getLoginRequest:
     case actionTypes.getRegisterUserRequest:
-      // case actionTypes.getLoadUserRequest:
+    case actionTypes.getLoadUserRequest:
       return {
         loading: true,
         isAuthenticated: false
@@ -83,20 +91,13 @@ var userReducer = function userReducer() {
 
     case actionTypes.getLoginSuccess:
     case actionTypes.getRegisterUserSuccess:
-      // case actionTypes.getLoadUserSuccess:
+    case actionTypes.getLoadUserSuccess:
       return _objectSpread({}, state, {
         loading: false,
         isAuthenticated: true,
         user: action.payload,
         error: null
       });
-    // case actionTypes.getLoadUserFail:
-    //     return {
-    //         loading: false,
-    //         isAuthenticated: false,
-    //         user: null,
-    //         error: action.payload
-    //     }
 
     case actionTypes.getLoginFail:
     case actionTypes.getRegisterUserFail:
@@ -123,6 +124,14 @@ var userReducer = function userReducer() {
         loading: false,
         error: action.payload
       });
+
+    case actionTypes.getLoadUserFail:
+      return {
+        loading: false,
+        isAuthenticated: false,
+        user: null,
+        error: action.payload
+      };
 
     case actionTypes.clearErrors:
       return _objectSpread({}, state, {
@@ -179,6 +188,28 @@ var actions = {
   getRegisterUserFail: function getRegisterUserFail(error) {
     return {
       type: actionTypes.getRegisterUserFail,
+      payload: {
+        error: error
+      }
+    };
+  },
+  getLoadUserRequest: function getLoadUserRequest() {
+    return {
+      type: actionTypes.getLoadUserRequest,
+      payload: {}
+    };
+  },
+  getLoadUserSuccess: function getLoadUserSuccess(user) {
+    return {
+      type: actionTypes.getLoadUserSuccess,
+      payload: {
+        user: user
+      }
+    };
+  },
+  getLoadUserFail: function getLoadUserFail(error) {
+    return {
+      type: actionTypes.getLoadUserFail,
       payload: {
         error: error
       }
@@ -299,71 +330,73 @@ function userRegisterSaga(userData) {
   }, _marked2, null, [[0, 13]]);
 }
 
-function userLogoutSaga() {
-  return regeneratorRuntime.wrap(function userLogoutSaga$(_context3) {
+function userLoadSaga() {
+  var user;
+  return regeneratorRuntime.wrap(function userLoadSaga$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
           _context3.prev = 0;
           _context3.next = 3;
-          return (0, _effects.call)(_api.userLogout);
+          return (0, _effects.call)(_api.loadUser);
 
         case 3:
-          _context3.next = 5;
-          return (0, _effects.put)(actions.getLogoutSuccess());
+          user = _context3.sent;
+          _context3.next = 6;
+          return (0, _effects.put)(actions.getLoadUserSuccess(user));
 
-        case 5:
-          _context3.next = 11;
+        case 6:
+          _context3.next = 12;
           break;
 
-        case 7:
-          _context3.prev = 7;
+        case 8:
+          _context3.prev = 8;
           _context3.t0 = _context3["catch"](0);
-          _context3.next = 11;
-          return (0, _effects.put)(actions.getLogoutFail(_context3.t0));
+          _context3.next = 12;
+          return (0, _effects.put)(actions.getLoadUserFail(_context3.t0));
 
-        case 11:
+        case 12:
         case "end":
           return _context3.stop();
       }
     }
-  }, _marked3, null, [[0, 7]]);
+  }, _marked3, null, [[0, 8]]);
 }
 
-function watchUserLogin() {
-  var action;
-  return regeneratorRuntime.wrap(function watchUserLogin$(_context4) {
+function userLogoutSaga() {
+  return regeneratorRuntime.wrap(function userLogoutSaga$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
-          if (!true) {
-            _context4.next = 8;
-            break;
-          }
-
+          _context4.prev = 0;
           _context4.next = 3;
-          return (0, _effects.take)(actionTypes.getLoginRequest);
+          return (0, _effects.call)(_api.userLogout);
 
         case 3:
-          action = _context4.sent;
-          _context4.next = 6;
-          return (0, _effects.call)(userLoginSaga, action.payload.email, action.payload.password);
+          _context4.next = 5;
+          return (0, _effects.put)(actions.getLogoutSuccess());
 
-        case 6:
-          _context4.next = 0;
+        case 5:
+          _context4.next = 11;
           break;
 
-        case 8:
+        case 7:
+          _context4.prev = 7;
+          _context4.t0 = _context4["catch"](0);
+          _context4.next = 11;
+          return (0, _effects.put)(actions.getLogoutFail(_context4.t0));
+
+        case 11:
         case "end":
           return _context4.stop();
       }
     }
-  }, _marked4);
+  }, _marked4, null, [[0, 7]]);
 }
 
-function watchUserRegister() {
+function watchUserLogin() {
   var action;
-  return regeneratorRuntime.wrap(function watchUserRegister$(_context5) {
+  return regeneratorRuntime.wrap(function watchUserLogin$(_context5) {
     while (1) {
       switch (_context5.prev = _context5.next) {
         case 0:
@@ -373,12 +406,12 @@ function watchUserRegister() {
           }
 
           _context5.next = 3;
-          return (0, _effects.take)(actionTypes.getRegisterUserRequest);
+          return (0, _effects.take)(actionTypes.getLoginRequest);
 
         case 3:
           action = _context5.sent;
           _context5.next = 6;
-          return (0, _effects.call)(userRegisterSaga, action.payload.userData);
+          return (0, _effects.call)(userLoginSaga, action.payload.email, action.payload.password);
 
         case 6:
           _context5.next = 0;
@@ -392,33 +425,93 @@ function watchUserRegister() {
   }, _marked5);
 }
 
-function watchUserLogout() {
-  return regeneratorRuntime.wrap(function watchUserLogout$(_context6) {
+function watchUserRegister() {
+  var action;
+  return regeneratorRuntime.wrap(function watchUserRegister$(_context6) {
     while (1) {
       switch (_context6.prev = _context6.next) {
         case 0:
           if (!true) {
-            _context6.next = 7;
+            _context6.next = 8;
             break;
           }
 
           _context6.next = 3;
-          return (0, _effects.take)(actionTypes.getLogoutRequest);
+          return (0, _effects.take)(actionTypes.getRegisterUserRequest);
 
         case 3:
-          _context6.next = 5;
-          return (0, _effects.call)(userLogoutSaga);
+          action = _context6.sent;
+          _context6.next = 6;
+          return (0, _effects.call)(userRegisterSaga, action.payload.userData);
 
-        case 5:
+        case 6:
           _context6.next = 0;
           break;
 
-        case 7:
+        case 8:
         case "end":
           return _context6.stop();
       }
     }
   }, _marked6);
+}
+
+function watchUserLoad() {
+  return regeneratorRuntime.wrap(function watchUserLoad$(_context7) {
+    while (1) {
+      switch (_context7.prev = _context7.next) {
+        case 0:
+          if (!true) {
+            _context7.next = 7;
+            break;
+          }
+
+          _context7.next = 3;
+          return (0, _effects.take)(actionTypes.getLoadUserRequest);
+
+        case 3:
+          _context7.next = 5;
+          return (0, _effects.call)(userLoadSaga);
+
+        case 5:
+          _context7.next = 0;
+          break;
+
+        case 7:
+        case "end":
+          return _context7.stop();
+      }
+    }
+  }, _marked7);
+}
+
+function watchUserLogout() {
+  return regeneratorRuntime.wrap(function watchUserLogout$(_context8) {
+    while (1) {
+      switch (_context8.prev = _context8.next) {
+        case 0:
+          if (!true) {
+            _context8.next = 7;
+            break;
+          }
+
+          _context8.next = 3;
+          return (0, _effects.take)(actionTypes.getLogoutRequest);
+
+        case 3:
+          _context8.next = 5;
+          return (0, _effects.call)(userLogoutSaga);
+
+        case 5:
+          _context8.next = 0;
+          break;
+
+        case 7:
+        case "end":
+          return _context8.stop();
+      }
+    }
+  }, _marked8);
 }
 
 var persistConfig = {

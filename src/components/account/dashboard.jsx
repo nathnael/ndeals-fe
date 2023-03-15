@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
 
 import PageHeader from '../../features/page-header';
+import { actions as userActions } from '../../store/user';
 
-function DashBoard () {
+function DashBoard (props, history) {
     function toOrder ( e ) {
         e.preventDefault();
         document
@@ -23,6 +25,10 @@ function DashBoard () {
         document
             .querySelector( '.nav-dashboard .react-tabs__tab-list .nav-item:nth-child(5)' )
             .click();
+    }
+
+    function onUserLogout(e) {
+        props.getLogoutRequest();
     }
 
     return (
@@ -71,7 +77,7 @@ function DashBoard () {
                                             </Tab>
 
                                             <Tab className="nav-item">
-                                                <a href="/" className="nav-link">Sign Out</a>
+                                                <a href="/" onClick={onUserLogout} className="nav-link">Sign Out</a>
                                             </Tab>
                                         </TabList>
                                     </aside>
@@ -178,4 +184,11 @@ function DashBoard () {
     )
 }
 
-export default React.memo( DashBoard );
+const mapStateToProps = (state) => {
+    return {
+        user: state.user.user ? state.user.user.user : undefined,
+        error: state.user.error ? state.user.error : undefined
+    };
+};
+
+export default connect(mapStateToProps, {...userActions})(React.memo( DashBoard ));

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { actions as userLoginAction } from '../../store/user';
 
@@ -107,13 +108,27 @@ function LoginModal (props) {
         <li>
             {
                 user ?   
-                <>
-                    { `Logged in as ${user.name}` } | <a href="/logout" onClick={ onUserLogout }>Logout</a>
-
-                </>
+                    <div className="header-dropdown">
+                        <Link to="!#" className="btn" type="button" id="dropDownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            
+                            <img src={user.avatar && user.avatar.url} alt={user && user.name} className="social-icon"/>   
+                            <span>{user && user.name}</span>&nbsp;&nbsp;&nbsp;                        
+                        </Link>
+                        <div className="header-menu">
+                            <ul>
+                                { user && user.role !== 'admin' ? (
+                                    <li><Link className='dropdown-item' to="/account/dashboard#orders">Orders</Link></li>
+                                ) : (
+                                    <li><Link className='dropdown-item' to="/account/dashboard">Dashboard</Link></li>
+                                )}                                
+                                <li><a href="/account/dashboard#orders">Profile</a></li>
+                                <li><a href="/logout" onClick={ onUserLogout }>Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
                     
                     :             
-                    <a href="/" onClick={ openModal }>Sign in / Sign up</a>
+                    <div className='with-gutter'><a href="/" onClick={ openModal }>Sign in / Sign up</a></div>
             }
             {
                 error || open ?
@@ -174,7 +189,7 @@ function LoginModal (props) {
                                                                     required />
                                                             </div>
 
-                                                            { error && <div className='alert alert-danger'>{error.error}</div>}
+                                                            { error && <div className='alert alert-danger'>{error}</div>}
 
                                                             <div className="form-footer">
                                                                 <button type="submit" className="btn btn-outline-primary-2">
@@ -254,13 +269,11 @@ function LoginModal (props) {
                                                             <label htmlFor="avatar_upload">Avatar *</label>
                                                             <div className='d-flex align-items-center'>
                                                                 <div>
-                                                                    <figure className='avatar mr-3 item-rtl'>
                                                                         <img 
                                                                             src={newAvatarPreview}
-                                                                            className='rounded-circle'
+                                                                            className='social-icon'
                                                                             alt='Avatar Preview'
                                                                         />
-                                                                    </figure>
                                                                 </div>
                                                                 <div className='custom-file'>
                                                                     <input

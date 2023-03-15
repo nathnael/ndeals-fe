@@ -25,7 +25,7 @@ const rootReducers = combineReducers({
 // Create a persist config for the root reducer
 const persistConfig = {
     key: 'root',
-    storage
+    storage,
 };
 
 // Apply the react-persist to the root reducer
