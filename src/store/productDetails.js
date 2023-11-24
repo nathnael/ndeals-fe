@@ -81,7 +81,7 @@ export function* productDetailsSaga (id) {
 export function* watchProductDetails() {
     while (true) {
         const action = yield take(actionTypes.productDetailsRequest);
-        yield call(productDetailsSaga, action.payload.id);
+        yield call(productDetailsSaga, action.payload._id);
     }
 }
 

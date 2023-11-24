@@ -17,7 +17,7 @@ const initialState = {
 const cartReducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case actionTypes.addToCart:
-            var findIndex = state.data.findIndex( item => item.id == action.payload.product.id );
+            var findIndex = state.data.findIndex( item => item._id == action.payload.product._id );
             let qty = action.payload.qty ? action.payload.qty : 1;
             if ( findIndex !== -1 && action.payload.product.variants.length > 0 ) {
                 findIndex = state.data.findIndex( item => item.name == action.payload.product.name );
@@ -58,7 +58,7 @@ const cartReducer = ( state = initialState, action ) => {
             return {
                 data: [
                     ...state.data.filter( item => {
-                        if ( item.id !== action.payload.product.id ) return true;
+                        if ( item._id !== action.payload.product._id ) return true;
                         if ( item.name !== action.payload.product.name ) return true;
                         return false;
                     } )

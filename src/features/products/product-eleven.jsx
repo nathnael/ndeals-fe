@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useLocation, useNavigate, useRouteMatch } from 'react-router-dom';
 
 import { actions as wishlistAction } from '../../store/wishlist';
 import { actions as cartAction } from '../../store/cart';
@@ -10,6 +11,7 @@ import { actions as demoAction } from '../../store/demo';
 import { isInWishlist, isInCompare } from '../../utils';
 
 function ProductEleven ( props ) {
+    const navigate = useNavigate();
     const { product, wishlist } = props;
     const [ maxPrice, setMaxPrice ] = useState( 0 );
     const [ minPrice, setMinPrice ] = useState( 99999 );
@@ -44,6 +46,7 @@ function ProductEleven ( props ) {
             props.addToWishlist( product );
         } else {
             // router.push( '/pages/wishlist' );
+            navigate( '/account/wishlist' );
         }
     }
 
