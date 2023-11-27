@@ -18,9 +18,11 @@ import {
 } from './product';
 import {
     userLoginSaga,
+    userGoogleLoginSaga,
     userRegisterSaga,
     userLogoutSaga,
     watchUserLogin,
+    watchUserGoogleLogin,
     watchUserRegister,
     watchUserLogout,
     userLoadSaga,
@@ -43,6 +45,8 @@ export default function* rootSaga () {
         watchProductDetails(),
         uniqueCategoriesSaga(),
         userLoginSaga(),
+        userGoogleLoginSaga(),
+        watchUserGoogleLogin(),
         userRegisterSaga(),
         userLoadSaga(),
         userLogoutSaga(),

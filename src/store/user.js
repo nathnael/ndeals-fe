@@ -4,6 +4,7 @@ import { put, take, call } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import {
     userLogin,
+    userGoogleLogin,
     userRegister,
     userLogout,
     loadUser,
@@ -13,6 +14,9 @@ export const actionTypes = {
     getLoginRequest: "LOGIN_REQUEST",
     getLoginSuccess: "LOGIN_SUCCESS",
     getLoginFail: "LOGIN_FAIL",
+    getGoogleLoginRequest: "GOOGLE_LOGIN_REQUEST",
+    getGoogleLoginSuccess: "GOOGLE_LOGIN_SUCCESS",
+    getGoogleLoginFail: "GOOGLE_LOGIN_FAIL",
     getLogoutRequest: "LOGOUT_REQUEST",
     getLogoutSuccess: "LOGOUT_SUCCESS",
     getLogoutFail: "LOGOUT_FAIL",
@@ -31,6 +35,7 @@ const initialState = { user: {} }
 const userReducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case actionTypes.getLoginRequest:
+        case actionTypes.getGoogleLoginRequest:
         case actionTypes.getRegisterUserRequest:
         case actionTypes.getLoadUserRequest:
             return {
@@ -38,6 +43,7 @@ const userReducer = ( state = initialState, action ) => {
                 isAuthenticated: false
             }
         case actionTypes.getLoginSuccess:
+        case actionTypes.getGoogleLoginSuccess:
         case actionTypes.getRegisterUserSuccess:
         case actionTypes.getLoadUserSuccess:
             return {
@@ -109,6 +115,24 @@ export const actions = {
             error
         }
     }),
+    getGoogleLoginRequest: (userData) => ({
+        type: actionTypes.getGoogleLoginRequest,
+        payload: {
+            userData
+        }
+    }),
+    getGoogleLoginSuccess: (user) => ({
+        type: actionTypes.getGoogleLoginSuccess,
+        payload: {
+            user
+        }
+    }),
+    getGoogleLoginFail: (error) => ({
+        type: actionTypes.getGoogleLoginFail,
+        payload: {
+            error
+        }
+    }),
     getRegisterUserRequest: (userData) => ({
         type: actionTypes.getRegisterUserRequest,
         payload: {
@@ -172,6 +196,20 @@ export function* userLoginSaga (email, password) {
     }
 }
 
+export function* userGoogleLoginSaga (userData) {
+    try {
+        const user = yield call(userGoogleLogin, userData);
+        if (user) {
+            yield put(actions.getGoogleLoginSuccess(user))
+        }            
+        else {
+            yield put(actions.getGoogleLoginFail('Signing with Google SSO failed.'));
+        } 
+    }catch(err) {
+        yield put(actions.getGoogleLoginFail(err));
+    }
+}
+
 export function* userRegisterSaga (userData) {
     try {
         const user = yield call(userRegister, userData);
@@ -210,6 +248,13 @@ export function* watchUserLogin() {
     while (true) {
         const action = yield take(actionTypes.getLoginRequest);
         yield call(userLoginSaga, action.payload.email, action.payload.password);
+    }
+}
+
+export function* watchUserGoogleLogin() {
+    while (true) {
+        const action = yield take(actionTypes.getGoogleLoginRequest);
+        yield call(userGoogleLoginSaga, action.payload.userData);
     }
 }
 
