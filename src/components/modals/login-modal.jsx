@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { actions as userLoginAction } from '../../store/user';
 
+import { GoogleOAuthProvider } from '@react-oauth/google';  
+import { GoogleLogin } from '@react-oauth/google';
+
 
 const customStyles = {
     overlay: {
@@ -12,6 +15,8 @@ const customStyles = {
         zIndex: '9000'
     }
 }
+
+const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 Modal.setAppElement( 'body' );
 
@@ -102,6 +107,27 @@ function LoginModal (props) {
     function onUserLogout (e) {
         e.preventDefault();        
         props.getLogoutRequest();
+    }
+
+    const googleSuccess =  async (res) => {
+        // console.log('auth.js-googlesuccess-res',res)  
+        props.getGoogleLoginRequest(res);
+        if (!error) {
+            setOpen( false );
+        } else {
+            setOpen( true );
+        }
+        // fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${res.credential}`)
+        //   .then(res => res.json())
+        //   .then(response => {
+        //     // console.log('user Info=',res)
+            
+        //   })
+        //   .catch(error => console.log(error));    
+    };
+
+    const googleError = (error) => {
+        console.log('google signin failed-error',error)
     }
 
     return (
@@ -209,10 +235,16 @@ function LoginModal (props) {
                                                             <p className="text-center">or sign in with</p>
                                                             <div className="row">
                                                                 <div className="col-sm-6">
-                                                                    <a href="/" className="btn btn-login btn-g">
+                                                                    {/* <a href="/" className="btn btn-login btn-g">
                                                                         <i className="icon-google"></i>
                                                                             Login With Google
-                                                                    </a>
+                                                                    </a> */}
+                                                                    <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
+                                                                        <GoogleLogin            
+                                                                            onSuccess={googleSuccess}
+                                                                            onFailure={googleError}     
+                                                                        />
+                                                                    </GoogleOAuthProvider>
                                                                 </div>
                                                                 <div className="col-sm-6">
                                                                     <a href="/" className="btn btn-login btn-f">
@@ -311,10 +343,16 @@ function LoginModal (props) {
                                                         <p className="text-center">or sign in with</p>
                                                         <div className="row">
                                                             <div className="col-md-6">
-                                                                <a href="/" className="btn btn-login btn-g">
+                                                                {/* <a href="/" className="btn btn-login btn-g">
                                                                     <i className="icon-google"></i>
                                                                     Login With Google
-                                                                </a>
+                                                                </a> */}
+                                                                <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
+                                                                    <GoogleLogin            
+                                                                        onSuccess={googleSuccess}
+                                                                        onFailure={googleError}     
+                                                                    />
+                                                                </GoogleOAuthProvider>
                                                             </div>
                                                             <div className="col-md-6 mt-1 mt-md-0">
                                                                 <a href="/" className="btn btn-login  btn-f">
