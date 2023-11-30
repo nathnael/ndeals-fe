@@ -166,6 +166,29 @@ export const userGoogleLogin = async (userData) => {
     }
 };
 
+export const userFacebookLogin = async (userData) => {
+    try {
+        if (userData) {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+
+            // console.log(`userData: ${JSON.stringify(userData)}`)
+
+            const { data } = await axios.post(`/api/v1/facebookLogin`, userData, config);
+
+            // console.log(`password: ${password}`)
+
+            return data;
+        }
+
+    } catch (error) {
+        // console.log(`Error: ${error}`);
+    }
+};
+
 export const userRegister = async (userData) => {
     try {
         if (userData) {

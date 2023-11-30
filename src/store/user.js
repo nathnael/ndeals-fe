@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import {
     userLogin,
     userGoogleLogin,
+    userFacebookLogin,
     userRegister,
     userLogout,
     loadUser,
@@ -17,6 +18,9 @@ export const actionTypes = {
     getGoogleLoginRequest: "GOOGLE_LOGIN_REQUEST",
     getGoogleLoginSuccess: "GOOGLE_LOGIN_SUCCESS",
     getGoogleLoginFail: "GOOGLE_LOGIN_FAIL",
+    getFacebookLoginRequest: "FACEBOOK_LOGIN_REQUEST",
+    getFacebookLoginSuccess: "FACEBOOK_LOGIN_SUCCESS",
+    getFacebookLoginFail: "FACEBOOK_LOGIN_FAIL",
     getLogoutRequest: "LOGOUT_REQUEST",
     getLogoutSuccess: "LOGOUT_SUCCESS",
     getLogoutFail: "LOGOUT_FAIL",
@@ -36,6 +40,7 @@ const userReducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case actionTypes.getLoginRequest:
         case actionTypes.getGoogleLoginRequest:
+        case actionTypes.getFacebookLoginRequest:
         case actionTypes.getRegisterUserRequest:
         case actionTypes.getLoadUserRequest:
             return {
@@ -44,6 +49,7 @@ const userReducer = ( state = initialState, action ) => {
             }
         case actionTypes.getLoginSuccess:
         case actionTypes.getGoogleLoginSuccess:
+        case actionTypes.getFacebookLoginSuccess:
         case actionTypes.getRegisterUserSuccess:
         case actionTypes.getLoadUserSuccess:
             return {
@@ -54,6 +60,8 @@ const userReducer = ( state = initialState, action ) => {
                 error: null,
             }
         case actionTypes.getLoginFail:
+        case actionTypes.getGoogleLoginFail:
+        case actionTypes.getFacebookLoginFail:
         case actionTypes.getRegisterUserFail:        
             return {
                 ...state,
@@ -129,6 +137,24 @@ export const actions = {
     }),
     getGoogleLoginFail: (error) => ({
         type: actionTypes.getGoogleLoginFail,
+        payload: {
+            error
+        }
+    }),
+    getFacebookLoginRequest: (userData) => ({
+        type: actionTypes.getFacebookLoginRequest,
+        payload: {
+            userData
+        }
+    }),
+    getFacebookLoginSuccess: (user) => ({
+        type: actionTypes.getFacebookLoginSuccess,
+        payload: {
+            user
+        }
+    }),
+    getFacebookLoginFail: (error) => ({
+        type: actionTypes.getFacebookLoginFail,
         payload: {
             error
         }
@@ -210,6 +236,20 @@ export function* userGoogleLoginSaga (userData) {
     }
 }
 
+export function* userFacebookLoginSaga (userData) {
+    try {
+        const user = yield call(userFacebookLogin, userData);
+        if (user) {
+            yield put(actions.getFacebookLoginSuccess(user))
+        }            
+        else {
+            yield put(actions.getFacebookLoginFail('Signing with Facebook SSO failed.'));
+        } 
+    }catch(err) {
+        yield put(actions.getFacebookLoginFail(err));
+    }
+}
+
 export function* userRegisterSaga (userData) {
     try {
         const user = yield call(userRegister, userData);
@@ -255,6 +295,13 @@ export function* watchUserGoogleLogin() {
     while (true) {
         const action = yield take(actionTypes.getGoogleLoginRequest);
         yield call(userGoogleLoginSaga, action.payload.userData);
+    }
+}
+
+export function* watchUserFacebookLogin() {
+    while (true) {
+        const action = yield take(actionTypes.getFacebookLoginRequest);
+        yield call(userFacebookLoginSaga, action.payload.userData);
     }
 }
 
