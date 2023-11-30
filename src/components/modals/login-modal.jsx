@@ -7,6 +7,7 @@ import { actions as userLoginAction } from '../../store/user';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';  
 import { GoogleLogin } from '@react-oauth/google';
+import FacebookLogin from 'react-facebook-login';
 
 
 const customStyles = {
@@ -17,6 +18,7 @@ const customStyles = {
 }
 
 const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+const REACT_APP_NDEALS_FACEBOOK_CLIENT_ID = process.env.REACT_APP_NDEALS_FACEBOOK_CLIENT_ID;
 
 Modal.setAppElement( 'body' );
 
@@ -116,6 +118,7 @@ function LoginModal (props) {
             setOpen( false );
         } else {
             setOpen( true );
+            props.getGoogleLoginFailed(error);
         }
         // fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${res.credential}`)
         //   .then(res => res.json())
@@ -127,8 +130,26 @@ function LoginModal (props) {
     };
 
     const googleError = (error) => {
-        console.log('google signin failed-error',error)
+        console.log('Google signin failed-error',error)
+        props.getGoogleLoginFailed(error);
     }
+
+    const responseFacebook = (response) => {
+        console.log(response);
+        // setData(response);
+        // setPicture(response.picture.data.url);
+        if (response.accessToken) {
+            props.getFacebookLoginRequest(response);
+            if (!error) {
+                setOpen( false );
+            } else {
+                setOpen( true );
+                props.getFacebookLoginFailed(error);
+            }
+        } else {
+            console.log('Facebook signin failed-error',error);
+        }
+    };
 
     return (
         <li>
@@ -247,10 +268,18 @@ function LoginModal (props) {
                                                                     </GoogleOAuthProvider>
                                                                 </div>
                                                                 <div className="col-sm-6">
-                                                                    <a href="/" className="btn btn-login btn-f">
+                                                                    {/* <a href="/" className="btn btn-login btn-f">
                                                                         <i className="icon-facebook-f"></i>
                                                                             Login With Facebook
-                                                                    </a>
+                                                                    </a> */}
+                                                                    <FacebookLogin
+                                                                        appId={REACT_APP_NDEALS_FACEBOOK_CLIENT_ID}
+                                                                        autoLoad={false}
+                                                                        fields="name,email,picture"
+                                                                        callback={responseFacebook}
+                                                                        cssClass="col-sm-12 btn btn-login btn-f"
+                                                                        icon={<i className="icon-facebook-f"></i>}
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         </div>
